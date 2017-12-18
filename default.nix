@@ -243,6 +243,8 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         ########################################################################
         foundation = dontCheck super.foundation;
 
+        };
+
     };
     haskellOverlays = import ./haskell-overlays {
       inherit

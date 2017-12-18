@@ -1,0 +1,20 @@
+flags: -overloaded-methods -overloaded-signals -overloaded-properties
+
+packages:
+ ef/
+ ef-base/
+ tlc/
+ trivial/
+ pure/
+
+-- Needed for ios
+-- package pure
+--  flags: -use-template-haskell
+-- package semigroupoids
+--  flags: -doctests
+-- package text
+--  flags: +integer-simple
+-- package scientific
+--  flags: +integer-simple
+-- package hashable
+--  flags: -integer-gmp
