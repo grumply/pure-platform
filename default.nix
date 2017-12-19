@@ -207,13 +207,16 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     });
 
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
-      overrides = self: super:
-        let pure = import (hackGet ./pure) self nixpkgs;
-            ef = import (hackGet ./ef) self;
-            efbase = import (hackGet ./ef-base) self;
-            tlc = import (hackGet ./tlc) self;
-            trivial = import (hackGet ./trivial) self;
-        in {
+      overrides = self: super: 
+        {
+       
+        ef = self.callPackage (hackGet ./ef) {};
+        ef-base = self.callPackage (hackGet ./ef-base) {};
+        tlc = self.callPackage (hackGet ./tlc) {};
+        trivial = self.callPackage (hackGet ./trivial) {};
+        pure = overrideCabal (self.callPackage (hackGet ./pure) {}) (drv: {
+          doHaddock = false;
+        });
 
         haskell-src-meta = self.callHackage "haskell-src-meta" "0.8.0.1" {};
 
@@ -223,6 +226,8 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         hashable = doJailbreak (self.callHackage "hashable" "1.2.6.1" {});
 
         haven = self.callHackage "haven" "0.2.0.0" {};
+
+        websockets = self.callHackage "websockets" "0.12.2.0" {};
 
         ########################################################################
         # Tweaks
