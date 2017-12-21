@@ -11,6 +11,7 @@ with haskellPackages;
   tlc
   trivial
   pure
+  excelsior
 
 ] ++ (if platform == "ghcjs" then [
   ##############################################################################
@@ -22,4 +23,4 @@ with haskellPackages;
   # Add ghc-only packages here                                                 #
   ##############################################################################
 
-] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: { out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++ (drv.executableHaskellDepends or []); }; }).out) [ ef ef-base tlc trivial pure ])
+] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: { out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++ (drv.executableHaskellDepends or []); }; }).out) [ ef ef-base tlc trivial pure excelsior ])

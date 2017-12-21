@@ -214,6 +214,9 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         ef-base = self.callPackage (hackGet ./ef-base) {};
         tlc = self.callPackage (hackGet ./tlc) {};
         trivial = self.callPackage (hackGet ./trivial) {};
+        excelsior = overrideCabal (self.callPackage (hackGet ./excelsior) {}) (drv: {
+          doHaddock = false;
+        });
         pure = overrideCabal (self.callPackage (hackGet ./pure) {}) (drv: {
           doHaddock = false;
         });
