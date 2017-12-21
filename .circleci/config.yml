@@ -14,4 +14,4 @@ jobs:
 
       - run:
           command: echo "Yes" | ./try-pure --command "exit 0"
-          no_output_timeout: 3600
+          no_output_timeout: 3599
