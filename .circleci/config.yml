@@ -3,12 +3,11 @@ jobs:
   build:
     environment:
       BASH_ENV: "~/.nix-profile/etc/profile.d/nix.sh"
-      
-    machine:
-      xcode:
-        version: 9.1.0
 
-    steps:
+    macos:
+      xcode: "9.1.0"
+      
+    steps: 
       - checkout
 
       - run: git config --global user.email "travis-ci@example.com"
