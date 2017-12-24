@@ -1,4 +1,9 @@
 version: 2
+
+machine:
+  xcode:
+    version: 9.1.0
+
 jobs:
   build:
     environment:
