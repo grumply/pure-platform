@@ -5,10 +5,26 @@ our_cache="https://nixcache.purehs.org"
 our_keyname="nixcache.purehs.org.key"
 our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
+nixconf_content = "$(cat <<EOF
+build-users-group = nixbld
+
+build-max-jobs = 4
+build-cores = 1
+build-use-sandbox = false
+
+binary-caches = https://cache.nixos.org/ https://nixcache.purehs.org
+trusted-binary-caches =
+binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nixcache.purehs.org.key:I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg=
+signed-binary-caches = *
+
+trusted-users = root
+allowed-users = *
+EOF
+)"
+
 if [[ -n $CI ]] ; then
     ./installNix.sh
     sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
     sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_keyname"':'"$our_key"'|' "$nixconf"
-    sudo launchctl unload org.nixos.nix-daemon.plist
-    sudo launchctl load org.nixos.nix-daemon.plist
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 fi;
