@@ -12,7 +12,11 @@ if [[ -n $CI ]] ; then
     ls /Library/LaunchDaemons
     sudo launchctl list
     sudo launchctl stop org.nixos.nix-daemon
+    echo '--------------------------------------'
+    sleep 3
     sudo launchctl list
     sudo launchctl start org.nixos.nix-daemon
+    echo '--------------------------------------'
+    sleep 3
     sudo launchctl list
 fi;
