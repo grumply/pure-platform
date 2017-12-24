@@ -13,7 +13,7 @@ our_keyname="nixcache.purehs.org.key"
 our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
 if [[ -n $CI ]] ; then
-  NIXOPTS="--option binary-cache-public-keys $our_keyname:$our_key --option trusted-binary-caches $our_cache"
+  NIXOPTS="--option binary-cache-public-keys $our_keyname:$our_key --option trusted-binary-caches $our_cache --option extra-binary-caches $our_cache"
 else
   NIXOPTS="--option extra-trusted-binary-caches https://nixcache.purehs.org"
 fi
