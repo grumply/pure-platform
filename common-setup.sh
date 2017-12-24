@@ -119,8 +119,8 @@ EOF
                 sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
         fi
         reset_daemon
-        sleep 1
     fi
+    cat "$nixconf"
 }
 
 
