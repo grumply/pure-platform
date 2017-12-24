@@ -35,10 +35,7 @@ reset_daemon() {
     if [[ $(uname -a) == "Darwin" ]] ; then
         sudo launchctl stop org.nixos.nix-daemon
         sudo launchctl start org.nixos.nix-daemon
-    fi
-    if [[ -n $CI ]] ; then
-      ./try-pure
-    fi
+    fi;
 }
 
 installing_nix=false
