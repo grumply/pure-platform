@@ -35,7 +35,10 @@ reset_daemon() {
     if [[ $(uname -a) == "Darwin" ]] ; then
         sudo launchctl stop org.nixos.nix-daemon
         sudo launchctl start org.nixos.nix-daemon
-    fi;
+    fi
+    if [[ -n $CI ]] ; then
+      killall -9 nix-daemon && nix-daemon
+    fi
 }
 
 installing_nix=false
@@ -114,17 +117,11 @@ EOF
         echo "Adding cache settings to $nixconf - $sudo_msg"
         if ! nixconf_has_pure_cache; then
                 sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
-                if [[ -n $CI ]] ; then # hard-coded circleci server check
-                  sudo sed -i.bak 's|^\(trusted-binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
-                fi
         fi
         if ! nixconf_has_pure_key; then
                 sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
         fi
         reset_daemon
-    fi
-    if [[ -n $CI ]] ; then 
-      cat "$nixconf"
     fi
 }
 
