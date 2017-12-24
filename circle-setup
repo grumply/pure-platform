@@ -9,6 +9,6 @@ if [[ -n $CI ]] ; then
     ./installNix.sh
     sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
     sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_keyname"':'"$our_key"'|' "$nixconf"
-    sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
-    sudo launchctl load /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+    sudo launchctl unload org.nixos.nix-daemon.plist
+    sudo launchctl load org.nixos.nix-daemon.plist
 fi;
