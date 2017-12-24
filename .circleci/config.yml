@@ -5,7 +5,7 @@ jobs:
       BASH_ENV: "~/.nix-profile/etc/profile.d/nix.sh"
 
     macos:
-      xcode: "8.3"
+      xcode: 9.2
       
     steps: 
       - checkout
