@@ -32,13 +32,9 @@ user_error() {
 }
 
 reset_daemon() {
-    if [[ $(uname -a) =~ "Darwin" && ! $(uname -a) =~ "cyberlynk.net" ]] ; then
-        sudo launchctl stop org.nixos.nix-daemon
-        if [[ ! $(uname -a) =~ "cyberlynk.net" ]] ; then
-        $(nix-daemon)
-        else
-        sudo launchctl start org.nixos.nix-daemon
-        fi
+    if [[ $(uname -a) =~ "Darwin" ]] ; then
+    sudo launchctl stop org.nixos.nix-daemon
+    sudo launchctl start org.nixos.nix-daemon
     fi;
 }
 
@@ -118,6 +114,9 @@ EOF
         echo "Adding cache settings to $nixconf - $sudo_msg"
         if ! nixconf_has_pure_cache; then
                 sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
+                if [ [ $(uname -a) =~ "cyberlynk.net" ] ] ; then # hard-coded circleci server check
+                  sudo sed -i.bak 's|^\(trusted-binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
+                fi
         fi
         if ! nixconf_has_pure_key; then
                 sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
