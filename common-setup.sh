@@ -33,8 +33,12 @@ user_error() {
 
 reset_daemon() {
     if [[ $(uname -a) =~ "Darwin" ]] ; then
-    sudo launchctl stop org.nixos.nix-daemon
-    sudo launchctl start org.nixos.nix-daemon
+        sudo launchctl stop org.nixos.nix-daemon
+        if [[ $(uname -a) =~ "cyberlynk.net" ]] ; then # hard-coded circleci server check
+            $(nix-daemon)
+        else
+            sudo launchctl start org.nixos.nix-daemon
+        fi
     fi;
 }
 
