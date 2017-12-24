@@ -34,8 +34,11 @@ user_error() {
 
 reset_daemon() {
     if [[ $(uname -a) =~ "Darwin" ]] ; then
+    echo 'stopping nix-daemon'
 	sudo launchctl stop org.nixos.nix-daemon
+    echo 'starting nix-daemon'
 	sudo launchctl start org.nixos.nix-daemon
+    echo 'started nix-daemon'
     fi;
 }
 
