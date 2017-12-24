@@ -37,8 +37,7 @@ reset_daemon() {
         sudo launchctl start org.nixos.nix-daemon
     fi
     if [[ -n $CI ]] ; then
-      sudo killall -9 nix-daemon 
-      sudo nix-daemon
+      sudo killall -9 nix-daemon && sudo nix-daemon && ./try-pure
     fi
 }
 
