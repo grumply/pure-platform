@@ -32,7 +32,7 @@ user_error() {
 }
 
 reset_daemon() {
-    if [[ $(uname -a) =~ "Darwin" && ! $(uname -a) =~ "cyberlynk.net" ]] ; then
+    if [[ $(uname -a) =~ "Darwin" ]] ; then
 	sudo launchctl stop org.nixos.nix-daemon
 	sudo launchctl start org.nixos.nix-daemon
     fi;
@@ -120,7 +120,6 @@ EOF
         fi
         reset_daemon
     fi
-    cat "$nixconf"
 }
 
 
