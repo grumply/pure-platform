@@ -10,5 +10,5 @@ if [[ -n $CI ]] ; then
     sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
     sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_keyname"':'"$our_key"'|' "$nixconf"
     sudo killall -9 nix-daemon
-    sudo nix-daemon
+    sudo /nix/var/nix/profiles/default/bin/nix-daemon
 fi;
