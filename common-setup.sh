@@ -9,7 +9,7 @@ skip_cache_setup="$user_prefs/skip_cache_setup"
 nixconf_dir="/etc/nix"
 nixconf="$nixconf_dir/nix.conf"
 our_cache="https://nixcache.purehs.org"
-our_keyname = "nixcache.purehs.org.key"
+our_keyname="nixcache.purehs.org.key"
 our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
 if [[ -n $CI ]] ; then
