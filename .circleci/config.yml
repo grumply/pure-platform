@@ -15,8 +15,8 @@ jobs:
       - run: git config --global user.name "Travis-CI"
 
       - run:
-          command: ./circle-setup
+          command: echo "Yes" | ./circle-setup
 
       - run:
-          command: echo "Yes" | ./try-pure --command "exit 0"
+          command: ./try-pure --command "exit 0"
           no_output_timeout: 3599
