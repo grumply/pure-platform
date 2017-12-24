@@ -6,7 +6,7 @@ our_keyname="nixcache.purehs.org.key"
 our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
 if [[ -n $CI ]] ; then
-    sudo ./installNix.sh
+    ./installNix.sh
     sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
     sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_keyname"':'"$our_key"'|' "$nixconf"
     sudo launchctl stop org.nixos.nix-daemon
