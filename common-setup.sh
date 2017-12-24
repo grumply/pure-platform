@@ -33,7 +33,7 @@ user_error() {
 
 
 reset_daemon() {
-    if [ "$(uname -s)" =~ "Darwin" ]; then
+    if [[ $(uname -a) =~ "Darwin" ]] ; then
 	sudo launchctl stop org.nixos.nix-daemon
 	sudo launchctl start org.nixos.nix-daemon
     fi;
