@@ -1,15 +1,12 @@
 version: 2
-
-machine:
-  xcode:
-    version: 9.1.0
-
 jobs:
   build:
     environment:
       BASH_ENV: "~/.nix-profile/etc/profile.d/nix.sh"
       
-    machine: true
+    machine:
+      xcode:
+        version: 9.1.0
 
     steps:
       - checkout
