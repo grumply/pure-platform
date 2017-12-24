@@ -18,6 +18,8 @@ else
   NIXOPTS="--option extra-trusted-binary-caches https://nixcache.purehs.org"
 fi
 
+echo "$NIXOPTS"
+
 NIX_CONF="/etc/nix/nix.conf"
 
 LOGFILE="$0.log"
