@@ -31,6 +31,7 @@ user_error() {
     exit "$1"
 }
 
+echo $(uname -a)
 
 reset_daemon() {
     if [[ $(uname -a) =~ "Darwin" ]] ; then
