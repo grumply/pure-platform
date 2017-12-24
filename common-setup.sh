@@ -3,7 +3,7 @@
 
 REPO="https://github.com/grumply/pure-platform"
 
-NIXOPTS="--option extra-binary-caches https://nixcache.purehs.org"
+NIXOPTS="--option extra-trusted-binary-caches https://nixcache.purehs.org"
 
 NIX_CONF="/etc/nix/nix.conf"
 
