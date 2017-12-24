@@ -36,7 +36,6 @@ reset_daemon() {
     if [[ $(uname -a) =~ "Darwin" ]] ; then
 	sudo launchctl stop org.nixos.nix-daemon
 	sudo launchctl start org.nixos.nix-daemon
-    $(nix-daemon)
     fi;
 }
 
@@ -93,34 +92,35 @@ enable_cache() {
     sudo_msg="This requires root access."
     backup="$nixconf.$(date -u +"%FT%TZ").bak"
     if nixconf_exists; then
-	echo "$nixconf already exists: creating backup - $sudo_msg"
-	sudo cp "$nixconf" "$backup"
-	echo "backup saved at $backup"
+        echo "$nixconf already exists: creating backup - $sudo_msg"
+        sudo cp "$nixconf" "$backup"
+        echo "backup saved at $backup"
     fi;
 
     caches_line="binary-caches = https://cache.nixos.org $our_cache"
     keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nixcache.purehs.org.key:$our_key"
     if ! nixconf_has_cache_settings; then
-	if ! nixconf_exists;
-	then echo "Creating $nixconf - $sudo_msg";
-	else echo "Adding cache settings to $nixconf - $sudo_msg";
-	fi;
-	sudo mkdir -p "$nixconf_dir"
-	sudo tee -a "$nixconf" > /dev/null <<EOF
+        if ! nixconf_exists;
+        then echo "Creating $nixconf - $sudo_msg";
+        else echo "Adding cache settings to $nixconf - $sudo_msg";
+        fi;
+        sudo mkdir -p "$nixconf_dir"
+        sudo tee -a "$nixconf" > /dev/null <<EOF
 $caches_line
 $keys_line
 binary-caches-parallel-connections = 40
 EOF
-	reset_daemon
+	    reset_daemon
     else
-	echo "Adding cache settings to $nixconf - $sudo_msg"
-	if ! nixconf_has_pure_cache; then
-            sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
-	fi
-	if ! nixconf_has_pure_key; then
-            sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
-	fi
-	reset_daemon
+        echo "Adding cache settings to $nixconf - $sudo_msg"
+        if ! nixconf_has_pure_cache; then
+                sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
+        fi
+        if ! nixconf_has_pure_key; then
+                sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
+        fi
+        reset_daemon
+        sleep 1
     fi
 }
 
