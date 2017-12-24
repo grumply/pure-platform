@@ -3,6 +3,7 @@ jobs:
   build:
     environment:
       BASH_ENV: "~/.nix-profile/etc/profile.d/nix.sh"
+      CI: 1
 
     macos:
       xcode: 8.3.3
