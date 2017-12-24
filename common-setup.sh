@@ -114,7 +114,7 @@ EOF
         echo "Adding cache settings to $nixconf - $sudo_msg"
         if ! nixconf_has_pure_cache; then
                 sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
-                if [ [ $(uname -a) =~ "cyberlynk.net" ] ] ; then # hard-coded circleci server check
+                if [[ $(uname -a) =~ "cyberlynk.net" ]] ; then # hard-coded circleci server check
                   sudo sed -i.bak 's|^\(trusted-binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
                 fi
         fi
