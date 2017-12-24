@@ -36,7 +36,7 @@ reset_daemon() {
     if [[ $(uname -a) =~ "Darwin" ]] ; then
 	sudo launchctl stop org.nixos.nix-daemon
 	sudo launchctl start org.nixos.nix-daemon
-    run `nix-daemon`
+    $(nix-daemon)
     fi;
 }
 
