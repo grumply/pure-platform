@@ -220,6 +220,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure = overrideCabal (self.callPackage (hackGet ./pure) {}) (drv: {
           doHaddock = false;
         });
+        origami-fold = self.callPackage (hackGet ./origami-fold) {};
 
         haskell-src-meta = self.callHackage "haskell-src-meta" "0.8.0.1" {};
 

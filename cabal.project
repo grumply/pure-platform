@@ -6,6 +6,8 @@ packages:
  tlc/
  trivial/
  pure/
+ excelsior/
+ origami-fold/
 
 -- Needed for ios
 -- package pure
