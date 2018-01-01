@@ -9,7 +9,7 @@ if [[ $# -eq 0 ]] ; then
     echo "Usage: $0 <packagename> [<packagename...>]"
     echo "Uses xdg-open to open the documentation for given (Haskell) packages"
     echo "from the nix-store. For example, try"
-    echo " $0 pure ef ef-base excelsior tlc trivial lens origami-fold"
+    echo " $0 pure ef ef-base tlc trivial lens"
 else
     export DOCSFOR_PKGLIST="$@"
     function openTheDocs () {
