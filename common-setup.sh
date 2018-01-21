@@ -3,18 +3,7 @@
 
 REPO="https://github.com/grumply/pure-platform"
 
-installing_nix=false
-user_prefs="$HOME/.local/share/pure-platform"
-skip_cache_setup="$user_prefs/skip_cache_setup"
-nixconf_dir="/etc/nix"
-nixconf="$nixconf_dir/nix.conf"
-our_cache="https://nixcache.purehs.org"
-our_keyname="nixcache.purehs.org.key"
-our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
-
-NIXOPTS="--option extra-trusted-binary-caches https://nixcache.purehs.org"
-
-echo "$NIXOPTS"
+NIXOPTS="--option extra-binary-caches https://nixcache.purehs.org"
 
 NIX_CONF="/etc/nix/nix.conf"
 
@@ -42,12 +31,22 @@ user_error() {
     exit "$1"
 }
 
+on_darwin_host() { [ "$(uname -s)" == 'Darwin' ]; }
+
 reset_daemon() {
-    if [[ $(uname -a) == "Darwin" ]] ; then
+    if on_darwin_host; then
         sudo launchctl stop org.nixos.nix-daemon
         sudo launchctl start org.nixos.nix-daemon
-    fi;
+    fi
 }
+
+installing_nix=false
+user_prefs="$HOME/.local/share/pure-platform"
+skip_cache_setup="$user_prefs/skip_cache_setup"
+nixconf_dir="/etc/nix"
+nixconf="$nixconf_dir/nix.conf"
+our_cache="https://nixcache.purehs.org"
+our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
 nixconf_exists() {
     if [ -e "$nixconf" ]; then return 0; else return 1; fi;
@@ -73,23 +72,26 @@ enable_cache() {
     if uname -v | grep -i "\bnixos\b"; then
 	echo "Please enable pure's binary cache by following the instructions at https://github.com/grumply/pure-platform/blob/master/notes/NixOS.md"
 	return 0;
-    fi;
+    fi
 
-    $(mkdir -p "$user_prefs")
+    mkdir -p "$user_prefs"
     if [ "$installing_nix" = false ]; then
-	read -p "Add binary caches for pure to $nixconf ?"
+	read -rp "Add binary caches for pure to $nixconf ?"
 	select yn in "Yes" "No" "Ask again next time"; do
 	    case $yn in
 		"Yes" )
 		    break;;
 		"No" )
-		    touch $skip_cache_setup
+		    touch "$skip_cache_setup"
+            echo "To re-enable this prompt do: "
+            echo "rm $skip_cache_setup"
+            echo ""
 		    return 0;;
-		"Ask next time" )
+		"Ask again next time" )
 		    return 0;;
 	    esac
 	done
-    fi;
+    fi
 
     sudo_msg="This requires root access."
     backup="$nixconf.$(date -u +"%FT%TZ").bak"
@@ -97,15 +99,16 @@ enable_cache() {
         echo "$nixconf already exists: creating backup - $sudo_msg"
         sudo cp "$nixconf" "$backup"
         echo "backup saved at $backup"
-    fi;
+    fi
 
     caches_line="binary-caches = https://cache.nixos.org $our_cache"
-    keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $our_keyname:$our_key"
+    keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nixcache.purehs.org.key:$our_key"
     if ! nixconf_has_cache_settings; then
-        if ! nixconf_exists;
-        then echo "Creating $nixconf - $sudo_msg";
-        else echo "Adding cache settings to $nixconf - $sudo_msg";
-        fi;
+        if ! nixconf_exists; then
+          echo "Creating $nixconf - $sudo_msg";
+        else 
+          echo "Adding cache settings to $nixconf - $sudo_msg";
+        fi
         sudo mkdir -p "$nixconf_dir"
         sudo tee -a "$nixconf" > /dev/null <<EOF
 $caches_line
@@ -125,7 +128,19 @@ EOF
     fi
 }
 
-
+if on_darwin_host; then
+  if (sw_vers | grep "ProductVersion" | grep "\(10.13.0\|10.13.1\)$" || false) &> /dev/null; then
+    allow_broken_macos="$HOME/.local/share/pure-platform/allow-broken-macos"
+    if [ ! -d "$allow_broken_macos" ]; then
+      echo "Running nix on High Sierra versions prior to 10.13.2 is likely to cause system crashes"
+      echo "See https://github.com/NixOS/nix/issues/1583"
+      echo "Please update your system to continue safely"
+      echo "If you still want to try, do:"
+      echo "mkdir -p $allow_broken_macos"
+      exit 1
+    fi
+  fi
+fi
 
 >&2 echo "If you have any trouble with this script, please submit an issue at $REPO/issues"
 
@@ -133,7 +148,7 @@ EOF
 
 cd "$DIR"
 
-if [ ! -d /nix ] ; then
+if [ ! -d /nix ]; then
   installing_nix=true
   if ! type -P curl >/dev/null ; then
     echo "Please make sure that 'curl' is installed and can be run from this shell"
@@ -147,7 +162,7 @@ fi
 )
 
 # The command to source the nix script.  This should be a line of valid bash code.
-if [ -O /nix/store ] ; then
+if [ -O /nix/store ]; then
     SOURCE_NIX_SCRIPT=". $HOME/.nix-profile/etc/profile.d/nix.sh"
 else
     SOURCE_NIX_SCRIPT=". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
@@ -156,12 +171,12 @@ fi
 # Whether the nix script needed to be sourced - i.e. nix commands are not available without doing so, from the user's basic prompt.
 NEEDED_TO_SOURCE_NIX_SCRIPT=0
 
-if ! type -P nix-shell >/dev/null ; then
+if ! type -P nix-shell >/dev/null; then
   set +eu
   $SOURCE_NIX_SCRIPT
   set -eu
   NEEDED_TO_SOURCE_NIX_SCRIPT=1
-  if ! type -P nix-shell >/dev/null ; then
+  if ! type -P nix-shell >/dev/null; then
     echo "It looks like Nix isn't working.  Please make sure you can run nix-shell, then retry the $0, or submit an issue at $REPO/issues"
     exit 1
   fi
@@ -170,9 +185,9 @@ fi
 # The minimum required version of Nix to run this script.
 MIN_REQUIRED_NIX_VERSION="1.8"
 
-if [ "$(nix-instantiate --eval --expr "builtins.compareVersions builtins.nixVersion \"$MIN_REQUIRED_NIX_VERSION\" >= 0")" != "true" ] ; then
+if [ "$(nix-instantiate --eval --expr "builtins.compareVersions builtins.nixVersion \"$MIN_REQUIRED_NIX_VERSION\" >= 0")" != "true" ]; then
   echo "It looks like your version of Nix, $(nix-instantiate --eval --expr "builtins.nixVersion"), is older than the minimum version required by the Pure Platform, \"$MIN_REQUIRED_NIX_VERSION\".  You'll need to upgrade Nix to continue.  On non-NixOS platforms, that can usually be done like this:"
-  if [ "$NEEDED_TO_SOURCE_NIX_SCRIPT" -ne 0 ] ; then
+  if [ "$NEEDED_TO_SOURCE_NIX_SCRIPT" -ne 0 ]; then
     echo "$SOURCE_NIX_SCRIPT"
   fi
   echo "nix-env --upgrade"
@@ -216,7 +231,7 @@ EOF
 )"
     else
         OUTPUT_GIT_MANIFEST_TYPE=git
-        OUTPUT_GIT_MANIFEST="$($NIX_PREFETCH_SCRIPTS/bin/nix-prefetch-git "$PWD/$REPO" "$REV" 2>/dev/null | sed -e '/^ *"date":/d' -e "s|$(echo "$PWD/$REPO" | sed 's/|/\\|/g')|$(echo "$URL" | sed 's/|/\\|/g')|" 2>/dev/null)"
+        OUTPUT_GIT_MANIFEST="$("$NIX_PREFETCH_SCRIPTS"/bin/nix-prefetch-git "$PWD/$REPO" "$REV" 2>/dev/null | sed -e '/^ *"date":/d' -e "s|$(echo "$PWD/$REPO" | sed 's/|/\\|/g')|$(echo "$URL" | sed 's/|/\\|/g')|" 2>/dev/null)"
     fi
 }
 
