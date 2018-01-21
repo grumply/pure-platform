@@ -3,7 +3,11 @@
 
 REPO="https://github.com/grumply/pure-platform"
 
-NIXOPTS="--option extra-binary-caches https://nixcache.purehs.org"
+our_cache="https://nixcache.purehs.org"
+our_key_name="nixcache.purehs.org.key"
+our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
+
+NIXOPTS="--option extra-binary-caches $our_cache"
 
 NIX_CONF="/etc/nix/nix.conf"
 
@@ -45,8 +49,6 @@ user_prefs="$HOME/.local/share/pure-platform"
 skip_cache_setup="$user_prefs/skip_cache_setup"
 nixconf_dir="/etc/nix"
 nixconf="$nixconf_dir/nix.conf"
-our_cache="https://nixcache.purehs.org"
-our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
 
 nixconf_exists() {
     if [ -e "$nixconf" ]; then return 0; else return 1; fi;
@@ -102,7 +104,7 @@ enable_cache() {
     fi
 
     caches_line="binary-caches = https://cache.nixos.org $our_cache"
-    keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nixcache.purehs.org.key:$our_key"
+    keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $our_key_name:$our_key"
     if ! nixconf_has_cache_settings; then
         if ! nixconf_exists; then
           echo "Creating $nixconf - $sudo_msg";
@@ -122,7 +124,7 @@ EOF
                 sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
         fi
         if ! nixconf_has_pure_key; then
-                sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 nixcache.purehs.org.key:'"$our_key"'|' "$nixconf"
+                sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_key_name"':'"$our_key"'|' "$nixconf"
         fi
         reset_daemon
     fi
