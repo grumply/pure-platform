@@ -204,16 +204,22 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         done
       '';
     });
-    cabal2nixResult = src: builtins.trace "cabal2nixResult is deprecated; use ghc.haskellSrc2nix or ghc.callCabal2nix instead" (ghc.haskellSrc2nix {
-      name = "for-unknown-package";
-      src = "file://${src}";
-      sha256 = null;
-    });
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: 
         let
         in {
        
+        # new release of zlib should fix the need for this for 
+        # cross-compilation to android
+        zlib = self.overrideCabal super.zlib (drv: {
+          src = fetchFromGitHub {
+                  owner = "haskell";
+                  repo = "zlib";
+                  rev = "a34b3bdc828052b10334a40f2f00067641120f6d";
+                  sha256 = "0cvxk1pjwcprqcqqlaxhsagj2bpsnyv01fapv1bc9lli62asacwx";
+          };
+          version = "0.6.1.3";
+        });
         vector = doJailbreak super.vector;
         ef = self.callPackage (hackGet ./ef) {};
         ef-base = self.callPackage (hackGet ./ef-base) {};
