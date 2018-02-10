@@ -3,7 +3,7 @@
 , config ? {}
 , enableLibraryProfiling ? false
 , enableExposeAllUnfoldings ? true
-, iosSdkVersion ? "10.2"
+, iosSdkVersion ? "11.4"
 , iosSdkLocation ? "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS${iosSdkVersion}.sdk"
 , iosSupportForce ? false
 }:
@@ -211,7 +211,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
        
         # new release of zlib should fix the need for this for 
         # cross-compilation to android
-        zlib = self.overrideCabal super.zlib (drv: {
+        zlib = overrideCabal super.zlib (drv: {
           src = fetchFromGitHub {
                   owner = "haskell";
                   repo = "zlib";
