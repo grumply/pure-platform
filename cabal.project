@@ -1,5 +1,3 @@
-flags: -overloaded-methods -overloaded-signals -overloaded-properties
-
 packages:
  ef/
  ef-base/
@@ -8,8 +6,6 @@ packages:
  pure/
 
 -- Needed for ios
--- package pure
---  flags: -use-template-haskell
 -- package semigroupoids
 --  flags: -doctests
 -- package text
