@@ -428,12 +428,7 @@ in let this = rec {
   platforms = [
     "ghcjs"
     "ghc"
-  ] ++ (optionals (system == "x86_64-linux") [
-    "ghcAndroidArm64"
-    "ghcAndroidArmv7a"
-  ]) ++ (optionals iosSupport [
-    "ghcIosArm64"
-  ]);
+  ];
 
   attrsToList = s: map (name: { inherit name; value = builtins.getAttr name s; }) (builtins.attrNames s);
   mapSet = f: s: builtins.listToAttrs (map ({name, value}: {
