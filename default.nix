@@ -16,8 +16,8 @@ let iosSupport =
         src-spec = {
           owner = "commercialhaskell";
           repo = "all-cabal-hashes";
-          rev = "2b0bf3ddf8b75656582c1e45c51caa59458cd3ad";
-          sha256 = "0g4nvvgfg9npd0alysd67ckhvx3s66q8b5x0x9am2myjrha3fjgq";
+          rev = "6c7ac64f43122567867760dfa6d0014301d1cfd9";
+          sha256 = "14m7c0iapz1svqk4hm0a9gpxnkbwj2fk8g8b1js5p8nrvqawgm1z";
         };
       };
     };
