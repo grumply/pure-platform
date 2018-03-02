@@ -163,7 +163,7 @@ packages:
 ```
 
 ```nix
--- default.nix
+# default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -186,7 +186,7 @@ The same can be done for `cabal-ghcjs.project`, but the library would be added t
 If the dependency is available via hackage, but you need an alternate version, you can pin the dependency with `callHackage` using `overrides`, like so:
 
 ```nix
--- default.nix
+# default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -211,7 +211,7 @@ If the dependency is available via hackage, but you need an alternate version, y
 If the dependency is available externally, you can pin it with `fetchWith[..]` using `overrides`, like so:
 
 ```nix
--- default.nix
+# default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -258,7 +258,7 @@ packages:
 ```
 
 ```nix
--- default.nix
+# default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
