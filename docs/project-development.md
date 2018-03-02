@@ -6,6 +6,8 @@ in Pure. You will see how to:
 
 - [Create a project from scratch](#creating-the-project)
 - [Build it with Nix](#building-with-nix)
+- [Add Dependencies](#adding-dependencies)
+- [Build it with Cabal](#building-with-cabal)
 - [Develop it incrementally](#building-with-cabal)
 
 Creating the Project
