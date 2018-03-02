@@ -163,6 +163,7 @@ packages:
 ```
 
 ```nix
+-- default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -185,6 +186,7 @@ The same can be done for `cabal-ghcjs.project`, but the library would be added t
 If the dependency is available via hackage, but you need an alternate version, you can pin the dependency with `callHackage` using `overrides`, like so:
 
 ```nix
+-- default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -209,6 +211,7 @@ If the dependency is available via hackage, but you need an alternate version, y
 If the dependency is available externally, you can pin it with `fetchWith[..]` using `overrides`, like so:
 
 ```nix
+-- default.nix
 {}:
 
 (import ./pure-platform {}).project ({ pkgs, ... }: {
@@ -236,6 +239,52 @@ If the dependency is available externally, you can pin it with `fetchWith[..]` u
 ```
 
 > Note that pinning the dependency will force all of the packages to use that version; you cannot use one version for `frontend` and another for `backend`.
+
+Another option that simplifies the use of non-hackage dependencies is git submodules. With this approach, you can simply `git pull` changes to the submodule. For example:
+
+```bash
+git submodule add -b master https://github.com/grumply/semantic-ui-pure
+```
+
+```
+-- cabal-ghcjs.project
+compiler: ghcjs
+allow-newer: all
+packages:
+  common/
+  backend/
+  frontend/
+  semantic-ui-pure/
+```
+
+```nix
+-- default.nix
+{}:
+
+(import ./pure-platform {}).project ({ pkgs, ... }: {
+  packages = {
+    common = ./common;
+    backend = ./backend;
+    frontend = ./frontend;
+    semantic-ui-pure = ./semantic-ui-pure;
+  };
+
+  shells = {
+    ghc = [ "common" "backend" "frontend" "semantic-ui-pure" ];
+    ghcjs = [ "common" "frontend" "semantic-ui-pure" ];
+  };
+})
+```
+
+And, simply, to update:
+
+```bash
+cd semantic-ui-pure
+git pull
+cd ..
+git add semantic-ui-pure
+git commit -m 'Update semantic-ui-pure.'
+```
 
 Building with Cabal
 ---
