@@ -90,7 +90,6 @@ module Common where
 ...
 ```
 
-
 Building with Nix
 ---
 
@@ -147,6 +146,96 @@ $ nix-build -o frontend-result -A ghcjs.frontend
 
 These commands will create two symlinks (`backend-result` and
 `frontend-result`) that point at the build products in the Nix store.
+
+Adding Dependencies
+---
+
+Custom dependencies of local libraries can be added via `cabal.project` and `cabal-ghcjs.project`. If you want a backend service, add it to `cabal.project` and `default.nix`, like so:
+
+```yaml
+-- cabal.project
+allow-newer: all
+packages:
+  common/
+  backend/
+  frontend/
+  service/ 
+```
+
+```nix
+{}:
+
+(import ./pure-platform {}).project ({ pkgs, ... }: {
+  packages = {
+    common = ./common;
+    backend = ./backend;
+    frontend = ./frontend;
+    service = ./service;
+  };
+
+  shells = {
+    ghc = [ "common" "backend" "frontend" "service" ];
+    ghcjs = [ "common" "frontend" ];
+  };
+})
+```
+
+The same can be done for `cabal-ghcjs.project`, but the library would be added to `shells.ghcjs` rather than `shells.ghc`.
+
+If the dependency is available via hackage, but you need an alternate version, you can pin the dependency with `callHackage` using `overrides`, like so:
+
+```nix
+{}:
+
+(import ./pure-platform {}).project ({ pkgs, ... }: {
+
+  overrides = self: super: {
+    lens = self.callHackage "lens" "4.15.4" {};
+  };
+
+  packages = {
+    common = ./common;
+    backend = ./backend;
+    frontend = ./frontend;
+  };
+
+  shells = {
+    ghc = [ "common" "backend" "frontend" ];
+    ghcjs = [ "common" "frontend" ];
+  };
+})
+```
+
+If the dependency is available externally, you can pin it with `fetchWith[..]` using `overrides`, like so:
+
+```nix
+{}:
+
+(import ./pure-platform {}).project ({ pkgs, ... }: {
+
+  overrides = self: super: {
+    free = self.callCabal2nix "free" (pkgs.fetchFromGitHub {
+              owner = "ekmett";
+              repo = "free";
+              rev = "a0c5bef18b9609377f20ac6a153a20b7b94578c9";
+              sha256 = "0vh3hj5rj98d448l647jc6b6q1km4nd4k01s9rajgkc2igigfp6s";
+            }) {};
+  };
+
+  packages = {
+    common = ./common;
+    backend = ./backend;
+    frontend = ./frontend;
+  };
+
+  shells = {
+    ghc = [ "common" "backend" "frontend" ];
+    ghcjs = [ "common" "frontend" ];
+  };
+})
+```
+
+> Note that pinning the dependency will force all of the packages to use that version; you cannot use one version for `frontend` and another for `backend`.
 
 Building with Cabal
 ---
