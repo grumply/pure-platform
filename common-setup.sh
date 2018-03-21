@@ -243,10 +243,11 @@ cleanup_nix_path() {
 }
 
 prebuild_try_pure_shell() {
-    nix-build "$DIR/shell.nix" --drv-link "$DIR/gc-roots/shell.drv" $NIXOPTS --indirect --add-root "$DIR/gc-roots/shell.out" >/dev/null
+    nix-instantiate "$DIR/shell.nix" --indirect --add-root "$DIR/gc-roots/shell.drv" $NIXOPTS >/dev/null
+    nix-store --realize "$DIR/gc-roots/shell.drv" --indirect --add-root "$DIR/gc-roots/shell.out" >/dev/null
 }
 
 try_pure_shell() {
     prebuild_try_pure_shell
-    nix-shell "$DIR/gc-roots/shell.drv" $NIXOPTS "$@"
+    nix-shell -E '{path}: import path' --arg path "$(readlink "$DIR/gc-roots/shell.drv")" $NIXOPTS "$@"
 }
