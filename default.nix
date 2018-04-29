@@ -205,11 +205,13 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       '';
     });
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
-      overrides = self: super: 
+      overrides = self: super:
         let
         in {
-       
-        # new release of zlib should fix the need for this for 
+
+        roles = self.callHackage "roles" "0.2.0.0" {};
+
+        # new release of zlib should fix the need for this for
         # cross-compilation to android
         zlib = overrideCabal super.zlib (drv: {
           src = fetchFromGitHub {

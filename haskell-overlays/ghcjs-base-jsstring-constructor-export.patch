@@ -1,0 +1,28 @@
+commit 7da83a99bd0cebdc3c58235ce46a309f8e33ec89
+Author: grumply <sean@grump.ly>
+Date:   Sat Apr 28 19:14:31 2018 -0500
+
+    Export JSString constructor and fix jsstringIndexR typo.
+
+diff --git a/Data/JSString.hs b/Data/JSString.hs
+index 176aad4..e353886 100644
+--- a/Data/JSString.hs
++++ b/Data/JSString.hs
+@@ -5,7 +5,7 @@
+ {-| Manipulation of JavaScript strings, API and fusion implementation
+     based on Data.Text by Tom Harper, Duncan Coutts, Bryan O'Sullivan e.a.
+  -}
+-module Data.JSString ( JSString
++module Data.JSString ( JSString(..)
+ 
+                        -- * Creation and elimination
+                      , pack
+@@ -1863,7 +1863,7 @@ foreign import javascript unsafe
+ foreign import javascript unsafe
+   "h$jsstringUncheckedIndex" js_uncheckedIndex :: Int# -> JSString -> Int#
+ foreign import javascript unsafe
+-  "h$jsstringdIndexR" js_uncheckedIndexR :: Int# -> JSString -> Int#
++  "h$jsstringIndexR" js_uncheckedIndexR :: Int# -> JSString -> Int#
+ 
+ -- js_head and js_last return -1 for empty string
+ foreign import javascript unsafe

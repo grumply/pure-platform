@@ -7,12 +7,12 @@ self: super: {
     packages = selectFrom self;
   };
 
-  ghcjs-base = haskellLib.doJailbreak (self.callCabal2nix "ghcjs-base" (fetchFromGitHub {
+  ghcjs-base = haskellLib.doJailbreak (haskellLib.appendPatch (self.callCabal2nix "ghcjs-base" (fetchFromGitHub {
     owner = "ghcjs";
     repo = "ghcjs-base";
-    rev = "43804668a887903d27caada85693b16673283c57";
-    sha256 = "1pqmgkan6xhpvsb64rh2zaxymxk4jg9c3hdxdb2cnn6jpx7jsl44";
-  }) {});
+    rev = "92bfcf42ffddb9676c4e288efd5750a06c4f4799";
+    sha256 = "14ndxrp2xsa0jz75zdaiqylbkzq8p7afg78vv418mv2c497rj08z";
+  }) {}) ./ghcjs-base-jsstring-constructor-export.patch);
 
   ghc = super.ghc // {
     withPackages = self.ghcWithPackages;
