@@ -10,7 +10,20 @@ with haskellPackages;
   ef-base
   tlc
   trivial
-  pure
+  pure-core
+  pure-default
+  pure-dom
+  pure-ease
+  pure-events
+  pure-html
+  pure-json
+  pure-lifted
+  pure-queue
+  pure-styles
+  pure-svg
+  pure-time
+  pure-try
+  pure-txt
 
 ] ++ (if platform == "ghcjs" then [
   ##############################################################################
@@ -22,4 +35,4 @@ with haskellPackages;
   # Add ghc-only packages here                                                 #
   ##############################################################################
 
-] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: { out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++ (drv.executableHaskellDepends or []); }; }).out) [ ef ef-base tlc trivial pure ])
+] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: { out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++ (drv.executableHaskellDepends or []); }; }).out) [ ef ef-base tlc trivial pure-core pure-default pure-dom pure-ease pure-events pure-html pure-json pure-lifted pure-queue pure-styles pure-svg pure-time pure-try pure-txt ])

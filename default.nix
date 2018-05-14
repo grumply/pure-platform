@@ -227,13 +227,22 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         ef-base = self.callPackage (hackGet ./ef-base) {};
         tlc = self.callPackage (hackGet ./tlc) {};
         trivial = self.callPackage (hackGet ./trivial) {};
-        pure = overrideCabal (self.callPackage (hackGet ./pure) {}) (drv: {
-          doHaddock = false;
-        });
+        pure-core = overrideCabal (hackGet ./pure-core) {};
+        pure-default = overrideCabal (hackGet ./pure-default) {};
+        pure-dom = overrideCabal (hackGet ./pure-dom) {};
+        pure-ease = overrideCabal (hackGet ./pure-ease) {};
+        pure-events = overrideCabal (hackGet ./pure-events) {};
+        pure-html = overrideCabal (hackGet ./pure-html) {};
+        pure-json = overrideCabal (hackGet ./pure-json) {};
+        pure-lifted = overrideCabal (hackGet ./pure-lifted) {};
+        pure-queue = overrideCabal (hackGet ./pure-queue) {};
+        pure-styles = overrideCabal (hackGet ./pure-styles) {};
+        pure-svg = overrideCabal (hackGet ./pure-svg) {};
+        pure-time = overrideCabal (hackGet ./pure-time) {};
+        pure-try = overrideCabal (hackGet ./pure-try) {};
+        pure-txt = overrideCabal (hackGet ./pure-txt) {};
 
         haskell-src-meta = self.callHackage "haskell-src-meta" "0.8.0.1" {};
-
-        haven = self.callHackage "haven" "0.2.0.0" {};
 
         websockets = self.callHackage "websockets" "0.12.2.0" {};
 
