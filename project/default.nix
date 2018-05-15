@@ -164,7 +164,25 @@ let
           ({ package = p: p.${name}; } // config)
       ) ios;
 
-    pure = this;
+    ef = this;
+    ef-base = this;
+    tlc = this;
+    trivial = this;
+    pure-core = this;
+    pure-default = this;
+    pure-dom = this;
+    pure-ease = this;
+    pure-events = this;
+    pure-html = this;
+    pure-json = this;
+    pure-lifted = this;
+    pure-queue = this;
+    pure-styles = this;
+    pure-svg = this;
+    pure-time = this;
+    pure-try = this;
+    pure-txt = this;
+
 
     all = all true;
   };

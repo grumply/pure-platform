@@ -3,5 +3,3 @@
 -- Without this, on Mac, we can't open a WKWebView
 :set -fno-ghci-sandbox
 -- Sensible default
-:m + Pure.App
-:m + Pure.View
