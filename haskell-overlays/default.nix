@@ -7,8 +7,6 @@ rec {
   disableTemplateHaskell = import ./disable-template-haskell.nix {
     inherit haskellLib fetchFromGitHub;
   };
-  exposeAllUnfoldings = import ./expose-all-unfoldings.nix { };
-
   ghc = import ./ghc.nix { inherit haskellLib stage2Script; };
   ghc-7 = nixpkgs.lib.composeExtensions
     ghc
