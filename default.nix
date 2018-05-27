@@ -234,12 +234,15 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-html = self.callPackage (hackGet ./pure-html) {};
         pure-json = self.callPackage (hackGet ./pure-json) {};
         pure-lifted = self.callPackage (hackGet ./pure-lifted) {};
+        pure-limiter = self.callPackage (hackGet ./pure-limiter) {};
         pure-queue = self.callPackage (hackGet ./pure-queue) {};
+        pure-server = self.callPackage (hackGet ./pure-server) {};
         pure-styles = self.callPackage (hackGet ./pure-styles) {};
         pure-svg = self.callPackage (hackGet ./pure-svg) {};
         pure-time = self.callPackage (hackGet ./pure-time) {};
         pure-try = self.callPackage (hackGet ./pure-try) {};
         pure-txt = self.callPackage (hackGet ./pure-txt) {};
+        pure-websocket = self.callPackage (hackGet ./pure-websocket) {};
 
         haskell-src-meta = self.callHackage "haskell-src-meta" "0.8.0.1" {};
 
