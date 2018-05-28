@@ -8,12 +8,6 @@ rec {
     inherit haskellLib fetchFromGitHub;
   };
   ghc = import ./ghc.nix { inherit haskellLib stage2Script; };
-  ghc-7 = nixpkgs.lib.composeExtensions
-    ghc
-    (import ./ghc-7.x.y.nix { inherit haskellLib; });
-  ghc-7_8 = nixpkgs.lib.composeExtensions
-    ghc-7
-    (import ./ghc-7.8.y.nix { inherit haskellLib; });
   ghc-8 = nixpkgs.lib.composeExtensions
     ghc
     (import ./ghc-8.x.y.nix { });

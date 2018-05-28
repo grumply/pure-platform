@@ -204,68 +204,29 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       '';
     });
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
-      overrides = self: super:
-        let
-        in {
+      overrides = self: super: {
+        pure-core      = self.callPackage (hackGet ./pure-core)      {};
+        pure-default   = self.callPackage (hackGet ./pure-default)   {};
+        pure-dom       = self.callPackage (hackGet ./pure-dom)       {};
+        pure-ease      = self.callPackage (hackGet ./pure-ease)      {};
+        pure-events    = self.callPackage (hackGet ./pure-events)    {};
+        pure-html      = self.callPackage (hackGet ./pure-html)      {};
+        pure-json      = self.callPackage (hackGet ./pure-json)      {};
+        pure-lifted    = self.callPackage (hackGet ./pure-lifted)    {};
+        pure-limiter   = self.callPackage (hackGet ./pure-limiter)   {};
+        pure-queue     = self.callPackage (hackGet ./pure-queue)     {};
+        pure-server    = self.callPackage (hackGet ./pure-server)    {};
+        pure-styles    = self.callPackage (hackGet ./pure-styles)    {};
+        pure-svg       = self.callPackage (hackGet ./pure-svg)       {};
+        pure-time      = self.callPackage (hackGet ./pure-time)      {};
+        pure-try       = self.callPackage (hackGet ./pure-try)       {};
+        pure-txt       = self.callPackage (hackGet ./pure-txt)       {};
+        pure-websocket = self.callPackage (hackGet ./pure-websocket) {};
+        excelsior      = self.callPackage (hackGet ./excelsior)      {};
+
+        websockets     = self.callHackage "websockets" "0.12.2.0"    {};
 
         roles = self.callHackage "roles" "0.2.0.0" {};
-
-        # new release of zlib should fix the need for this for
-        # cross-compilation to android
-        zlib = overrideCabal super.zlib (drv: {
-          src = fetchFromGitHub {
-                  owner = "haskell";
-                  repo = "zlib";
-                  rev = "a34b3bdc828052b10334a40f2f00067641120f6d";
-                  sha256 = "0cvxk1pjwcprqcqqlaxhsagj2bpsnyv01fapv1bc9lli62asacwx";
-          };
-          version = "0.6.1.3";
-        });
-        vector = doJailbreak super.vector;
-        ef = self.callPackage (hackGet ./ef) {};
-        ef-base = self.callPackage (hackGet ./ef-base) {};
-        tlc = self.callPackage (hackGet ./tlc) {};
-        trivial = self.callPackage (hackGet ./trivial) {};
-        pure-core = self.callPackage (hackGet ./pure-core) {};
-        pure-default = self.callPackage (hackGet ./pure-default) {};
-        pure-dom = self.callPackage (hackGet ./pure-dom) {};
-        pure-ease = self.callPackage (hackGet ./pure-ease) {};
-        pure-events = self.callPackage (hackGet ./pure-events) {};
-        pure-html = self.callPackage (hackGet ./pure-html) {};
-        pure-json = self.callPackage (hackGet ./pure-json) {};
-        pure-lifted = self.callPackage (hackGet ./pure-lifted) {};
-        pure-limiter = self.callPackage (hackGet ./pure-limiter) {};
-        pure-queue = self.callPackage (hackGet ./pure-queue) {};
-        pure-server = self.callPackage (hackGet ./pure-server) {};
-        pure-styles = self.callPackage (hackGet ./pure-styles) {};
-        pure-svg = self.callPackage (hackGet ./pure-svg) {};
-        pure-time = self.callPackage (hackGet ./pure-time) {};
-        pure-try = self.callPackage (hackGet ./pure-try) {};
-        pure-txt = self.callPackage (hackGet ./pure-txt) {};
-        pure-websocket = self.callPackage (hackGet ./pure-websocket) {};
-
-        haskell-src-meta = self.callHackage "haskell-src-meta" "0.8.0.1" {};
-
-        websockets = self.callHackage "websockets" "0.12.2.0" {};
-
-        ########################################################################
-        # Tweaks
-        ########################################################################
-
-        cabal-macosx = overrideCabal super.cabal-macosx (drv: {
-          src = fetchFromGitHub {
-            owner = "obsidiansystems";
-            repo = "cabal-macosx";
-            rev = "b1e22331ffa91d66da32763c0d581b5d9a61481b";
-            sha256 = "1y2qk61ciflbxjm0b1ab3h9lk8cm7m6ln5ranpf1lg01z1qk28m8";
-          };
-          doCheck = false;
-        });
-
-        ########################################################################
-        # Fixes to be upstreamed
-        ########################################################################
-        foundation = dontCheck super.foundation;
 
         } // (if enableLibraryProfiling then {
           mkDerivation = expr: super.mkDerivation (expr // { enableLibraryProfiling = true; });
@@ -301,10 +262,6 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       packageSetConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghcjs.nix") { inherit haskellLib; };
       inherit haskellLib;
     };
-#    TODO: Figure out why this approach doesn't work; it doesn't seem to evaluate our overridden ghc at all
-#    ghcjsPackages = nixpkgs.haskell.packages.ghcjs.override {
-#      ghc = builtins.trace "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" ghcjsCompiler;
-#    };
   ghcjs = (extendHaskellPackages ghcjsPackages).override {
     overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
       haskellOverlays.ghcjs
@@ -323,16 +280,6 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
   ghc = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc802).override {
     overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
       haskellOverlays.ghc-8
-    ];
-  };
-  ghc7 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc7103).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-7
-    ];
-  };
-  ghc7_8 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc784).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-7_8
     ];
   };
   ghcAndroidArm64 = (extendHaskellPackages nixpkgsCross.android.arm64Impure.pkgs.haskell.packages.ghc821).override {
@@ -395,8 +342,6 @@ in let this = rec {
           ghcHEAD
           ghc8_2_1
           ghc8_0_1
-          ghc7
-          ghc7_8
           ghcIosSimulator64
           ghcIosArm64
           ghcIosArmv7
@@ -495,23 +440,13 @@ in let this = rec {
     in [
     nativeHaskellPackages.Cabal
     nativeHaskellPackages.cabal-install
-    nativeHaskellPackages.ghcid
-    nativeHaskellPackages.hasktags
-    nativeHaskellPackages.hlint
     nixpkgs.cabal2nix
     nixpkgs.curl
     nixpkgs.nix-prefetch-scripts
     nixpkgs.nodejs
     nixpkgs.pkgconfig
     nixpkgs.closurecompiler
-  ] ++ (optionals (!(haskellPackages.ghc.isGhcjs or false) && builtins.compareVersions haskellPackages.ghc.version "8.2" < 0) [
-    # ghc-mod doesn't currently work on ghc 8.2.2; revisit when https://github.com/DanielG/ghc-mod/pull/911 is closed
-    # When ghc-mod is included in the environment without being wrapped in justStaticExecutables, it prevents ghc-pkg from seeing the libraries we install
-    nativeHaskellPackages.ghc-mod
-    haskellPackages.hdevtools
-  ]) ++ (if builtins.compareVersions haskellPackages.ghc.version "7.10" >= 0 then [
-    nativeHaskellPackages.stylish-haskell # Recent stylish-haskell only builds with AMP in place
-  ] else []) ++ optionals (system == "x86_64-linux") androidDevTools;
+  ] ++ optionals (system == "x86_64-linux") androidDevTools;
 
   nativeHaskellPackages = haskellPackages:
     if haskellPackages.isGhcjs or false

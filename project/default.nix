@@ -164,10 +164,6 @@ let
           ({ package = p: p.${name}; } // config)
       ) ios;
 
-    ef = this;
-    ef-base = this;
-    tlc = this;
-    trivial = this;
     pure-core = this;
     pure-default = this;
     pure-dom = this;
@@ -182,6 +178,9 @@ let
     pure-time = this;
     pure-try = this;
     pure-txt = this;
+    pure-websocket = this;
+    pure-server = this;
+    excelsior = this;
 
 
     all = all true;
