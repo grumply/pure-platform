@@ -205,30 +205,33 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     });
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
-        pure-core      = self.callPackage (hackGet ./pure-core)      {};
-        pure-default   = self.callPackage (hackGet ./pure-default)   {};
-        pure-dom       = self.callPackage (hackGet ./pure-dom)       {};
-        pure-ease      = self.callPackage (hackGet ./pure-ease)      {};
-        pure-events    = self.callPackage (hackGet ./pure-events)    {};
-        pure-html      = self.callPackage (hackGet ./pure-html)      {};
-        pure-json      = self.callPackage (hackGet ./pure-json)      {};
-        pure-lifted    = self.callPackage (hackGet ./pure-lifted)    {};
-        pure-limiter   = self.callPackage (hackGet ./pure-limiter)   {};
-        pure-queue     = self.callPackage (hackGet ./pure-queue)     {};
-        pure-server    = self.callPackage (hackGet ./pure-server)    {};
-        pure-styles    = self.callPackage (hackGet ./pure-styles)    {};
-        pure-svg       = self.callPackage (hackGet ./pure-svg)       {};
-        pure-time      = self.callPackage (hackGet ./pure-time)      {};
-        pure-try       = self.callPackage (hackGet ./pure-try)       {};
-        pure-txt       = self.callPackage (hackGet ./pure-txt)       {};
-        pure-txt-trie  = self.callPackage (hackGet ./pure-txt-trie)  {};
-        pure-websocket = self.callPackage (hackGet ./pure-websocket) {};
-        pure-xml       = self.callPackage (hackGet ./pure-xml)       {};
-        excelsior      = self.callPackage (hackGet ./excelsior)      {};
+        pure-core         = self.callPackage (hackGet ./pure-core)         {};
+        pure-default      = self.callPackage (hackGet ./pure-default)      {};
+        pure-dom          = self.callPackage (hackGet ./pure-dom)          {};
+        pure-ease         = self.callPackage (hackGet ./pure-ease)         {};
+        pure-events       = self.callPackage (hackGet ./pure-events)       {};
+        pure-html         = self.callPackage (hackGet ./pure-html)         {};
+        pure-json         = self.callPackage (hackGet ./pure-json)         {};
+        pure-lifted       = self.callPackage (hackGet ./pure-lifted)       {};
+        pure-limiter      = self.callPackage (hackGet ./pure-limiter)      {};
+        pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
+        pure-queue        = self.callPackage (hackGet ./pure-queue)        {};
+        pure-server       = self.callPackage (hackGet ./pure-server)       {};
+        pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
+        pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
+        pure-tagsoup      = self.callPackage (hackGet ./pure-tagsoup)      {};
+        pure-time         = self.callPackage (hackGet ./pure-time)         {};
+        pure-try          = self.callPackage (hackGet ./pure-try)          {};
+        pure-txt          = self.callPackage (hackGet ./pure-txt)          {};
+        pure-txt-trie     = self.callPackage (hackGet ./pure-txt-trie)     {};
+        pure-websocket    = self.callPackage (hackGet ./pure-websocket)    {};
+        pure-xml          = self.callPackage (hackGet ./pure-xml)          {};
+        excelsior         = self.callPackage (hackGet ./excelsior)         {};
 
-        websockets     = self.callHackage "websockets" "0.12.2.0"    {};
+        websockets        = self.callHackage "websockets" "0.12.2.0"       {};
+        tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
 
-        roles = self.callHackage "roles" "0.2.0.0" {};
+        roles             = self.callHackage "roles" "0.2.0.0"             {};
 
         } // (if enableLibraryProfiling then {
           mkDerivation = expr: super.mkDerivation (expr // { enableLibraryProfiling = true; });

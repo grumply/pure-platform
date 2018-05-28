@@ -172,9 +172,12 @@ let
     pure-html = this;
     pure-json = this;
     pure-lifted = this;
+    pure-limiter = this;
+    pure-localstorage = this;
     pure-queue = this;
     pure-styles = this;
     pure-svg = this;
+    pure-tagsoup = this;
     pure-time = this;
     pure-try = this;
     pure-txt = this;
@@ -183,7 +186,6 @@ let
     pure-server = this;
     pure-xml = this;
     excelsior = this;
-
 
     all = all true;
   };
