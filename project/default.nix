@@ -178,8 +178,10 @@ let
     pure-time = this;
     pure-try = this;
     pure-txt = this;
+    pure-txt-trie = this;
     pure-websocket = this;
     pure-server = this;
+    pure-xml = this;
     excelsior = this;
 
 
