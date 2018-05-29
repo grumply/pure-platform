@@ -206,6 +206,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
+        pure-css          = self.callPackage (hackGet ./pure-css)          {};
         pure-default      = self.callPackage (hackGet ./pure-default)      {};
         pure-dom          = self.callPackage (hackGet ./pure-dom)          {};
         pure-ease         = self.callPackage (hackGet ./pure-ease)         {};
@@ -216,6 +217,8 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-limiter      = self.callPackage (hackGet ./pure-limiter)      {};
         pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
         pure-queue        = self.callPackage (hackGet ./pure-queue)        {};
+        pure-render       = self.callPackage (hackGet ./pure-render)       {};
+        pure-router       = self.callPackage (hackGet ./pure-router)       {};
         pure-server       = self.callPackage (hackGet ./pure-server)       {};
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
@@ -226,6 +229,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-txt-trie     = self.callPackage (hackGet ./pure-txt-trie)     {};
         pure-websocket    = self.callPackage (hackGet ./pure-websocket)    {};
         pure-xml          = self.callPackage (hackGet ./pure-xml)          {};
+        ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
 
         websockets        = self.callHackage "websockets" "0.12.2.0"       {};

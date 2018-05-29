@@ -165,6 +165,7 @@ let
       ) ios;
 
     pure-core = this;
+    pure-css = this;
     pure-default = this;
     pure-dom = this;
     pure-ease = this;
@@ -175,6 +176,8 @@ let
     pure-limiter = this;
     pure-localstorage = this;
     pure-queue = this;
+    pure-render = this;
+    pure-router = this;
     pure-styles = this;
     pure-svg = this;
     pure-tagsoup = this;
@@ -185,6 +188,7 @@ let
     pure-websocket = this;
     pure-server = this;
     pure-xml = this;
+    ef = this;
     excelsior = this;
 
     all = all true;
