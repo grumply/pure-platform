@@ -187,6 +187,7 @@ let
     pure-txt-trie = this;
     pure-websocket = this;
     pure-server = this;
+    pure-uri = this;
     pure-xml = this;
     ef = this;
     excelsior = this;
