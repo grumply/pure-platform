@@ -164,6 +164,7 @@ let
           ({ package = p: p.${name}; } // config)
       ) ios;
 
+    pure-cond = this;
     pure-core = this;
     pure-css = this;
     pure-default = this;
