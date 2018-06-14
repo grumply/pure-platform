@@ -152,7 +152,7 @@ main = do
   b <- getBody
   inject b $ flip ComponentIO () $ \self ->
     let
-        upd msg = void $ setState self $ \_ mdl -> do
+        upd msg = modifyM_ self $ \_ mdl -> do
           mdl' <-
             case msg of
               CreateM amount -> do
