@@ -183,6 +183,7 @@ let
     pure-styles = this;
     pure-svg = this;
     pure-tagsoup = this;
+    pure-theme = this;
     pure-time = this;
     pure-try = this;
     pure-txt = this;
