@@ -219,6 +219,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-limiter      = self.callPackage (hackGet ./pure-limiter)      {};
         pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
         pure-queue        = self.callPackage (hackGet ./pure-queue)        {};
+        pure-random-pcg   = self.callPackage (hackGet ./pure-random-pcg)   {};
         pure-render       = self.callPackage (hackGet ./pure-render)       {};
         pure-router       = self.callPackage (hackGet ./pure-router)       {};
         pure-server       = self.callPackage (hackGet ./pure-server)       {};
