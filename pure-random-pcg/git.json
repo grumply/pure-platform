@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-random-pcg.git",
-  "rev": "1665b132dc359224af8f9ecf720b7381effc1dfe",
-  "sha256": "010alwwclrrjb63p04lqf48879z004qv5r3xz77845zprd0l7w8v",
+  "rev": "ec2ebf331619f186c09d750b95b2073f5582e7ed",
+  "sha256": "1nrzlprdcd8dawg5d4gqhim1mg5kaw8fa3r4iiph862bbb3gz0y6",
   "fetchSubmodules": true
 }
