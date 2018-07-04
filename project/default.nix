@@ -193,6 +193,7 @@ let
     pure-websocket = this;
     pure-server = this;
     pure-uri = this;
+    pure-visibility = this;
     pure-xml = this;
     ef = this;
     excelsior = this;

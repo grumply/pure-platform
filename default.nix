@@ -232,6 +232,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-try          = self.callPackage (hackGet ./pure-try)          {};
         pure-txt          = self.callPackage (hackGet ./pure-txt)          {};
         pure-txt-trie     = self.callPackage (hackGet ./pure-txt-trie)     {};
+        pure-visibility   = self.callPackage (hackGet ./pure-visibility)   {};
         pure-websocket    = self.callPackage (hackGet ./pure-websocket)    {};
         pure-uri          = self.callPackage (hackGet ./pure-uri)          {};
         pure-xml          = self.callPackage (hackGet ./pure-xml)          {};
