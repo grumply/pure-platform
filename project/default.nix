@@ -178,6 +178,7 @@ let
     pure-limiter = this;
     pure-localstorage = this;
     pure-prop = this;
+    pure-proxy = this;
     pure-queue = this;
     pure-random-pcg = this;
     pure-render = this;
