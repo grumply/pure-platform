@@ -183,6 +183,7 @@ let
     pure-queue = this;
     pure-random-pcg = this;
     pure-render = this;
+    pure-responsive = this;
     pure-router = this;
     pure-styles = this;
     pure-svg = this;
