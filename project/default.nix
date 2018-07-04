@@ -177,6 +177,7 @@ let
     pure-lifted = this;
     pure-limiter = this;
     pure-localstorage = this;
+    pure-prop = this;
     pure-queue = this;
     pure-random-pcg = this;
     pure-render = this;
