@@ -185,6 +185,7 @@ let
     pure-render = this;
     pure-responsive = this;
     pure-router = this;
+    pure-sticky = this;
     pure-styles = this;
     pure-svg = this;
     pure-tagsoup = this;

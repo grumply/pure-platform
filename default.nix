@@ -227,6 +227,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-responsive   = self.callPackage (hackGet ./pure-responsive)   {};
         pure-router       = self.callPackage (hackGet ./pure-router)       {};
         pure-server       = self.callPackage (hackGet ./pure-server)       {};
+        pure-sticky       = self.callPackage (hackGet ./pure-sticky)       {};
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
         pure-tagsoup      = self.callPackage (hackGet ./pure-tagsoup)      {};
