@@ -178,6 +178,7 @@ let
     pure-limiter = this;
     pure-localstorage = this;
     pure-portal = this;
+    pure-popup = this;
     pure-prop = this;
     pure-proxy = this;
     pure-queue = this;
