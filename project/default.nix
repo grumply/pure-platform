@@ -176,6 +176,7 @@ let
     pure-json = this;
     pure-lifted = this;
     pure-limiter = this;
+    pure-loader = this;
     pure-localstorage = this;
     pure-modal = this;
     pure-portal = this;
