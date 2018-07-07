@@ -194,6 +194,7 @@ let
     pure-tagsoup = this;
     pure-theme = this;
     pure-time = this;
+    pure-timediff-simple = this;
     pure-transition = this;
     pure-try = this;
     pure-txt = this;
