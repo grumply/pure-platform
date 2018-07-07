@@ -177,6 +177,7 @@ let
     pure-lifted = this;
     pure-limiter = this;
     pure-localstorage = this;
+    pure-modal = this;
     pure-portal = this;
     pure-popup = this;
     pure-prop = this;
