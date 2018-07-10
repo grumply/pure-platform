@@ -30,6 +30,7 @@ with haskellPackages;
   pure-render
   pure-responsive
   pure-router
+  pure-spacetime
   pure-spinners
   pure-sticky
   pure-styles
