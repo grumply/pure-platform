@@ -203,6 +203,7 @@ let
     pure-websocket = this;
     pure-server = this;
     pure-uri = this;
+    pure-variance = this;
     pure-visibility = this;
     pure-xml = this;
     ef = this;
