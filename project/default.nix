@@ -194,6 +194,7 @@ let
     pure-styles = this;
     pure-svg = this;
     pure-tagsoup = this;
+    pure-test = this;
     pure-theme = this;
     pure-time = this;
     pure-timediff-simple = this;

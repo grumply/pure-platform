@@ -236,6 +236,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
         pure-tagsoup      = self.callPackage (hackGet ./pure-tagsoup)      {};
+        pure-test         = self.callPackage (hackGet ./pure-test)         {};
         pure-theme        = self.callPackage (hackGet ./pure-theme)        {};
         pure-time         = self.callPackage (hackGet ./pure-time)         {};
         pure-timediff-simple = self.callPackage (hackGet ./pure-timediff-simple) {};
