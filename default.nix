@@ -216,6 +216,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-events       = self.callPackage (hackGet ./pure-events)       {};
         pure-html         = self.callPackage (hackGet ./pure-html)         {};
         pure-json         = self.callPackage (hackGet ./pure-json)         {};
+        pure-lazyloader   = self.callPackage (hackGet ./pure-lazyloader)   {};
         pure-lifted       = self.callPackage (hackGet ./pure-lifted)       {};
         pure-limiter      = self.callPackage (hackGet ./pure-limiter)      {};
         pure-loader       = self.callPackage (hackGet ./pure-loader)       {};

@@ -175,6 +175,7 @@ let
     pure-events = this;
     pure-html = this;
     pure-json = this;
+    pure-lazyloader = this;
     pure-lifted = this;
     pure-limiter = this;
     pure-loader = this;
