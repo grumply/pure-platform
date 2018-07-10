@@ -199,6 +199,7 @@ let
     pure-theme = this;
     pure-time = this;
     pure-timediff-simple = this;
+    pure-tlc = this;
     pure-transition = this;
     pure-try = this;
     pure-txt = this;
