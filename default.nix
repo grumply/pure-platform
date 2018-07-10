@@ -206,6 +206,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
+        pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
         pure-cond         = self.callPackage (hackGet ./pure-cond)         {};
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
         pure-css          = self.callPackage (hackGet ./pure-css)          {};
