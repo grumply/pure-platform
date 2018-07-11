@@ -181,6 +181,7 @@ let
     pure-loader = this;
     pure-localstorage = this;
     pure-modal = this;
+    pure-paginate = this;
     pure-portal = this;
     pure-popup = this;
     pure-prop = this;
