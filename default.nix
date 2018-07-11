@@ -232,6 +232,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-render       = self.callPackage (hackGet ./pure-render)       {};
         pure-responsive   = self.callPackage (hackGet ./pure-responsive)   {};
         pure-router       = self.callPackage (hackGet ./pure-router)       {};
+        pure-scroll-loader = self.callPackage (hackGet ./pure-scroll-loader) {};
         pure-server       = self.callPackage (hackGet ./pure-server)       {};
         pure-spacetime    = self.callPackage (hackGet ./pure-spacetime)    {};
         pure-spinners     = self.callPackage (hackGet ./pure-spinners)     {};

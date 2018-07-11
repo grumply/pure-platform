@@ -191,6 +191,7 @@ let
     pure-render = this;
     pure-responsive = this;
     pure-router = this;
+    pure-scroll-loader = this;
     pure-spacetime = this;
     pure-spinners = this;
     pure-sticky = this;
