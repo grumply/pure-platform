@@ -173,6 +173,7 @@ let
     pure-dom = this;
     pure-ease = this;
     pure-events = this;
+    pure-grid = this;
     pure-html = this;
     pure-json = this;
     pure-lazyloader = this;
