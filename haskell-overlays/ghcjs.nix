@@ -12,7 +12,7 @@ self: super: {
     repo = "ghcjs-base";
     rev = "92bfcf42ffddb9676c4e288efd5750a06c4f4799";
     sha256 = "14ndxrp2xsa0jz75zdaiqylbkzq8p7afg78vv418mv2c497rj08z";
-  }) {}) ./ghcjs-base-jsstring-constructor-export.patch);
+  }) {}) ./ghcjs-base.patch);
 
   ghc = super.ghc // {
     withPackages = self.ghcWithPackages;
