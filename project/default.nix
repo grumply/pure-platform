@@ -28,19 +28,12 @@ in
 #         ghc = ["common" "backend" "frontend"];
 #         ghcjs = ["common" "frontend"];
 #       };
-#
-#       android.frontend = {
-#         executableName = "frontend";
-#         applicationId = "org.example.frontend";
-#         displayName = "Example App";
-#       };
 #     })
 #
 # > example commands
 #
 #     $ nix-build -A ghc.backend
 #     $ nix-build -A ghcjs.frontend
-#     $ nix-build -A android.frontend
 #     $ nix-shell -A shells.ghc
 #     $ nix-shell -A shells.ghcjs
 #
@@ -83,6 +76,28 @@ in
   #       }) {};
   #     };
 
+, shellToolOverrides ? _: _: {}
+  # A function returning a record of tools to provide in the
+  # nix-shells.
+  #
+  #     shellToolOverrides = ghc: super: {
+  #       inherit (ghc) hpack;
+  #       inherit (pkgs) chromium;
+  #       ghc-mod = null;
+  #       cabal-install = ghc.callHackage "cabal-install" "2.0.0.1" {};
+  #       ghcid = pkgs.haskell.lib.justStaticExecutables super.ghcid;
+  #     };
+  #
+  # Some tools, like `ghc-mod`, have to be built with the same GHC as
+  # your project. The argument to the `tools` function is the haskell
+  # package set of the platform we are developing for, allowing you to
+  # build tools with the correct Haskell package set.
+  #
+  # The second argument, `super`, is the record of tools provided by
+  # default. You can override these defaults by returning values with
+  # the same name in your record. They can be disabled by setting them
+  # to null.
+
 , tools ? _: []
   # A function returning the list of tools to provide in the
   # nix-shells.
@@ -101,37 +116,6 @@ in
   # Set to false to disable building the hoogle database when entering
   # the nix-shell.
 
-, android ? {}
-  # ::
-  # { <app name> ::
-  #   { executableName :: String
-  #   , applicationId :: String
-  #   , displayName :: String
-  #   , package :: PackageSet -> Derivation
-  #     ^ Optional
-  #   }
-  # }
-  #
-  # Use this argument to configure android apps. The returned
-  # derivations will be in `android.<app name>`. The `package`
-  # argument can be set to use a different Haskell package than the
-  # one named <app name>.
-
-, ios ? {}
-  # ::
-  # { <app name> ::
-  #   { executableName :: String
-  #   , bundleIdentifier :: String
-  #   , bundleName :: String
-  #   , package :: PackageSet -> Derivation
-  #     ^ Optional
-  #   }
-  # }
-  #
-  # Use this argument to configure iOS apps. The returned derivations
-  # will be in `ios.<app name>`. The `package` argument can be set to
-  # use a different Haskell package than the one named <app name>.
-
 }:
 let
   overrides' = nixpkgs.lib.composeExtensions
@@ -147,22 +131,6 @@ let
         inherit tools;
       }
     ) shells;
-
-    android =
-      mapAttrs (name: config:
-        let
-          ghcAndroidArm64 = this.ghcAndroidArm64.override { overrides = overrides'; };
-          ghcAndroidArmv7a = this.ghcAndroidArmv7a.override { overrides = overrides'; };
-        in (this.androidWithHaskellPackages { inherit ghcAndroidArm64 ghcAndroidArmv7a; }).buildApp
-          ({ package = p: p.${name}; } // config)
-      ) android;
-
-    ios =
-      mapAttrs (name: config:
-        let ghcIosArm64 = this.ghcIosArm64.override { overrides = overrides'; };
-        in (this.iosWithHaskellPackages ghcIosArm64).buildApp
-          ({ package = p: p.${name}; } // config)
-      ) ios;
 
     pure = this;
     pure-cond = this;
@@ -217,7 +185,7 @@ let
     ef = this;
     excelsior = this;
 
-    all = all true;
+    all = all;
   };
 
   ghcLinks = mapAttrsToList (name: pnames: optionalString (pnames != []) ''
@@ -233,30 +201,8 @@ let
     '') mobile)}
   '';
 
-  all = includeRemoteBuilds:
-    let tracedMobileLinks = mobileName: system: mobile:
-      let
-        build = mobileLinks mobileName mobile;
-        msg = ''
-          Skipping ${mobileName} apps; system is ${this.system}, but ${system} is needed.
-          Use `nix-build -A all` to build with remote machines.
-          See: https://nixos.org/nixos/manual/options.html#opt-nix.buildMachines
-        '';
-      in if mobile == {} then ""
-        else if includeRemoteBuilds then build
-          else if system != this.system then builtins.trace msg ""
-            # TODO: This is a bit of a hack. `this.iosSupport` prints
-            # a warning and returns false when *the local system*
-            # doesn't have the SDK. Just because `includeRemoteBuilds`
-            # is off doesn't mean we know this is the system iOS apps
-            # will build on. Nonetheless, it's important not to
-            # evaluate `this.iosSupport` if we don't need to, as it
-            # may `trace` an unnecessary warning.
-            else if system == "x86_64-darwin" -> this.iosSupport then build
-              else "";
-    in nixpkgs.runCommand name { passthru = prj; preferLocalBuild = true; } ''
+  all =
+    nixpkgs.runCommand name { passthru = prj; preferLocalBuild = true; } ''
       ${concatStringsSep "\n" ghcLinks}
-      ${tracedMobileLinks "android" "x86_64-linux" prj.android}
-      ${tracedMobileLinks "ios" "x86_64-darwin" prj.ios}
     '';
-in all false
+in all

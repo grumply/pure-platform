@@ -19,13 +19,9 @@ let nixpkgs = nixpkgsFunc { inherit system; };
         name = baseNameOf p;
         outPath = filterGit p;
       };
-    # All imports of sources need to go here, so that they can be explicitly cached
-    sources = {
-      ghcjs = hackGet ./ghcjs;
-    };
-    inherit (nixpkgs.stdenv.lib) optional optionals;
+    inherit (nixpkgs.stdenv.lib) optional optionals optionalAttrs;
     optionalExtension = cond: overlay: if cond then overlay else _: _: {};
-in with haskellLib;
+in with nixpkgs.lib; with haskellLib;
 let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCabal pkg f;
     replaceSrc = pkg: src: version: overrideCabal pkg (drv: {
       inherit src version;
@@ -34,7 +30,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       editedCabalFile = null;
     });
     combineOverrides = old: new: (old // new) // {
-      overrides = nixpkgs.lib.composeExtensions old.overrides new.overrides;
+      overrides = composeExtensions old.overrides new.overrides;
     };
     makeRecursivelyOverridable = x: old: x.override old // {
       override = new: makeRecursivelyOverridable x (combineOverrides old new);
@@ -127,13 +123,13 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     inherit haskellLib;
   };
   ghcjs8_4 = (extendHaskellPackages ghcjs8_4Packages).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
+    overrides = foldr composeExtensions (_: _: {}) [
       haskellOverlays.ghcjs
     ];
   };
   ghcjs = ghcjs8_4;
   ghc8_4 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc843).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
+    overrides = foldr composeExtensions (_: _: {}) [
        (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
         ghcjsSrc = fetchgit {
           url = "https://github.com/matthewbauer/ghcjs.git";
@@ -261,13 +257,58 @@ in let this = rec {
     buildDepends = (drv.buildDepends or []) ++ generalDevTools (nativeHaskellPackages haskellPackages);
   })).env;
 
-  workOnMulti' = { env, packageNames, tools ? _: [] }:
-    let ghcEnv = env.ghc.withPackages (packageEnv: builtins.concatLists (map (n: (packageEnv.${n}.override { mkDerivation = x: { out = builtins.filter (p: builtins.all (nameToAvoid: (p.pname or "") != nameToAvoid) packageNames) ((x.buildDepends or []) ++ (x.libraryHaskellDepends or []) ++ (x.executableHaskellDepends or []) ++ (x.testHaskellDepends or [])); }; }).out) packageNames));
-    in nixpkgs.runCommand "shell" (ghcEnv.ghcEnvVars // {
-      buildInputs = [
-        ghcEnv
-      ] ++ generalDevTools env ++ tools env;
-    }) "";
+  workOnMulti' = { env, packageNames, tools ? _: [], shellToolOverrides ? _: _: {} }:
+    let inherit (builtins) listToAttrs filter attrValues all concatLists;
+        combinableAttrs = [
+          "benchmarkDepends"
+          "benchmarkFrameworkDepends"
+          "benchmarkHaskellDepends"
+          "benchmarkPkgconfigDepends"
+          "benchmarkSystemDepends"
+          "benchmarkToolDepends"
+          "buildDepends"
+          "buildTools"
+          "executableFrameworkDepends"
+          "executableHaskellDepends"
+          "executablePkgconfigDepends"
+          "executableSystemDepends"
+          "executableToolDepends"
+          "extraLibraries"
+          "libraryFrameworkDepends"
+          "libraryHaskellDepends"
+          "libraryPkgconfigDepends"
+          "librarySystemDepends"
+          "libraryToolDepends"
+          "pkgconfigDepends"
+          "setupHaskellDepends"
+          "testDepends"
+          "testFrameworkDepends"
+          "testHaskellDepends"
+          "testPkgconfigDepends"
+          "testSystemDepends"
+          "testToolDepends"
+        ];
+        concatCombinableAttrs = haskellConfigs: listToAttrs (map (name: { inherit name; value = concatLists (map (haskellConfig: haskellConfig.${name} or []) haskellConfigs); }) combinableAttrs);
+        getHaskellConfig = p: (overrideCabal p (args: {
+          passthru = (args.passthru or {}) // {
+            out = args;
+          };
+        })).out;
+        notInTargetPackageSet = p: all (pname: (p.pname or "") != pname) packageNames;
+        baseTools = generalDevToolsAttrs env;
+        overriddenTools = attrValues (baseTools // shellToolOverrides env baseTools);
+        depAttrs = mapAttrs (_: v: filter notInTargetPackageSet v) (concatCombinableAttrs (concatLists [
+          (map getHaskellConfig (attrVals packageNames env))
+          [{
+            buildTools = overriddenTools ++ tools env;
+          }]
+        ]));
+
+    in (env.mkDerivation (depAttrs // {
+      pname = "work-on-multi--combined-pkg";
+      version = "0";
+      license = null;
+    })).env;
 
   workOnMulti = env: packageNames: workOnMulti' { inherit env packageNames; };
 
