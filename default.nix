@@ -1,160 +1,10 @@
 { nixpkgsFunc ? import ./nixpkgs
 , system ? builtins.currentSystem
 , config ? {}
-, enableLibraryProfiling ? false
-, iosSdkVersion ? "11.4"
-, iosSdkLocation ? "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS${iosSdkVersion}.sdk"
-, iosSupportForce ? false
 }:
-let iosSupport =
-      if system != "x86_64-darwin" then false
-      else if iosSupportForce || builtins.pathExists iosSdkLocation then true
-      else builtins.trace "Warning: No iOS sdk found at ${iosSdkLocation}; iOS support disabled.  To enable, either install a version of Xcode that provides that SDK or override the value of iosSdkVersion to match your installed version." false;
-    globalOverlay = self: super: {
-      all-cabal-hashes = super.all-cabal-hashes.override {
-        src-spec = {
-          owner = "commercialhaskell";
-          repo = "all-cabal-hashes";
-          rev = "6c7ac64f43122567867760dfa6d0014301d1cfd9";
-          sha256 = "14m7c0iapz1svqk4hm0a9gpxnkbwj2fk8g8b1js5p8nrvqawgm1z";
-        };
-      };
-    };
-    nixpkgs = nixpkgsFunc ({
-      inherit system;
-      overlays = [globalOverlay];
-      config = {
-        allowUnfree = true;
-        allowBroken = true; # GHCJS is marked broken in 011c149ed5e5a336c3039f0b9d4303020cff1d86
-        permittedInsecurePackages = [
-          "webkitgtk-2.4.11"
-        ];
-        packageOverrides = pkgs: {
-          webkitgtk = pkgs.webkitgtk216x;
-          # cabal2nix's tests crash on 32-bit linux; see https://github.com/NixOS/cabal2nix/issues/272
-          ${if system == "i686-linux" then "cabal2nix" else null} = pkgs.haskell.lib.dontCheck pkgs.cabal2nix;
-        };
-      } // config;
-    });
+let nixpkgs = nixpkgsFunc { inherit system; };
     inherit (nixpkgs) fetchurl fetchgit fetchgitPrivate fetchFromGitHub;
-    nixpkgsCross = {
-      android = nixpkgs.lib.mapAttrs (_: args: if args == null then null else nixpkgsFunc args) rec {
-        arm64 = {
-          system = "x86_64-linux";
-          overlays = [globalOverlay];
-          crossSystem = {
-            config = "aarch64-unknown-linux-android";
-            arch = "arm64";
-            libc = "bionic";
-            withTLS = true;
-            openssl.system = "linux-generic64";
-            platform = nixpkgs.pkgs.platforms.aarch64-multiplatform;
-          };
-          config.allowUnfree = true;
-        };
-        arm64Impure = arm64 // {
-          crossSystem = arm64.crossSystem // { useAndroidPrebuilt = true; };
-        };
-        armv7a = {
-          system = "x86_64-linux";
-          overlays = [globalOverlay];
-          crossSystem = {
-            config = "arm-unknown-linux-androideabi";
-            arch = "armv7";
-            libc = "bionic";
-            withTLS = true;
-            openssl.system = "linux-generic32";
-            platform = nixpkgs.pkgs.platforms.armv7l-hf-multiplatform;
-          };
-          config.allowUnfree = true;
-        };
-        armv7aImpure = armv7a // {
-          crossSystem = armv7a.crossSystem // { useAndroidPrebuilt = true; };
-        };
-      };
-      ios =
-        let config = {
-              allowUnfree = true;
-              packageOverrides = p: {
-                darwin = p.darwin // {
-                  ios-cross = p.darwin.ios-cross.override {
-                    # Depending on where ghcHEAD is in your nixpkgs checkout, you may need llvm 39 here instead
-                    inherit (p.llvmPackages_39) llvm clang;
-                  };
-                };
-                buildPackages = p.buildPackages // {
-                  osx_sdk = p.buildPackages.callPackage ({ stdenv }:
-                    let version = "10";
-                    in stdenv.mkDerivation rec {
-                    name = "iOS.sdk";
-
-                    src = p.stdenv.cc.sdk;
-
-                    unpackPhase    = "true";
-                    configurePhase = "true";
-                    buildPhase     = "true";
-                    target_prefix = stdenv.lib.replaceStrings ["-"] ["_"] p.targetPlatform.config;
-                    setupHook = ./setup-hook-ios.sh;
-
-                    installPhase = ''
-                      mkdir -p $out/
-                      echo "Source is: $src"
-                      cp -r $src/* $out/
-                    '';
-
-                    meta = with stdenv.lib; {
-                      description = "The IOS OS ${version} SDK";
-                      maintainers = with maintainers; [ copumpkin ];
-                      platforms   = platforms.darwin;
-                      license     = licenses.unfree;
-                    };
-                  }) {};
-                };
-              };
-            };
-        in nixpkgs.lib.mapAttrs (_: args: if args == null then null else nixpkgsFunc args) {
-        simulator64 = {
-          system = "x86_64-darwin";
-          overlays = [globalOverlay];
-          crossSystem = {
-            useIosPrebuilt = true;
-            # You can change config/arch/isiPhoneSimulator depending on your target:
-            # aarch64-apple-darwin14 | arm64  | false
-            # arm-apple-darwin10     | armv7  | false
-            # i386-apple-darwin11    | i386   | true
-            # x86_64-apple-darwin14  | x86_64 | true
-            config = "x86_64-apple-darwin14";
-            arch = "x86_64";
-            isiPhoneSimulator = true;
-            sdkVer = iosSdkVersion;
-            useiOSCross = true;
-            openssl.system = "darwin64-x86_64-cc";
-            libc = "libSystem";
-          };
-          inherit config;
-        };
-        arm64 = {
-          system = "x86_64-darwin";
-          overlays = [globalOverlay];
-          crossSystem = {
-            useIosPrebuilt = true;
-            # You can change config/arch/isiPhoneSimulator depending on your target:
-            # aarch64-apple-darwin14 | arm64  | false
-            # arm-apple-darwin10     | armv7  | false
-            # i386-apple-darwin11    | i386   | true
-            # x86_64-apple-darwin14  | x86_64 | true
-            config = "aarch64-apple-darwin14";
-            arch = "arm64";
-            isiPhoneSimulator = false;
-            sdkVer = iosSdkVersion;
-            useiOSCross = true;
-            openssl.system = "ios64-cross";
-            libc = "libSystem";
-          };
-          inherit config;
-        };
-      };
-    };
+    nixpkgsCross = { };
     haskellLib = nixpkgs.haskell.lib;
     filterGit = builtins.filterSource (path: type: !(builtins.any (x: x == baseNameOf path) [".git" "tags" "TAGS" "dist"]));
     # Retrieve source that is controlled by the hack-* scripts; it may be either a stub or a checked-out git repo
@@ -171,8 +21,6 @@ let iosSupport =
       };
     # All imports of sources need to go here, so that they can be explicitly cached
     sources = {
-      ghcjs-boot = hackGet ./ghcjs-boot;
-      shims = hackGet ./shims;
       ghcjs = hackGet ./ghcjs;
     };
     inherit (nixpkgs.stdenv.lib) optional optionals;
@@ -191,22 +39,17 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     makeRecursivelyOverridable = x: old: x.override old // {
       override = new: makeRecursivelyOverridable x (combineOverrides old new);
     };
+    ghcjsPkgs = ghcjs: self: super: {
+      ghcjs = ghcjs.overrideAttrs (o: {
+        patches = (o.patches or []);
+        phases = [ "unpackPhase" "patchPhase" "buildPhase" ];
+      });
+    };
 
-    # huh?
-    foreignLibSmuggleHeaders = pkg: overrideCabal pkg (drv: {
-      postInstall = ''
-        cd dist/build/${pkg.pname}/${pkg.pname}-tmp
-        for header in $(find . | grep '\.h'$); do
-          local dest_dir=$out/include/$(dirname "$header")
-          mkdir -p "$dest_dir"
-          cp "$header" "$dest_dir"
-        done
-      '';
-    });
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
-        pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
+        # pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
         pure-cond         = self.callPackage (hackGet ./pure-cond)         {};
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
         pure-css          = self.callPackage (hackGet ./pure-css)          {};
@@ -259,112 +102,48 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
 
-        websockets        = self.callHackage "websockets" "0.12.2.0"       {};
+        websockets        = self.callHackage "websockets" "0.12.4.0"       {};
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
 
         roles             = self.callHackage "roles" "0.2.0.0"             {};
 
-        } // (if enableLibraryProfiling then {
-          mkDerivation = expr: super.mkDerivation (expr // { enableLibraryProfiling = true; });
-        } else {});
+        hasktags          = dontCheck super.hasktags;
+
+        };
     };
     haskellOverlays = import ./haskell-overlays {
       inherit
         haskellLib
-        nixpkgs jdk fetchFromGitHub
-        stage2Script;
+        nixpkgs hackGet fetchFromGitHub;
+      inherit (nixpkgs) lib;
     };
-    stage2Script = nixpkgs.runCommand "stage2.nix" {
-      GEN_STAGE2 = builtins.readFile (nixpkgs.path + "/pkgs/development/compilers/ghcjs/gen-stage2.rb");
-      buildCommand = ''
-        echo "$GEN_STAGE2" > gen-stage2.rb && chmod +x gen-stage2.rb
-        patchShebangs .
-        ./gen-stage2.rb "${sources.ghcjs-boot}" >"$out"
-      '';
-      nativeBuildInputs = with nixpkgs; [
-        ruby cabal2nix
-      ];
-    } "";
-    ghcjsCompiler = ghc.callPackage (nixpkgs.path + "/pkgs/development/compilers/ghcjs/base.nix") {
-      bootPkgs = ghc;
-      ghcjsSrc = sources.ghcjs;
-      ghcjsBootSrc = sources.ghcjs-boot;
-      shims = sources.shims;
-      stage2 = import stage2Script;
-    };
-    ghcjsPackages = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules") {
-      ghc = ghcjsCompiler;
-      compilerConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghc-7.10.x.nix") { inherit haskellLib; };
-      packageSetConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghcjs.nix") { inherit haskellLib; };
-      inherit haskellLib;
-    };
-  ghcjs = (extendHaskellPackages ghcjsPackages).override {
+
+  ghc = ghc8_4;
+  ghcjs8_4Packages = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules") {
+    ghc = ghc8_4.ghcjs;
+    buildHaskellPackages = ghc8_4.ghcjs.bootPkgs;
+    compilerConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghc-7.10.x.nix") { inherit haskellLib; };
+    packageSetConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghcjs.nix") { inherit haskellLib; };
+    inherit haskellLib;
+  };
+  ghcjs8_4 = (extendHaskellPackages ghcjs8_4Packages).override {
     overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
       haskellOverlays.ghcjs
     ];
   };
-  ghcHEAD = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghcHEAD).override {
+  ghcjs = ghcjs8_4;
+  ghc8_4 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc843).override {
     overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-head
+       (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
+        ghcjsSrc = fetchgit {
+          url = "https://github.com/matthewbauer/ghcjs.git";
+          rev = "c4aa2656dbfd1d96ce398a049371562065bd297a";
+          sha256 = "04vy297x47h1126rrm2dlqwrw7lykqk525j4lhbdzdfw3s3a55ia";
+          fetchSubmodules = true;
+        };
+      }))
+      haskellOverlays.ghc
     ];
-  };
-  ghc8_2_1 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-    ];
-  };
-  ghc = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc802).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8
-    ];
-  };
-  ghcAndroidArm64 = (extendHaskellPackages nixpkgsCross.android.arm64Impure.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-      haskellOverlays.disableTemplateHaskell
-      haskellOverlays.android
-    ];
-  };
-  ghcAndroidArmv7a = (extendHaskellPackages nixpkgsCross.android.armv7aImpure.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-      haskellOverlays.disableTemplateHaskell
-      haskellOverlays.android
-    ];
-  };
-  ghcIosSimulator64 = (extendHaskellPackages nixpkgsCross.ios.simulator64.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-    ];
-  };
-  ghcIosArm64 = (extendHaskellPackages nixpkgsCross.ios.arm64.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-      haskellOverlays.disableTemplateHaskell
-      haskellOverlays.ios
-    ];
-  };
-  ghcIosArmv7 = (extendHaskellPackages nixpkgsCross.ios.armv7.pkgs.haskell.packages.ghc821).override {
-    overrides = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-      haskellOverlays.ghc-8_2_1
-      haskellOverlays.disableTemplateHaskell
-      haskellOverlays.ios
-    ];
-  };
-  #TODO: Separate debug and release APKs
-  #TODO: Warn the user that the android app name can't include dashes
-  android = androidWithHaskellPackages { inherit ghcAndroidArm64 ghcAndroidArmv7a; };
-  androidWithHaskellPackages = { ghcAndroidArm64, ghcAndroidArmv7a }: import ./android {
-    nixpkgs = nixpkgsFunc { system = "x86_64-linux"; };
-    inherit nixpkgsCross ghcAndroidArm64 ghcAndroidArmv7a overrideCabal;
-  };
-  ios = iosWithHaskellPackages ghcIosArm64;
-  iosWithHaskellPackages = ghcIosArm64: {
-    buildApp = import ./ios {
-      inherit ghcIosArm64;
-      nixpkgs = nixpkgsFunc { system = "x86_64-darwin"; };
-      inherit (nixpkgsCross.ios.arm64) libiconv;
-    };
   };
 in let this = rec {
   inherit nixpkgs
@@ -372,22 +151,10 @@ in let this = rec {
           overrideCabal
           hackGet
           extendHaskellPackages
-          foreignLibSmuggleHeaders
-          stage2Script
           ghc
-          ghcHEAD
-          ghc8_2_1
-          ghc8_0_1
-          ghcIosSimulator64
-          ghcIosArm64
-          ghcIosArmv7
-          ghcAndroidArm64
-          ghcAndroidArmv7a
+          ghc8_4
           ghcjs
-          android
-          androidWithHaskellPackages
-          ios
-          iosWithHaskellPackages;
+          ghcjs8_4;
   setGhcLibdir = ghcLibdir: inputGhcjs:
     let libDir = "$out/lib/ghcjs-${inputGhcjs.version}";
         ghcLibdirLink = nixpkgs.stdenv.mkDerivation {
@@ -464,25 +231,26 @@ in let this = rec {
   });
   releaseCandidates = mapSet mkReleaseCandidate ghc;
 
-  androidDevTools = [
-    ghc.haven
-    nixpkgs.maven
-    nixpkgs.androidsdk
-  ];
-
   # Tools that are useful for development under both ghc and ghcjs
-  generalDevTools = haskellPackages:
+  generalDevToolsAttrs = haskellPackages:
     let nativeHaskellPackages = ghc;
-    in [
-    nativeHaskellPackages.Cabal
-    nativeHaskellPackages.cabal-install
-    nixpkgs.cabal2nix
-    nixpkgs.curl
-    nixpkgs.nix-prefetch-scripts
-    nixpkgs.nodejs
-    nixpkgs.pkgconfig
-    nixpkgs.closurecompiler
-  ] ++ optionals (system == "x86_64-linux") androidDevTools;
+    in {
+    inherit (nativeHaskellPackages)
+      Cabal
+      cabal-install
+      ghcid
+      hasktags
+      hlint;
+    inherit (nixpkgs)
+      cabal2nix
+      curl
+      nix-prefetch-scripts
+      nodejs
+      pkgconfig
+      closurecompiler;
+  };
+
+  generalDevTools = haskellPackages: builtins.attrValues (generalDevToolsAttrs haskellPackages);
 
   nativeHaskellPackages = haskellPackages:
     if haskellPackages.isGhcjs or false
@@ -515,7 +283,6 @@ in let this = rec {
   # The systems that we want to build for on the current system
   cacheTargetSystems = [
     "x86_64-linux"
-    "i686-linux"
     "x86_64-darwin"
   ];
 
@@ -531,18 +298,8 @@ in let this = rec {
   tryPurePackages = generalDevTools ghc
     ++ builtins.map pureEnv platforms;
 
-  demoVM = (import "${nixpkgs.path}/nixos" {
-    configuration = {
-      imports = [
-        "${nixpkgs.path}/nixos/modules/virtualisation/virtualbox-image.nix"
-        "${nixpkgs.path}/nixos/modules/profiles/demo.nix"
-      ];
-      environment.systemPackages = tryPurePackages;
-    };
-  }).config.system.build.virtualBoxOVA;
-
   lib = haskellLib;
-  inherit cabal2nixResult sources system iosSupport;
+  inherit system;
   project = args: import ./project this (args ({ pkgs = nixpkgs; } // this));
   tryPureShell = pinBuildInputs ("shell-" + system) tryPurePackages [];
 }; in this

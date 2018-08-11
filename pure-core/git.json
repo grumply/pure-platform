@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-core.git",
-  "rev": "5da224d8af7c42843cc7b733195e6d086508c72f",
-  "sha256": "1s5rvg7mcf8v9l59cj73f96vh59drnm3sxxh9r9rrha7pakwrcvz",
-  "fetchSubmodules": true
+  "rev": "b2f248dc97217c80ad1a312b42bc9cf61256e3af",
+  "sha256": "1wrpxwilbwcjhn82l4h4g17rwwab047lfdnh7k4b5s33y5na2bqq",
+  "fetchSubmodules": false
 }

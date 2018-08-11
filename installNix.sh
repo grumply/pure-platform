@@ -23,22 +23,22 @@ require_util() {
 }
 
 case "$(uname -s).$(uname -m)" in
-    Linux.x86_64) system=x86_64-linux; hash=d7e3cba2103c051b17d2a49dc6389f96ebe46dca72dac8473cfb87af8b67ef03;;
-    Linux.i?86) system=i686-linux; hash=c9f5c41bea715b72eeab83dd70d5cb42c84469a4b419f918df39ebb8597ffec1;;
-    Linux.aarch64) system=aarch64-linux; hash=6b60342fb430a2842b300a72a9cf179dace569713fb27520513c9fcdf94ba0c4;;
-    Darwin.x86_64) system=x86_64-darwin; hash=b3e1a7316053fda14b4c69142c9f432aab2742e3a5febaed805a316450d6360d;;
+    Linux.x86_64) system=x86_64-linux; hash=d6db178007014ed47ad5460c1bd5b2cb9403b1ec543a0d6507cb27e15358341f;;
+    Linux.i?86) system=i686-linux; hash=b2e5b62a66c6d1951fdd5e01109680592b498ef40f28bfc790341f5b986ba34d;;
+    Linux.aarch64) system=aarch64-linux; hash=248be69c25f599ac214bad1e4f4003e27f1da83cb17f7cd762746bd2c215a0df;;
+    Darwin.x86_64) system=x86_64-darwin; hash=ec6279bb6d628867d82a6e751dac2bcb64ccea3194d753756a309f75fd704d4c;;
     *) oops "sorry, there is no binary distribution of Nix for your platform";;
 esac
 
-url="https://nixos.org/releases/nix/nix-1.11.16/nix-1.11.16-$system.tar.bz2"
+url="https://nixos.org/releases/nix/nix-2.0.4/nix-2.0.4-$system.tar.bz2"
 
-tarball="$tmpDir/$(basename "$tmpDir/nix-1.11.16-$system.tar.bz2")"
+tarball="$tmpDir/$(basename "$tmpDir/nix-2.0.4-$system.tar.bz2")"
 
 require_util curl "download the binary tarball"
 require_util bzcat "decompress the binary tarball"
 require_util tar "unpack the binary tarball"
 
-echo "downloading Nix 1.11.16 binary tarball for $system from '$url' to '$tmpDir'..."
+echo "downloading Nix 2.0.4 binary tarball for $system from '$url' to '$tmpDir'..."
 curl -L "$url" -o "$tarball" || oops "failed to download '$url'"
 
 if type sha256sum > /dev/null 2>&1; then
@@ -57,11 +57,11 @@ fi
 
 unpack=$tmpDir/unpack
 mkdir -p "$unpack"
-< "$tarball" bzcat | tar x -C "$unpack" || oops "failed to unpack '$url'"
+< "$tarball" bzcat | tar -xf - -C "$unpack" || oops "failed to unpack '$url'"
 
 script=$(echo "$unpack"/*/install)
 
 [ -e "$script" ] || oops "installation script is missing from the binary tarball!"
-"$script"
+"$script" "$@"
 
 } # End of wrapping

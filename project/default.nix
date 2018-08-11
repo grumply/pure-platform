@@ -165,7 +165,6 @@ let
       ) ios;
 
     pure = this;
-    pure-bench = this;
     pure-cond = this;
     pure-core = this;
     pure-css = this;

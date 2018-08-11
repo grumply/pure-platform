@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-responsive.git",
-  "rev": "0884b898971c2ee44278fc6e16da5dcbbe28c9f9",
-  "sha256": "0w1zsaph3ynd35q5jmlc7g3sask3gg40b84c8yi3nv20rin2iqik",
-  "fetchSubmodules": true
+  "rev": "acb90a5f903e43354b5a708830b7dc65867d9992",
+  "sha256": "0a19ynlzmdinkmvhn92v7l75q7a7pfbgqwp7hic9pw0djnxl1jg7",
+  "fetchSubmodules": false
 }

@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-grid.git",
-  "rev": "81ae955ca1e6e49c2d5598427debaad882ff6f04",
-  "sha256": "1lk9rj8z1kdppd406jyrpibhr24b6w1agvq1fpa21qpbfjflgrsf",
-  "fetchSubmodules": true
+  "rev": "49118c92605edbc4258382fc2ed2a31af1cae160",
+  "sha256": "1pi66bwsls3mxir10x0a2jdmsrp5k7aasyla5hdgphgsmsh11r1d",
+  "fetchSubmodules": false
 }

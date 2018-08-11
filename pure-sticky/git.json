@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-sticky.git",
-  "rev": "1a690c9712d011f7b786cd9f8140d242957232ec",
-  "sha256": "0rg2b1967hpx23fdmk3f176flirjrhnmgqh2d8i3jvn8n1am8irf",
-  "fetchSubmodules": true
+  "rev": "d54f536d588ef9878c6fd85beb7fa7c55cb59276",
+  "sha256": "1d1cziz3in44wilgaxkbficdqapcnk664qh4a7dwdlc5y5a8a8l7",
+  "fetchSubmodules": false
 }

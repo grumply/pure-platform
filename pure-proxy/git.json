@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-proxy.git",
-  "rev": "e40b85da16758361c771a04a874d7c7f16d648b4",
-  "sha256": "1kipzm2h6p69hnnv6wsp9wh89y7y08gzv37zp894jw4d2i50vdpz",
-  "fetchSubmodules": true
+  "rev": "33cae4804d3d8fb9b3d7b239296b7d650e647e65",
+  "sha256": "1djn09j3srzn9vgvn4kibzj7i8k52ydfz6c27fm8l8lyqdv63p8j",
+  "fetchSubmodules": false
 }

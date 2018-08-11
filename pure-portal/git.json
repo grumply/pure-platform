@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-portal.git",
-  "rev": "3a087cc8fd571050630a9630afa83f8ea5561579",
-  "sha256": "0516p2i7wmp2g1qvzchp0f3452lb4gbynjzjla0k93wayhm49c96",
-  "fetchSubmodules": true
+  "rev": "320f90548f80c21d8e35f23ebe56c27776e4c774",
+  "sha256": "1y11688mrsxi9gannab9dzzfdq0pjnh5m8xsaq5h5q8ncgf8hns8",
+  "fetchSubmodules": false
 }

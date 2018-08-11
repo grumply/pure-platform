@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-prop.git",
-  "rev": "646141adedd01baf2b20f5e25950f1ec4a3c2778",
-  "sha256": "1ii2m28k71slyisw0qg957bhcwspphpnid9wlfrp2gilp56s1mh6",
-  "fetchSubmodules": true
+  "rev": "eca7c03f97974e4a5d6f500fd1f5b429311d138e",
+  "sha256": "1s2an1qd2mm6ki1ivjxjr6yj0ghp02mrxq8q3b7nrnybyzkzr6jw",
+  "fetchSubmodules": false
 }

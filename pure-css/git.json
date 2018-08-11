@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-css.git",
-  "rev": "e1505512d1c345b4fe1312ea04eca6a4a980cfee",
-  "sha256": "1465b7kw91k56vsc7d3hq49z4cdk91ir8if2m3d2hhm3yj8631vv",
-  "fetchSubmodules": true
+  "rev": "f58ccc8e372b70829ea90dac5497bf2df0351b47",
+  "sha256": "1309d59pj1zgi1zlla6l7p7350m9knhpdm37qv0niwvlzg0yqnka",
+  "fetchSubmodules": false
 }

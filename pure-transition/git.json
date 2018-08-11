@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-transition.git",
-  "rev": "a1c92cd3dad08c2865b9dd94e04dc5085048389c",
-  "sha256": "1xmrsnm14zxfli65mjln589nni1fzhcn93kb7ljx908wfslv81i2",
-  "fetchSubmodules": true
+  "rev": "d45365c55ce17494d71419f0c828b7dc3d0d9c44",
+  "sha256": "013kixgr0dxn09l7p332m644drm3aj735krwrbz4z16j9dlvp7kk",
+  "fetchSubmodules": false
 }

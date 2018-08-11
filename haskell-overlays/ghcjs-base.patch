@@ -1,4 +1,5 @@
-unchanged:
+diff --git a/Data/JSString.hs b/Data/JSString.hs
+index 84f3319..d30e579 100644
 --- a/Data/JSString.hs
 +++ b/Data/JSString.hs
 @@ -5,7 +5,7 @@
@@ -10,26 +11,32 @@ unchanged:
  
                         -- * Creation and elimination
                       , pack
-@@ -1863,7 +1863,7 @@ foreign import javascript unsafe
- foreign import javascript unsafe
-   "h$jsstringUncheckedIndex" js_uncheckedIndex :: Int# -> JSString -> Int#
- foreign import javascript unsafe
--  "h$jsstringdIndexR" js_uncheckedIndexR :: Int# -> JSString -> Int#
-+  "h$jsstringIndexR" js_uncheckedIndexR :: Int# -> JSString -> Int#
- 
- -- js_head and js_last return -1 for empty string
- foreign import javascript unsafe
-only in patch2:
-unchanged:
+diff --git a/ghcjs-base.cabal b/ghcjs-base.cabal
+index 4a64694..5f8b061 100644
+--- a/ghcjs-base.cabal
++++ b/ghcjs-base.cabal
+@@ -133,8 +133,8 @@ library
+                    aeson                >= 0.8  && < 1.3,
+                    scientific           >= 0.3  && < 0.4,
+                    vector               >= 0.10 && < 0.13,
+-                   containers           >= 0.5  && < 0.6,
+-                   time                 >= 1.5  && < 1.9,
++                   containers           >= 0.5  && < 0.7,
++                   time                 >= 1.5  && < 1.10,
+                    hashable             >= 1.2  && < 1.3,
+                    unordered-containers >= 0.2  && < 0.3,
+                    attoparsec           >= 0.11 && < 0.14,
+diff --git a/jsbits/jsstring.js b/jsbits/jsstring.js
+index 7b9a761..9113c16 100644
 --- a/jsbits/jsstring.js
 +++ b/jsbits/jsstring.js
-@@ -1137,16 +1137,15 @@ function h$jsstringReadValue64(str, start, negate) {
+@@ -1138,16 +1138,15 @@ function h$jsstringReadValue64(str, start, negate) {
        h$jsstringLongs.push(goog.math.Long.fromInt(t));
      }
    }
 -  var li = l-i;
 -  if(li < 10 && !negate) {
-+  if(l - i < 10 && !negate) {
++  if(l- i < 10 && !negate) {
      RETURN_UBX_TUP3(1, 0, parseInt(str.substr(i), 10));
    }
 -  var r = goog.math.Long.fromInt(parseInt(str.substr(li,9),10));

@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/ef.git",
-  "rev": "b5d1cbe32c9ecde5802925e56848b0c8ed4c091f",
-  "sha256": "1z1gvvkp0nzg44p0kyf2988fczj9h1s9yxh39bxjn56x5hklikha",
-  "fetchSubmodules": true
+  "rev": "2089198647e84fab161403ed6bc001245653d51b",
+  "sha256": "1z49ma14ipvc5143h6k2ln7zyyhmpbknmq0qr4jv4c0acncp793w",
+  "fetchSubmodules": false
 }

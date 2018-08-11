@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-json.git",
-  "rev": "c87177ed9b942cad3df3ecadb2192781e4feddbd",
-  "sha256": "1z3hdg2qz6ajnn74l2lbhzb6jyg04nlhhfa5g8bip68fh03jwbk9",
-  "fetchSubmodules": true
+  "rev": "8ec3fe6915bb459eab95ccded7444619f13a105a",
+  "sha256": "00fc6581k6sn9z4akac8ifjkg9i37rnccb105mqh5ci70iqc29kw",
+  "fetchSubmodules": false
 }

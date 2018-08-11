@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-spinners.git",
-  "rev": "201794845fc90f688f4906cf27602403481651bf",
-  "sha256": "1psrw3j8zfcx8yr7rag59w11s2sz7lh457q2d82dnzblk7xlzwr9",
-  "fetchSubmodules": true
+  "rev": "ccb2d61b290684cb04df005c2261ae94b50bb6b8",
+  "sha256": "00qhb16ckn3mrrg9cvbpf7j30xb19qz413pw53lqif4q5251dllj",
+  "fetchSubmodules": false
 }

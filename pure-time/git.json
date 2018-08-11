@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-time.git",
-  "rev": "8bf15fe3fd146037371338339343c8388001ceb9",
-  "sha256": "1iy309wklcxc4w207jmspkmiv5ib1mx7wgihy7xcam3nz389jzh0",
-  "fetchSubmodules": true
+  "rev": "cad4c631d02d1f7870ae4624220dd5046fd65509",
+  "sha256": "00sc5wnbhhvgywgr794lm0dxkp9zp0vwffsf0zjfkfzil8cghyv3",
+  "fetchSubmodules": false
 }

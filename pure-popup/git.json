@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-popup.git",
-  "rev": "99cc2be09c41d68408f999bdeb0c8ee798bf1780",
-  "sha256": "10b6wm07xqrhwybfwz5zgfqilrsdr9ms01px1plhrcfaw1pl888z",
-  "fetchSubmodules": true
+  "rev": "027672a68b00b6d528564d09193c9e835222db8b",
+  "sha256": "1fhvm9128jqaxj91y16sz6qn5hzj1y92s2x34423wglj2cgi8s1s",
+  "fetchSubmodules": false
 }

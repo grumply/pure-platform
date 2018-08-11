@@ -2,5 +2,5 @@
   "url": "https://github.com/grumply/pure-localstorage.git",
   "rev": "66f565cfa6e37bbe5da3af9d90cd78290e45dd8d",
   "sha256": "1as0pybn7mnbdm9z1z81pavnnyyn22lvv3j9hg241aa9acqmqsvi",
-  "fetchSubmodules": true
+  "fetchSubmodules": false
 }

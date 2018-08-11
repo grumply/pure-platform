@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-visibility.git",
-  "rev": "a47ccd44d8d50b3601b0730487c8ae30d4b0a695",
-  "sha256": "1rzaq1illyyhfhig5azxp0rhzmqkalrylszbgv4bvqzlq0ip7pyc",
-  "fetchSubmodules": true
+  "rev": "c411f20dfe3f89fb5b26485d24ec3159c68f75a1",
+  "sha256": "1f788k928kf2vfqalhfmnczclyxnlsknjn7r1qc4znsn8r76jjxb",
+  "fetchSubmodules": false
 }

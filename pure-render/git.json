@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-render.git",
-  "rev": "35dbde2aa8dad65d3b0e01071ed36f8501154542",
-  "sha256": "1183xjs04prjcsyxzkx2k2bza66j1cbscfcn8mdzkj8rnra0zd75",
-  "fetchSubmodules": true
+  "rev": "3c4ac5660d8aec5aba3ecf2bfcb1df3f7cee1572",
+  "sha256": "15hprn2jnhjf0jhihnrgf6d6902ckmr54i59jb2z83kmvmv4xwi9",
+  "fetchSubmodules": false
 }
