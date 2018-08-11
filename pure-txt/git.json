@@ -2,5 +2,5 @@
   "url": "https://github.com/grumply/pure-txt.git",
   "rev": "881029e0455a9e0cd1f189b0132bd9e21a726b53",
   "sha256": "0dir5nrf9sn6hf8xi1y8cbf448rksx3zma8bc8n71xssj9wrkgp1",
-  "fetchSubmodules": true
+  "fetchSubmodules": false
 }

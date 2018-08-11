@@ -84,7 +84,6 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-test         = self.callPackage (hackGet ./pure-test)         {};
         pure-theme        = self.callPackage (hackGet ./pure-theme)        {};
         pure-time         = self.callPackage (hackGet ./pure-time)         {};
-        pure-timediff-simple = self.callPackage (hackGet ./pure-timediff-simple) {};
         pure-tlc          = self.callPackage (hackGet ./pure-tlc)          {};
         pure-transition   = self.callPackage (hackGet ./pure-transition)   {};
         pure-try          = self.callPackage (hackGet ./pure-try)          {};
