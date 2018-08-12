@@ -131,9 +131,10 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     overrides = foldr composeExtensions (_: _: {}) [
        (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
         ghcjsSrc = fetchgit {
-          url = "https://github.com/matthewbauer/ghcjs.git";
-          rev = "c4aa2656dbfd1d96ce398a049371562065bd297a";
-          sha256 = "04vy297x47h1126rrm2dlqwrw7lykqk525j4lhbdzdfw3s3a55ia";
+          url = "https://github.com/grumply/ghcjs.git";
+          branchName = "ghc-8.4-666-fix";
+          rev = "a0acc37c3248906dfab4c31727711cc63077e03a";
+          sha256 = "0ka8whqcajdsyhwb5a53zvsw6x5cwk4z1jy7paijyc1byjymbyhv";
           fetchSubmodules = true;
         };
       }))
