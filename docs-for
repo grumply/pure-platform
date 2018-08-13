@@ -7,13 +7,17 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 if [[ $# -eq 0 ]] ; then
     echo "Usage: $0 <packagename> [<packagename...>]"
-    echo "Uses xdg-open to open the documentation for given (Haskell) packages"
+    echo "Uses xdg-open (or open on macos) to open the documentation for given (Haskell) packages"
     echo "from the nix-store. For example, try"
     echo " $0 pure ef ef-base tlc trivial lens"
 else
     export DOCSFOR_PKGLIST="$@"
     function openTheDocs () {
-        echo $DOCSFOR_PKGLIST | xargs -d' ' -n1 --replace ghc-pkg field {} haddock-html | sed 's#.*: \(.*\)#\1/index.html#' | xargs -n1 xdg-open
+        if type xdg-open 2>/dev/null; then
+            echo $DOCSFOR_PKGLIST | xargs -d' ' -n1 --replace ghc-pkg field {} haddock-html | sed 's#.*: \(.*\)#\1/index.html#' | xargs -n1 xdg-open
+        else
+            echo $DOCSFOR_PKGLIST | xargs -d' ' -n1 --replace ghc-pkg field {} haddock-html | sed 's#.*: \(.*\)#\1/index.html#' | xargs -n1 open
+        fi
     }
     export -f openTheDocs
     try_pure_shell --command "openTheDocs"
