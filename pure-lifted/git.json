@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-lifted.git",
-  "rev": "f8224e21d2f5defcd3ecf685a687fd63d9c712b2",
-  "sha256": "0jcnnbyi6dnqyfjyhg5vfj5mhqdvjgjjiwr6p6a511f2r1lkl9wb",
-  "fetchSubmodules": true
+  "rev": "e3f343b5501603bc68f9dddf1da1d78087e37017",
+  "sha256": "0fd4cwngpny64rq4ixvv96rnvinja67kh4hvwzar5ycs42cylw62",
+  "fetchSubmodules": false
 }
