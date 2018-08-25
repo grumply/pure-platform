@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/excelsior",
-  "rev": "2faddfe0be86d7b99ec2bd93d9ae974b8451186e",
-  "sha256": "12jmsi404ig2cwsim0dv0416m5whzdkqhswdw4yjgnh8008im13w",
-  "fetchSubmodules": true
+  "rev": "22749520c7c64ea765abf6fbbba2ece2d920021c",
+  "sha256": "0vy1w45v57fd580azzvpxy3sgni0x20ygmmj8dadrlsjgjwdbxri",
+  "fetchSubmodules": false
 }
