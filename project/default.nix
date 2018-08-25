@@ -118,17 +118,17 @@ in
 
 }:
 let
-  overrides' = nixpkgs.lib.composeExtensions
-    (self: super: mapAttrs (name: path: self.callCabal2nix name path {}) packages) overrides;
+  overrides' = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
+    (self: super: mapAttrs (name: path: self.callCabal2nix name path {}) packages) 
+    overrides
+  ];
   mkPkgSet = name: _: this.${name}.override { overrides = overrides'; };
   prj = mapAttrs mkPkgSet shells // {
     shells = mapAttrs (name: pnames:
       this.workOnMulti' {
-        env = prj.${name}.override { overrides = self: super: nixpkgs.lib.optionalAttrs withHoogle {
-          ghcWithPackages = self.ghcWithHoogle;
-        }; };
+        env = prj.${name}.override { overrides = self: super: nixpkgs.lib.optionalAttrs withHoogle {}; };
         packageNames = pnames;
-        inherit tools;
+        inherit tools shellToolOverrides;
       }
     ) shells;
 
