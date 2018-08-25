@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-dom.git",
-  "rev": "77b40c8d95eb25cf9447cef880e45732f7df91fc",
-  "sha256": "0i9y91mcc94smi9r48l2gikpxcyciwlhr7c4pxl8p9vw10r98pg6",
-  "fetchSubmodules": true
+  "rev": "9a948b643cab271fad4b1d25bf4344de5e84af5a",
+  "sha256": "1lwz89ywjk1r0b8i9i5pnzs40z3jxzi2bi3dlhvnl5fbn2ml5fxh",
+  "fetchSubmodules": false
 }
