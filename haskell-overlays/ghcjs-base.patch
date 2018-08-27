@@ -11,6 +11,28 @@ index 84f3319..d30e579 100644
  
                         -- * Creation and elimination
                       , pack
+diff --git a/JavaScript/JSON/Types/Generic.hs b/JavaScript/JSON/Types/Generic.hs
+index 7cb5abd..0847f55 100644
+--- a/JavaScript/JSON/Types/Generic.hs
++++ b/JavaScript/JSON/Types/Generic.hs
+@@ -228,7 +228,7 @@ instance (Selector s, GToJSON a) => RecordToPairs (S1 s a) where
+     recordToPairs = fieldToPair
+     {-# INLINE recordToPairs #-}
+ 
+-instance (Selector s, ToJSON a) => RecordToPairs (S1 s (K1 i (Maybe a))) where
++instance {-# INCOHERENT #-} (Selector s, ToJSON a) => RecordToPairs (S1 s (K1 i (Maybe a))) where
+     recordToPairs opts (M1 k1) | omitNothingFields opts
+                                , K1 Nothing <- k1 = empty
+     recordToPairs opts m1 = fieldToPair opts m1
+@@ -503,7 +503,7 @@ instance (Selector s, GFromJSON a) => FromRecord (S1 s a) where
+           label = fieldLabelModifier opts $ selName (undefined :: t s a p)
+     {-# INLINE parseRecord #-}
+ 
+-instance (Selector s, FromJSON a) => FromRecord (S1 s (K1 i (Maybe a))) where
++instance {-# INCOHERENT #-} (Selector s, FromJSON a) => FromRecord (S1 s (K1 i (Maybe a))) where
+     parseRecord opts obj = (M1 . K1) <$> obj .:? pack label
+         where
+           label = fieldLabelModifier opts $
 diff --git a/ghcjs-base.cabal b/ghcjs-base.cabal
 index 4a64694..5f8b061 100644
 --- a/ghcjs-base.cabal
