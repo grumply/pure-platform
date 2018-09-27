@@ -81,6 +81,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
         pure-tagsoup      = self.callPackage (hackGet ./pure-tagsoup)      {};
+        pure-template     = self.callPackage (hackGet ./pure-template)     {};
         pure-test         = self.callPackage (hackGet ./pure-test)         {};
         pure-theme        = self.callPackage (hackGet ./pure-theme)        {};
         pure-time         = self.callPackage (hackGet ./pure-time)         {};
@@ -99,6 +100,8 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
 
         websockets        = self.callHackage "websockets" "0.12.4.0"       {};
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
+
+	haskell-src-meta  = self.callHackage "haskell-src-meta" "0.8.0.3"  {};
 
         roles             = self.callHackage "roles" "0.2.0.0"             {};
 

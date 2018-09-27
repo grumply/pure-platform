@@ -167,6 +167,7 @@ let
     pure-styles = this;
     pure-svg = this;
     pure-tagsoup = this;
+    pure-template = this;
     pure-test = this;
     pure-theme = this;
     pure-time = this;
