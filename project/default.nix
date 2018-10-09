@@ -140,6 +140,7 @@ let
     pure-dom = this;
     pure-ease = this;
     pure-events = this;
+    pure-forms = this;
     pure-grid = this;
     pure-html = this;
     pure-json = this;
