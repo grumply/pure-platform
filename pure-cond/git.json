@@ -2,5 +2,5 @@
   "url": "https://github.com/grumply/pure-cond.git",
   "rev": "33f9495fbe54633ac3ff5b6abf13feae1501f326",
   "sha256": "1g53x891a5xxl1s5iqmrd9hhl5x8wdr7cfr20708gav69181rdpl",
-  "fetchSubmodules": true
+  "fetchSubmodules": false
 }
