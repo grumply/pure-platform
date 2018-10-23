@@ -1,9 +1,8 @@
-{ nixpkgsFunc ? import ./nixpkgs
+{ nixpkgs ? import <nixpkgs> {}
 , system ? builtins.currentSystem
 , config ? {}
 }:
-let nixpkgs = nixpkgsFunc { inherit system; };
-    inherit (nixpkgs) fetchurl fetchgit fetchgitPrivate fetchFromGitHub;
+let inherit (nixpkgs) fetchurl fetchgit fetchgitPrivate fetchFromGitHub;
     nixpkgsCross = { };
     haskellLib = nixpkgs.haskell.lib;
     filterGit = builtins.filterSource (path: type: !(builtins.any (x: x == baseNameOf path) [".git" "tags" "TAGS" "dist"]));
