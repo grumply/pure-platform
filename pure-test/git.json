@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-test.git",
-  "rev": "e6570f9ca8c3b1f84bbf2816d49cf6b3c7fe79f3",
-  "sha256": "0c3gqli0pmmv2wd5chqmhprypwh6r6cpa5nnqha6hzvh833xqir4",
-  "fetchSubmodules": true
+  "rev": "e43047709756b77c7182d35ec5c65963e01ba423",
+  "sha256": "0rkaf8c5fggfcm4jwhn6n16zakp6q68gl1pav8fk1pf9vd1b1mg3",
+  "fetchSubmodules": false
 }
