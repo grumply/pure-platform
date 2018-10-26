@@ -208,8 +208,8 @@ git_thunk() {
 
 # NOTE: Returns the manifest type in OUTPUT_GIT_MANIFEST_TYPE and the manifest contents in OUTPUT_GIT_MANIFEST
 get_git_manifest() {
-    local NIX_PREFETCH_SCRIPTS="$(nix-build --no-out-link -E "(import \"$DIR/nixpkgs\" {}).nix-prefetch-scripts")"
-    local NIX="$(nix-build --no-out-link -E "(import \"$DIR/nixpkgs\" {}).nix")"
+    local NIX_PREFETCH_SCRIPTS="$(nix-build --no-out-link -E "(import <nixpkgs> {}).nix-prefetch-scripts")"
+    local NIX="$(nix-build --no-out-link -E "(import <nixpkgs> {}).nix")"
     local REPO="$(echo "$1" | sed 's/\.git$//')"
 
     local URL="$(git -C "$REPO" config --get remote.origin.url | sed 's_^git@github.com:_git://github.com/_')" # Don't use git@github.com origins, since these can't be accessed by nix
