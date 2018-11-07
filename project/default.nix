@@ -176,6 +176,7 @@ let
     pure-transition = this;
     pure-try = this;
     pure-txt = this;
+    pure-txt-interpolate = this;
     pure-txt-trie = this;
     pure-websocket = this;
     pure-server = this;
