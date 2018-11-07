@@ -90,6 +90,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-try          = self.callPackage (hackGet ./pure-try)          {};
         pure-txt          = self.callPackage (hackGet ./pure-txt)          {};
         pure-txt-interpolate = self.callPackage (hackGet ./pure-txt-interpolate) {};
+        pure-txt-search   = self.callPackage (hackGet ./pure-txt-search)   {};
         pure-txt-trie     = self.callPackage (hackGet ./pure-txt-trie)     {};
         pure-variance     = self.callPackage (hackGet ./pure-variance)     {};
         pure-visibility   = self.callPackage (hackGet ./pure-visibility)   {};

@@ -177,6 +177,7 @@ let
     pure-try = this;
     pure-txt = this;
     pure-txt-interpolate = this;
+    pure-txt-search = this;
     pure-txt-trie = this;
     pure-websocket = this;
     pure-server = this;
