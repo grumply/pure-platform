@@ -110,6 +110,9 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
 
         hasktags          = dontCheck super.hasktags;
 
+        comonad           = dontCheck super.comonad;
+        semigroupoids     = dontCheck super.semigroupoids;
+
         };
     };
     haskellOverlays = import ./haskell-overlays {
@@ -119,11 +122,11 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       inherit (nixpkgs) lib;
     };
 
-  ghc = ghc8_4;
+  ghcjs = ghcjs8_4;
   ghcjs8_4Packages = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules") {
     ghc = ghc8_4.ghcjs;
     buildHaskellPackages = ghc8_4.ghcjs.bootPkgs;
-    compilerConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghc-7.10.x.nix") { inherit haskellLib; };
+    compilerConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghc-8.4.x.nix") { inherit haskellLib; };
     packageSetConfig = nixpkgs.callPackage (nixpkgs.path + "/pkgs/development/haskell-modules/configuration-ghcjs.nix") { inherit haskellLib; };
     inherit haskellLib;
   };
@@ -132,8 +135,9 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
       haskellOverlays.ghcjs
     ];
   };
-  ghcjs = ghcjs8_4;
-  ghc8_4 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc843).override {
+
+  ghc = ghc8_4;
+  ghc8_4 = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc844).override {
     overrides = foldr composeExtensions (_: _: {}) [
        (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
         ghcjsSrc = fetchgit {
