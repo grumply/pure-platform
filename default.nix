@@ -101,6 +101,8 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
 
+	pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
+
         websockets        = self.callHackage "websockets" "0.12.4.0"       {};
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
 

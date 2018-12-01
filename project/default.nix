@@ -189,6 +189,8 @@ let
     ef = this;
     excelsior = this;
 
+    pure-semantic-ui = this;
+
     all = all;
   };
 
