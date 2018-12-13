@@ -156,6 +156,7 @@ let
     pure-prop = this;
     pure-proxy = this;
     pure-queue = this;
+    pure-radar = this;
     pure-random-pcg = this;
     pure-readfile = this;
     pure-render = this;

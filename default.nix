@@ -68,6 +68,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-prop         = self.callPackage (hackGet ./pure-prop)         {};
         pure-proxy        = self.callPackage (hackGet ./pure-proxy)        {};
         pure-queue        = self.callPackage (hackGet ./pure-queue)        {};
+        pure-radar        = self.callPackage (hackGet ./pure-radar)        {};
         pure-random-pcg   = self.callPackage (hackGet ./pure-random-pcg)   {};
         pure-readfile     = self.callPackage (hackGet ./pure-readfile)     {};
         pure-render       = self.callPackage (hackGet ./pure-render)       {};
