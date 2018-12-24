@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-uri.git",
-  "rev": "1292dd347787622403eeb40b58894ff12e814c21",
-  "sha256": "05f9vpbxaqjl9bfhhhq158w0v8wgdl2fhd7akrdrhxir8ai7irxs",
-  "fetchSubmodules": true
+  "rev": "7b08fb4a7a12429daee736854af65ceeae4ac362",
+  "sha256": "03fv3y27493bm7gam98ny78jpz0axpshd0h1a6x7x7i9f15f9x6w",
+  "fetchSubmodules": false
 }

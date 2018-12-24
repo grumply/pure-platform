@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-router.git",
-  "rev": "e34938dba1269b1efb3280f5461a4b7767b76142",
-  "sha256": "193h46kjmw87nfjw69r65x3dh9np5m28lh2rdiy9laill6xwyvsz",
-  "fetchSubmodules": true
+  "rev": "2edb940b5cda7b76a968b6246067b7405e306d41",
+  "sha256": "0i8qfvn18v2z1l6nqg54c2rq28rp82d1jqzw0acl9schfbz7xz68",
+  "fetchSubmodules": false
 }
