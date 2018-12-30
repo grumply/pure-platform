@@ -79,6 +79,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-server       = self.callPackage (hackGet ./pure-server)       {};
         pure-spacetime    = self.callPackage (hackGet ./pure-spacetime)    {};
         pure-spinners     = self.callPackage (hackGet ./pure-spinners)     {};
+        pure-state        = self.callPackage (hackGet ./pure-state)        {};
         pure-sticky       = self.callPackage (hackGet ./pure-sticky)       {};
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};

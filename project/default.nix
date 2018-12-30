@@ -166,6 +166,7 @@ let
     pure-search = this;
     pure-spacetime = this;
     pure-spinners = this;
+    pure-state = this;
     pure-sticky = this;
     pure-styles = this;
     pure-svg = this;
