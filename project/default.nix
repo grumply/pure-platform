@@ -133,6 +133,8 @@ let
     ) shells;
 
     pure = this;
+    pure-async = this;
+    pure-cache = this;
     pure-cond = this;
     pure-core = this;
     pure-css = this;
@@ -151,6 +153,7 @@ let
     pure-localstorage = this;
     pure-modal = this;
     pure-paginate = this;
+    pure-periodically = this;
     pure-portal = this;
     pure-popup = this;
     pure-prop = this;
@@ -169,6 +172,7 @@ let
     pure-state = this;
     pure-sticky = this;
     pure-styles = this;
+    pure-suspense = this;
     pure-svg = this;
     pure-tagsoup = this;
     pure-template = this;

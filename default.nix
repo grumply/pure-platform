@@ -44,7 +44,9 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
+        pure-async        = self.callPackage (hackGet ./pure-async)        {};
         # pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
+        pure-cache        = self.callPackage (hackGet ./pure-cache)        {};
         pure-cond         = self.callPackage (hackGet ./pure-cond)         {};
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
         pure-css          = self.callPackage (hackGet ./pure-css)          {};
@@ -63,6 +65,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
         pure-modal        = self.callPackage (hackGet ./pure-modal)        {};
         pure-paginate     = self.callPackage (hackGet ./pure-paginate)     {};
+        pure-periodically = self.callPackage (hackGet ./pure-periodically) {};
         pure-portal       = self.callPackage (hackGet ./pure-portal)       {};
         pure-popup        = self.callPackage (hackGet ./pure-popup)        {};
         pure-prop         = self.callPackage (hackGet ./pure-prop)         {};
@@ -82,6 +85,7 @@ let overrideCabal = pkg: f: if pkg == null then null else haskellLib.overrideCab
         pure-state        = self.callPackage (hackGet ./pure-state)        {};
         pure-sticky       = self.callPackage (hackGet ./pure-sticky)       {};
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
+        pure-suspense     = self.callPackage (hackGet ./pure-suspense)     {};
         pure-svg          = self.callPackage (hackGet ./pure-svg)          {};
         pure-tagsoup      = self.callPackage (hackGet ./pure-tagsoup)      {};
         pure-template     = self.callPackage (hackGet ./pure-template)     {};
