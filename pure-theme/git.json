@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-theme.git",
-  "rev": "89bea6071e52dd3b959d918483455005ea6c3a99",
-  "sha256": "06k0xc297cj55wxwx1v13zkky8z323silkq3z9702dqj0cx38vi7",
-  "fetchSubmodules": true
+  "rev": "3d81acf64e89241f457e75b23346cd40be4b5562",
+  "sha256": "0z3xgpfsbkb7l7lkk0kkg3aj4mb39b61pv9lcb1apfjqccxwdnhw",
+  "fetchSubmodules": false
 }
