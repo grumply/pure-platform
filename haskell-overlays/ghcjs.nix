@@ -26,6 +26,8 @@ self: super: {
   # doctest doesn't work on ghcjs, but sometimes dontCheck doesn't seem to get rid of the dependency
   doctest = builtins.trace "Warning: ignoring dependency on doctest" null;
 
-  tagsoup = dontCheck (super.tagsoup);
+  cereal = dontCheck super.cereal;
+
+  tagsoup = dontCheck super.tagsoup;
 
 }

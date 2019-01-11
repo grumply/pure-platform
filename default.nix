@@ -138,10 +138,10 @@ let combineOverrides = old: new: (old // new) // {
     overrides = foldr composeExtensions (_: _: {}) [
        (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
         ghcjsSrc = fetchgit {
-          url = "https://github.com/grumply/ghcjs.git";
-          branchName = "ghc-8.4-666-fix";
-          rev = "a0acc37c3248906dfab4c31727711cc63077e03a";
-          sha256 = "0ka8whqcajdsyhwb5a53zvsw6x5cwk4z1jy7paijyc1byjymbyhv";
+          url = "https://github.com/ghcjs/ghcjs.git";
+          branchName = "ghc-8.4";
+          rev = "00a8993a8d9c35b33b84a83b0aec5171c582a4f3";
+          sha256 = "0a9qna5qffskfgw9a4jwvzfd81c41vw36k46hw52hw9xxynvk7x9";
           fetchSubmodules = true;
         };
       }))
