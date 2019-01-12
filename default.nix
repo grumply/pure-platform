@@ -200,6 +200,65 @@ in let this = rec {
 
   generalDevTools = haskellPackages: builtins.attrValues (generalDevToolsAttrs haskellPackages);
 
+  workOn = haskellPackages: package: (overrideCabal package (drv: {
+      buildDepends = (drv.buildDepends or []) ++ generalDevTools (nativeHaskellPackages haskellPackages);
+    })).env;
+
+  workOnMulti' = { env, packageNames, tools ? _: [], shellToolOverrides ? _: _: {} }:
+    let inherit (builtins) listToAttrs filter attrValues all concatLists;
+        combinableAttrs = [
+          "benchmarkDepends"
+          "benchmarkFrameworkDepends"
+          "benchmarkHaskellDepends"
+          "benchmarkPkgconfigDepends"
+          "benchmarkSystemDepends"
+          "benchmarkToolDepends"
+          "buildDepends"
+          "buildTools"
+          "executableFrameworkDepends"
+          "executableHaskellDepends"
+          "executablePkgconfigDepends"
+          "executableSystemDepends"
+          "executableToolDepends"
+          "extraLibraries"
+          "libraryFrameworkDepends"
+          "libraryHaskellDepends"
+          "libraryPkgconfigDepends"
+          "librarySystemDepends"
+          "libraryToolDepends"
+          "pkgconfigDepends"
+          "setupHaskellDepends"
+          "testDepends"
+          "testFrameworkDepends"
+          "testHaskellDepends"
+          "testPkgconfigDepends"
+          "testSystemDepends"
+          "testToolDepends"
+        ];
+        concatCombinableAttrs = haskellConfigs: listToAttrs (map (name: { inherit name; value = concatLists (map (haskellConfig: haskellConfig.${name} or []) haskellConfigs); }) combinableAttrs);
+        getHaskellConfig = p: (overrideCabal p (args: {
+          passthru = (args.passthru or {}) // {
+            out = args;
+          };
+        })).out;
+        notInTargetPackageSet = p: all (pname: (p.pname or "") != pname) packageNames;
+        baseTools = generalDevToolsAttrs env;
+        overriddenTools = attrValues (baseTools // shellToolOverrides env baseTools);
+        depAttrs = mapAttrs (_: v: filter notInTargetPackageSet v) (concatCombinableAttrs (concatLists [
+          (map getHaskellConfig (attrVals packageNames env))
+          [{
+            buildTools = overriddenTools ++ tools env;
+          }]
+        ]));
+
+    in (env.mkDerivation (depAttrs // {
+      pname = "work-on-multi--combined-pkg";
+      version = "0";
+      license = null;
+    })).env;
+
+  workOnMulti = env: packageNames: workOnMulti' { inherit env packageNames; };
+
   nativeHaskellPackages = haskellPackages:
     if haskellPackages.isGhcjs or false
     then haskellPackages.ghc
