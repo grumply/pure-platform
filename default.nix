@@ -111,6 +111,7 @@ let combineOverrides = old: new: (old // new) // {
 
         comonad           = dontCheck super.comonad;
         semigroupoids     = dontCheck super.semigroupoids;
+        lens              = dontCheck super.lens;
 
         };
     };
