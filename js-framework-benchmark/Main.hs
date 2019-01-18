@@ -1,36 +1,47 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, OverloadedLists #-}
 module Main where
 
--- from pure
 import Pure
+import Pure.Random
 
--- from base
-import Control.Arrow ((&&&))
-import Control.Monad (unless,void)
-import Data.List as L (filter)
+import Data.Maybe (fromJust)
 import Data.Monoid ((<>))
-import Data.Traversable (for)
 
--- from vector
 import qualified Data.Vector as V
 import qualified Data.Vector.Mutable as MV
 
---------------------------------------------------------------------------------
+{-
 
-foreign import javascript unsafe
-  "$r = Math.round(Math.random()*1000)%$1"
-    rand :: Int -> IO Int
+Performance is pretty good (as of 0.7.0.0), scoring ~1.5 on the
+js-framework-benchmark (result image included). Pure has been benchmarked
+against, and should be competetive with, Angular, React, Vue, and Elm.
+
+If you can find a way to improve build performance, the only place performance
+is lacking, please let me know. In theory, there's no reason build can't be
+50-75% faster. Note that `create rows` contains a warmup overhead, but
+`create many rows` does not.
+
+I have not run more recent versions of the js-framework-benchmark. Given that
+the GHCJS RTS is implemented as a stack machine, I suspect the synthetic CPU
+slowdown will unfairly bias the results.
+
+A note on the performance of `clear rows`:
+  Pure beats vanillajs on the clear rows benchmark because listener cleanup is
+  deferred to an idle worker. This was a design choice to avoid long frames.
+
+-}
 
 data Row = Row
   { ident     :: Int
-  , label     :: String
+  , label     :: Txt
   , selected  :: Bool
-  , update    :: Msg -> IO ()
-  , rendered  :: View
+  , update    :: (Msg -> IO ())
+  , rendered  :: View -- render cache
   }
 
 data Model = Model
-  { rows    :: V.Vector Row
+  { seed    :: Seed
+  , rows    :: V.Vector Row
   , lastId  :: Int
   }
 
@@ -42,39 +53,38 @@ data Msg
   | SwapM
   | SelectM Int
   | RemoveM Int
+  | ConstM
 
-adjectives :: V.Vector String
-adjectives = V.fromList
+unsafeChoose :: V.Vector Txt -> Generator Txt
+unsafeChoose = fmap fromJust . sampleVector
+
+adjectives :: Generator Txt
+adjectives = unsafeChoose
   [  "pretty",  "large",  "big",  "small",  "tall",  "short",  "long"
   ,  "handsome",  "plain",  "quaint",  "clean",  "elegant",  "easy",  "angry"
   ,  "crazy",  "helpful",  "mushy",  "odd",  "unsightly",  "adorable"
   ,  "important",  "inexpensive",  "cheap",  "expensive",  "fancy"
   ]
 
-colors :: V.Vector String
-colors = V.fromList
+colors :: Generator Txt
+colors = unsafeChoose
   [  "red",  "yellow",  "blue",  "green",  "pink",  "brown"
   ,  "purple",  "brown",  "white",  "black",  "orange"
   ]
 
-nouns :: V.Vector String
-nouns = V.fromList
+nouns :: Generator Txt
+nouns = unsafeChoose
   [  "table",  "chair",  "house",  "bbq",  "desk",  "car"
   ,  "pony",  "cookie",  "sandwich",  "burger",  "pizza"
   ,  "mouse",  "keyboard"
   ]
 
-choose :: V.Vector x -> IO x
-choose vs = do
-  r <- rand (V.length vs)
-  return $ V.unsafeIndex vs r
-
-createRows :: Int -> Int -> (Msg -> IO ()) -> IO (V.Vector Row)
+createRows :: Int -> Int -> (Msg -> IO ()) -> Generator (V.Vector Row)
 createRows n newId update = V.generateM n $ \n -> do
-  adjective <- choose adjectives
-  color     <- choose colors
-  noun      <- choose nouns
-  return $ renderRow $ Row (newId + n) (adjective <> " " <> color <> " " <> noun) False update undefined
+  adjective <- adjectives
+  color <- colors
+  noun <- nouns
+  pure $ renderRow $ Row (newId + n) (adjective <> " " <> color <> " " <> noun) False update undefined
 
 bang :: Row -> Row
 bang row = renderRow row { label = label row <> " !!!" }
@@ -84,15 +94,17 @@ updateEvery n f = V.modify (flip update 0)
   where
     update v = go
       where
-        go x = unless (x >= MV.length v) $ do
-          MV.unsafeModify v f x
-          go (x + n)
+        go x
+          | x >= MV.length v = return ()
+          | otherwise = do
+            MV.unsafeModify v f x
+            go (x + n)
 
 swap :: Int -> Int -> V.Vector a -> V.Vector a
-swap i j = V.modify (\v -> MV.swap v i j)
+swap i j = V.modify (\v -> MV.unsafeSwap v i j)
 
 renderRow :: Row -> Row
-renderRow r = r { rendered = View r }
+renderRow r = r { rendered = buildRow r }
 
 selectRow :: Int -> Row -> Row
 selectRow i row
@@ -101,88 +113,90 @@ selectRow i row
   | otherwise      = row
 
 data Button = Button
-  { bId :: Txt
+  { bId    :: Txt
   , bLabel :: Txt
-  , bEvt :: IO ()
+  , bEvt   :: IO ()
   }
 
 button :: (Msg -> IO ()) -> (Txt,Txt,Msg) -> View
-button f (ident,label,msg) = View (Main.Button ident label (f msg))
-
-instance Pure Main.Button where
-  view (Main.Button ident label evt) =
-    Div <| Classes [ "col-sm-6", "smallpad" ] |>
-        [ Pure.Button <| Attribute "ref" "text"
-                      . Classes [ "btn", "btn-primary", "btn-block" ]
-                      . OnClick (\_ -> evt)
-                      . Type "button"
-                      . Id ident
-                      |>
-            [ txt label ]
-        ]
+button f (ident,label,msg) =
+  Div <| Class "col-sm-6 smallpad" |>
+    [ Pure.Button
+      <| Attribute "ref" "text"
+       . Class "btn btn-primary btn-block"
+       . OnClick (\_ -> f msg)
+       . Type "button"
+       . Id ident
+       |> [ txt label ]
+    ]
 
 buttons :: [(Txt,Txt,Msg)]
 buttons =
-    [ ( "run"       , "Create 1,000 rows"    , CreateM 1000      )
+    [ ( "run_small" , "Create 10 rows"       , CreateM 10        )
+    , ( "run"       , "Create 1,000 rows"    , CreateM 1000      )
     , ( "runlots"   , "Create 10,000 rows"   , CreateM 10000     )
     , ( "add"       , "Append 1,000 rows"    , AppendM 1000      )
     , ( "update"    , "Update every 10th row", UpdateEveryM 10   )
     , ( "clear"     , "Clear"                , ClearM            )
     , ( "swaprows"  , "Swap Rows"            , SwapM             )
+    , ( "const"     , "Const"                , ConstM            )
     ]
 
-instance Pure Row where
-  view (Row i l s upd _) =
-    Tr <| (if s then Class "danger" else id) |>
-      [ Td <| Class "col-md-1" |> [ text i ]
-      , Td <| Class "col-md-4" |> [ A <| OnClick (\_ -> upd (SelectM i)) |> [ text l ] ]
-      , Td <| Class "col-md-1" |>
-          [ A <| OnClick (\_ -> upd (RemoveM i)) |>
-              [ Span <| Classes [ "glyphicon", "glyphicon-remove" ] . Attribute "aria-hidden" "true"
-              ]
-          ]
-      , Td <| Class "col-md-6"
+buildRow :: Row -> View
+buildRow (Row i l s upd _) =
+  Tr <| (if s then Class "danger" else id) |>
+    [ Td <| Class "col-md-1" |> [ text i ]
+    , Td <| Class "col-md-4" |>
+      [ A <| OnClick (\_ -> upd (SelectM i)) |> [ text l ]
       ]
+    , Td <| Class "col-md-1" |>
+      [ A <| OnClick (\_ -> upd (RemoveM i)) |>
+        [ Span <| Class "glyphicon glyphicon-remove" . Attribute "aria-hidden" "true"
+        ]
+      ]
+    , Td <| Class "col-md-6"
+    ]
 
-keyedRows :: V.Vector Row -> [(Int,View)]
-keyedRows = fmap (ident &&& rendered) . V.toList
+buildRows :: V.Vector Row -> [(Int,View)]
+buildRows = fmap ((,) <$> ident <*> rendered) . V.toList
 
 main :: IO ()
 main = do
-  b <- getBody
-  inject b $ flip ComponentIO () $ \self ->
+  inject body $ flip ComponentIO () $ \self ->
     let
-        upd msg = modifyM_ self $ \_ mdl -> do
-          mdl' <-
-            case msg of
-              CreateM amount -> do
-                newRows <- createRows amount (lastId mdl) upd
-                return mdl { rows = newRows, lastId = lastId mdl + amount }
+        upd msg = modify_ self $ \_ mdl -> do
+          case msg of
+            CreateM amount ->
+              let (seed',newRows) = generate (createRows amount (lastId mdl) upd) (seed mdl)
+              in mdl { seed = seed', rows = newRows, lastId = lastId mdl + amount }
 
-              AppendM amount -> do
-                newRows <- createRows amount (lastId mdl) upd
-                return mdl { rows = rows mdl <> newRows, lastId = lastId mdl + amount }
+            AppendM amount ->
+              let (seed',newRows) = generate (createRows amount (lastId mdl) upd) (seed mdl)
+              in mdl { seed = seed', rows = rows mdl <> newRows, lastId = lastId mdl + amount }
 
-              UpdateEveryM amount ->
-                return mdl { rows = updateEvery 10 bang (rows mdl) }
+            UpdateEveryM amount ->
+              mdl { rows = updateEvery 10 bang (rows mdl) }
 
-              ClearM ->
-                return mdl { rows = V.empty }
+            ClearM ->
+              mdl { rows = V.empty }
 
-              SwapM ->
-                return mdl { rows = swap 1 998 (rows mdl) }
+            SwapM ->
+              mdl { rows = swap 1 998 (rows mdl) }
 
-              RemoveM i ->
-                return mdl { rows = V.filter ((/= i) . ident) (rows mdl) }
+            RemoveM i ->
+              mdl { rows = V.filter ((/= i) . ident) (rows mdl) }
 
-              SelectM i ->
-                return mdl { rows = fmap (selectRow i) (rows mdl) }
+            SelectM i ->
+              mdl { rows = fmap (selectRow i) (rows mdl) }
 
-          return (mdl',return ())
+            ConstM ->
+              mdl
 
     in
         def
-            { construct = return (Model V.empty 1)
+            { construct = do
+                seed <- newSeed
+                return (Model seed V.empty 1)
             , render = \_ model ->
                 Div <| Id "main" |>
                     [ Div <| Class "container" |>
@@ -192,9 +206,9 @@ main = do
                                   , Div <| Class "col-md-6" |> (fmap (Main.button upd) buttons)
                                   ]
                             ]
-                        , Table <| Classes [ "table", "table-hover", "table-striped", "test-data" ] |>
-                            [ Keyed Tbody <||#> keyedRows (rows model) ]
-                        , Span <| Classes [ "preloadicon", "glyphicon", "glyphicon-remove" ] . Property "aria-hidden" "true"
+                        , Table <| Class "table table-hover table-striped test-data" |>
+                            [ Keyed Tbody <||#> buildRows (rows model) ]
+                        , Span <| Class "preloadicon glyphicon glyphicon-remove" . Property "aria-hidden" "true"
                         ]
                     ]
             }
