@@ -142,6 +142,7 @@ let
     pure-dom = this;
     pure-ease = this;
     pure-events = this;
+    pure-fetch = this;
     pure-forms = this;
     pure-grid = this;
     pure-html = this;
