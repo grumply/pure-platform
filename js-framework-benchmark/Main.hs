@@ -16,15 +16,6 @@ Performance is pretty good (as of 0.7.0.0), scoring ~1.5 on the
 js-framework-benchmark (result image included). Pure has been benchmarked
 against, and should be competetive with, Angular, React, Vue, and Elm.
 
-If you can find a way to improve build performance, the only place performance
-is lacking, please let me know. In theory, there's no reason build can't be
-50-75% faster. Note that `create rows` contains a warmup overhead, but
-`create many rows` does not.
-
-I have not run more recent versions of the js-framework-benchmark. Given that
-the GHCJS RTS is implemented as a stack machine, I suspect the synthetic CPU
-slowdown will unfairly bias the results.
-
 A note on the performance of `clear rows`:
   Pure beats vanillajs on the clear rows benchmark because listener cleanup is
   deferred to an idle worker. This was a design choice to avoid long frames.
@@ -32,27 +23,28 @@ A note on the performance of `clear rows`:
 -}
 
 data Row = Row
-  { ident     :: Int
-  , label     :: Txt
-  , selected  :: Bool
-  , update    :: (Msg -> IO ())
-  , rendered  :: View -- render cache
+  { ident     :: !Int
+  , label     :: !Txt
+  , selected  :: !Bool
+  , select    :: !(View -> View)
+  , remove    :: !(View -> View)
+  , rendered  :: !View -- render cache
   }
 
 data Model = Model
-  { seed    :: Seed
-  , rows    :: V.Vector Row
-  , lastId  :: Int
+  { seed    :: !Seed
+  , rows    :: !(V.Vector Row)
+  , lastId  :: !Int
   }
 
 data Msg
-  = CreateM Int
-  | AppendM Int
-  | UpdateEveryM Int
+  = CreateM !Int
+  | AppendM !Int
+  | UpdateEveryM !Int
   | ClearM
   | SwapM
-  | SelectM Int
-  | RemoveM Int
+  | SelectM !Int
+  | RemoveM !Int
   | ConstM
 
 unsafeChoose :: V.Vector Txt -> Generator Txt
@@ -84,7 +76,8 @@ createRows n newId update = V.generateM n $ \n -> do
   adjective <- adjectives
   color <- colors
   noun <- nouns
-  pure $ renderRow $ Row (newId + n) (adjective <> " " <> color <> " " <> noun) False update undefined
+  let i = newId + n
+  pure $ renderRow $ Row i (adjective <> " " <> color <> " " <> noun) False (OnClick (const $ update (SelectM i))) (OnClick (const $ update (RemoveM i))) Null
 
 bang :: Row -> Row
 bang row = renderRow row { label = label row <> " !!!" }
@@ -143,14 +136,14 @@ buttons =
     ]
 
 buildRow :: Row -> View
-buildRow (Row i l s upd _) =
+buildRow (Row i l s select remove _) =
   Tr <| (if s then Class "danger" else id) |>
     [ Td <| Class "col-md-1" |> [ text i ]
     , Td <| Class "col-md-4" |>
-      [ A <| OnClick (\_ -> upd (SelectM i)) |> [ text l ]
+      [ A <| select |> [ text l ]
       ]
     , Td <| Class "col-md-1" |>
-      [ A <| OnClick (\_ -> upd (RemoveM i)) |>
+      [ A <| remove |>
         [ Span <| Class "glyphicon glyphicon-remove" . Attribute "aria-hidden" "true"
         ]
       ]
