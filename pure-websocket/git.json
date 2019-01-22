@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-websocket.git",
-  "rev": "8cf537b3d4e37ff7cbd71ad220e51ed028874e2f",
-  "sha256": "06dcm7khafyiwvsrq8rzpdg3mb84b448krivrrph3l58inw4s7p1",
+  "rev": "e8a20fa340c09a60d2d757616ee3677e585b55b8",
+  "sha256": "0jxznyylihl8irsfcs4f3kkinv27ca8j0wq4x22ix7nvb8avmhgk",
   "fetchSubmodules": false
 }
