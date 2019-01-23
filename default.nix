@@ -1,8 +1,9 @@
-{ nixpkgs ? import <nixpkgs> {}
+{ nixpkgsFunc ? import ./nixpkgs
 , system ? builtins.currentSystem
 , config ? {}
 }:
-let inherit (nixpkgs) fetchurl fetchgit fetchgitPrivate fetchFromGitHub;
+let nixpkgs = nixpkgsFunc config;
+    inherit (nixpkgs) fetchurl fetchgit fetchgitPrivate fetchFromGitHub;
     haskellLib = nixpkgs.haskell.lib;
     filterGit = builtins.filterSource (path: type: !(builtins.any (x: x == baseNameOf path) [".git" "tags" "TAGS" "dist"]));
     # Retrieve source that is controlled by the hack-* scripts; it may be either a stub or a checked-out git repo
