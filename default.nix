@@ -33,6 +33,13 @@ let combineOverrides = old: new: (old // new) // {
       });
     };
 
+    hie-nix = import (fetchFromGitHub {
+      owner = "wizzup";
+      repo = "hie-nix";
+      rev = "279a9bb8baad82ea20f18056420b58ce763ee4ad";
+      sha256 = "1j6763lzgif3wrz28gjsqp201r75rlf7gc3sjhcfa1ix74z0a6ds";
+    }) {};
+
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
@@ -115,6 +122,9 @@ let combineOverrides = old: new: (old // new) // {
         semigroupoids     = dontCheck super.semigroupoids;
         lens              = dontCheck super.lens;
 
+        hie84             = hie-nix.hie84;
+        ghc-mod84         = hie-nix.ghc-mod84;
+
         };
     };
     haskellOverlays = import ./haskell-overlays {
@@ -181,7 +191,7 @@ in let this = rec {
     "ghcjs"
     "ghc"
   ];
-
+ 
   # Tools that are useful for development under both ghc and ghcjs
   generalDevToolsAttrs = haskellPackages:
     let nativeHaskellPackages = ghc;
@@ -191,6 +201,8 @@ in let this = rec {
       cabal-install
       ghcid
       hasktags
+      hie84
+      ghc-mod84
       hlint;
     inherit (nixpkgs)
       cabal2nix
@@ -294,4 +306,6 @@ in let this = rec {
   inherit system;
   project = args: import ./project this (args ({ pkgs = nixpkgs; } // this));
   tryPureShell = pinBuildInputs ("shell-" + system) tryPurePackages [];
+
+  tryPureDevTools = pinBuildInputs ("shell-" + system) (generalDevTools ghc) [];
 }; in this
