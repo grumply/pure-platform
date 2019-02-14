@@ -307,5 +307,12 @@ in let this = rec {
   project = args: import ./project this (args ({ pkgs = nixpkgs; } // this));
   tryPureShell = pinBuildInputs ("shell-" + system) tryPurePackages [];
 
-  tryPureDevTools = pinBuildInputs ("shell-" + system) (generalDevTools ghc) [];
+  ghcDev = makeRecursivelyOverridable nixpkgs.pkgs.haskell.packages.ghc844 {
+      overrides = self: super: {
+        hie84             = hie-nix.hie84;
+        ghc-mod84         = hie-nix.ghc-mod84;
+      };
+  };
+  tryPureDevTools = pinBuildInputs ("shell-" + system) (generalDevTools ghcDev) [];
+
 }; in this
