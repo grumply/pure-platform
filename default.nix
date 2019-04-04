@@ -44,7 +44,7 @@ let combineOverrides = old: new: (old // new) // {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
         pure-async        = self.callPackage (hackGet ./pure-async)        {};
-        # pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
+        pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
         pure-cache        = self.callPackage (hackGet ./pure-cache)        {};
         pure-cond         = self.callPackage (hackGet ./pure-cond)         {};
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
@@ -198,19 +198,13 @@ in let this = rec {
     in {
     inherit (nativeHaskellPackages)
       Cabal
-      cabal-install
-      ghcid
-      hasktags
-      hie84
-      ghc-mod84
-      hlint;
+      cabal-install;
     inherit (nixpkgs)
       cabal2nix
       curl
       nix-prefetch-scripts
       nodejs
-      pkgconfig
-      closurecompiler;
+      pkgconfig;
   };
 
   generalDevTools = haskellPackages: builtins.attrValues (generalDevToolsAttrs haskellPackages);
