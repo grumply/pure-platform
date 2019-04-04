@@ -134,6 +134,7 @@ let
 
     pure = this;
     pure-async = this;
+    pure-bench = this;
     pure-cache = this;
     pure-cond = this;
     pure-core = this;
@@ -146,6 +147,7 @@ let
     pure-forms = this;
     pure-grid = this;
     pure-html = this;
+    pure-intersection = this;
     pure-json = this;
     pure-lazyloader = this;
     pure-lifted = this;

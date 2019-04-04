@@ -8,6 +8,7 @@ with haskellPackages;
   ##############################################################################
   pure
   pure-async
+  pure-bench
   pure-cache
   pure-cond
   pure-core
@@ -20,6 +21,7 @@ with haskellPackages;
   pure-forms
   pure-grid
   pure-html
+  pure-intersection
   pure-json
   pure-lazyloader
   pure-lifted
@@ -82,4 +84,8 @@ with haskellPackages;
   # Add ghc-only packages here                                                 #
   ##############################################################################
 
-] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: { out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++ (drv.executableHaskellDepends or []); }; }).out) [ pure pure-async pure-cache pure-cond pure-core pure-css pure-default pure-dom pure-ease pure-events pure-fetch pure-forms pure-grid pure-html pure-json pure-lazyloader pure-lifted pure-limiter pure-loader pure-localstorage pure-modal pure-periodically pure-paginate pure-portal pure-popup pure-prop pure-proxy pure-random-pcg pure-queue pure-radar pure-render pure-readfile pure-responsive pure-router pure-scroll-loader pure-search pure-spinners pure-state pure-sticky pure-styles pure-suspense pure-svg pure-tagsoup pure-template pure-test pure-theme pure-time pure-tlc pure-transition pure-try pure-txt pure-txt-interpolate pure-txt-search pure-txt-trie pure-websocket pure-server pure-uri pure-variance pure-visibility pure-xml ef excelsior pure-semantic-ui])
+] else []) ++ builtins.concatLists (map (x: (x.override { mkDerivation = drv: {
+  out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++
+  (drv.executableHaskellDepends or []); }; }).out) [ pure pure-async pure-bench
+  pure-cache pure-cond pure-core pure-css pure-default pure-dom pure-ease
+  pure-events pure-fetch pure-forms pure-grid pure-intersection pure-html pure-json pure-lazyloader pure-lifted pure-limiter pure-loader pure-localstorage pure-modal pure-periodically pure-paginate pure-portal pure-popup pure-prop pure-proxy pure-random-pcg pure-queue pure-radar pure-render pure-readfile pure-responsive pure-router pure-scroll-loader pure-search pure-spinners pure-state pure-sticky pure-styles pure-suspense pure-svg pure-tagsoup pure-template pure-test pure-theme pure-time pure-tlc pure-transition pure-try pure-txt pure-txt-interpolate pure-txt-search pure-txt-trie pure-websocket pure-server pure-uri pure-variance pure-visibility pure-xml ef excelsior pure-semantic-ui])
