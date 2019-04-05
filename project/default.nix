@@ -154,6 +154,7 @@ let
     pure-limiter = this;
     pure-loader = this;
     pure-localstorage = this;
+    pure-locker = this;
     pure-modal = this;
     pure-paginate = this;
     pure-periodically = this;

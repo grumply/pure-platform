@@ -64,6 +64,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-limiter      = self.callPackage (hackGet ./pure-limiter)      {};
         pure-loader       = self.callPackage (hackGet ./pure-loader)       {};
         pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
+        pure-locker       = self.callPackage (hackGet ./pure-locker)       {};
         pure-modal        = self.callPackage (hackGet ./pure-modal)        {};
         pure-paginate     = self.callPackage (hackGet ./pure-paginate)     {};
         pure-periodically = self.callPackage (hackGet ./pure-periodically) {};
