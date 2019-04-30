@@ -46,6 +46,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-async        = self.callPackage (hackGet ./pure-async)        {};
         pure-bench        = self.callPackage (hackGet ./pure-bench)        {};
         pure-cache        = self.callPackage (hackGet ./pure-cache)        {};
+        pure-capability   = self.callPackage (hackGet ./pure-capability)   {};
         pure-cond         = self.callPackage (hackGet ./pure-cond)         {};
         pure-core         = self.callPackage (hackGet ./pure-core)         {};
         pure-css          = self.callPackage (hackGet ./pure-css)          {};
@@ -109,12 +110,12 @@ let combineOverrides = old: new: (old // new) // {
         ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
 
-	      pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
+	pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
 
         websockets        = self.callHackage "websockets" "0.12.4.0"       {};
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
 
-	      haskell-src-meta  = self.callHackage "haskell-src-meta" "0.8.0.3"  {};
+	haskell-src-meta  = self.callHackage "haskell-src-meta" "0.8.0.3"  {};
 
         roles             = self.callHackage "roles" "0.2.0.0"             {};
 
