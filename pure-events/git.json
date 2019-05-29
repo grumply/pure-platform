@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-events.git",
-  "rev": "61a1767895c2087cfa47700c65bd05edd96eb17a",
-  "sha256": "1i1q9m9340qckpy06g9wqgpdlfn6i1nj4khsl0f798vab3fhwxr7",
-  "fetchSubmodules": true
+  "rev": "752b484cb94ab9b2d229424e1494acab7240d513",
+  "sha256": "16qim4nn86lv4ss2smcvjdrcf1iwhnmmgz5qmpli2d3bnn0103lx",
+  "fetchSubmodules": false
 }
