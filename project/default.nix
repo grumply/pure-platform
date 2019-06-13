@@ -143,6 +143,7 @@ let
     pure-default = this;
     pure-dom = this;
     pure-ease = this;
+    pure-elm = this;
     pure-events = this;
     pure-fetch = this;
     pure-forms = this;

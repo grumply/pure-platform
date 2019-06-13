@@ -53,6 +53,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-default      = self.callPackage (hackGet ./pure-default)      {};
         pure-dom          = self.callPackage (hackGet ./pure-dom)          {};
         pure-ease         = self.callPackage (hackGet ./pure-ease)         {};
+        pure-elm          = self.callPackage (hackGet ./pure-elm)          {};
         pure-events       = self.callPackage (hackGet ./pure-events)       {};
         pure-fetch        = self.callPackage (hackGet ./pure-fetch)        {};
         pure-forms        = self.callPackage (hackGet ./pure-forms)        {};
