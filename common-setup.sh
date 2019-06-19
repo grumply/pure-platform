@@ -66,70 +66,6 @@ nixconf_has_pure_key() {
     if nixconf_has_cache_settings && grep -q "$our_key" "$nixconf"; then return 0; else return 1; fi;
 }
 
-enable_cache() {
-    if [ -e "$skip_cache_setup" ]; then return 0; fi;
-
-    if nixconf_has_pure_cache && nixconf_has_pure_key; then return 0; fi;
-
-    if uname -v | grep -i "\bnixos\b"; then
-	echo "Please enable pure's binary cache by following the instructions at https://github.com/grumply/pure-platform/blob/master/notes/NixOS.md"
-	return 0;
-    fi
-
-    mkdir -p "$user_prefs"
-    if [ "$installing_nix" = false ]; then
-	read -rp "Add binary caches for pure to $nixconf ?"
-	select yn in "Yes" "No" "Ask again next time"; do
-	    case $yn in
-		"Yes" )
-		    break;;
-		"No" )
-		    touch "$skip_cache_setup"
-            echo "To re-enable this prompt do: "
-            echo "rm $skip_cache_setup"
-            echo ""
-		    return 0;;
-		"Ask again next time" )
-		    return 0;;
-	    esac
-	done
-    fi
-
-    sudo_msg="This requires root access."
-    backup="$nixconf.$(date -u +"%FT%TZ").bak"
-    if nixconf_exists; then
-        echo "$nixconf already exists: creating backup - $sudo_msg"
-        sudo cp "$nixconf" "$backup"
-        echo "backup saved at $backup"
-    fi
-
-    caches_line="binary-caches = https://cache.nixos.org $our_cache"
-    keys_line="binary-cache-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= $our_key_name:$our_key"
-    if ! nixconf_has_cache_settings; then
-        if ! nixconf_exists; then
-          echo "Creating $nixconf - $sudo_msg";
-        else 
-          echo "Adding cache settings to $nixconf - $sudo_msg";
-        fi
-        sudo mkdir -p "$nixconf_dir"
-        sudo tee -a "$nixconf" > /dev/null <<EOF
-$caches_line
-$keys_line
-binary-caches-parallel-connections = 40
-EOF
-	    reset_daemon
-    else
-        echo "Adding cache settings to $nixconf - $sudo_msg"
-        if ! nixconf_has_pure_cache; then
-                sudo sed -i.bak 's|^\(binary-caches[ =].*\)$|\1 '"$our_cache"'|' "$nixconf"
-        fi
-        if ! nixconf_has_pure_key; then
-                sudo sed -i.bak 's|^\(binary-cache-public-keys[ =].*\)$|\1 '"$our_key_name"':'"$our_key"'|' "$nixconf"
-        fi
-        reset_daemon
-    fi
-}
-
 if on_darwin_host; then
   if (sw_vers | grep "ProductVersion" | grep "\(10.13.0\|10.13.1\)$" || false) &> /dev/null; then
     allow_broken_macos="$HOME/.local/share/pure-platform/allow-broken-macos"
@@ -197,7 +133,6 @@ if [ "$(nix-instantiate --eval --expr "builtins.compareVersions builtins.nixVers
   exit 1
 fi
 
-enable_cache
 
 git_thunk() {
     case "$1" in
