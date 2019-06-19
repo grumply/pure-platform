@@ -3,13 +3,7 @@
 
 REPO="https://github.com/grumply/pure-platform"
 
-our_cache="https://nixcache.purehs.org"
-our_key_name="nixcache.purehs.org.key"
-our_key="I56gZt71cbMA6tm8x+1gD6fQyITnE+Q4DgNQIXd7sJg="
-
-NIXOPTS="--option extra-binary-caches $our_cache"
-
-NIX_CONF="/etc/nix/nix.conf"
+NIXOPTS=""
 
 LOGFILE="$0.log"
 
@@ -46,25 +40,6 @@ reset_daemon() {
 
 installing_nix=false
 user_prefs="$HOME/.local/share/pure-platform"
-skip_cache_setup="$user_prefs/skip_cache_setup"
-nixconf_dir="/etc/nix"
-nixconf="$nixconf_dir/nix.conf"
-
-nixconf_exists() {
-    if [ -e "$nixconf" ]; then return 0; else return 1; fi;
-}
-
-nixconf_has_cache_settings() {
-    if nixconf_exists && grep -q '^binary-caches\|^binary-cache-public-keys\|^binary-caches-parallel-connections' "$nixconf" ; then return 0; else return 1; fi;
-}
-
-nixconf_has_pure_cache() {
-    if nixconf_has_cache_settings && grep -q "$our_cache" "$nixconf"; then return 0; else return 1; fi;
-}
-
-nixconf_has_pure_key() {
-    if nixconf_has_cache_settings && grep -q "$our_key" "$nixconf"; then return 0; else return 1; fi;
-}
 
 if on_darwin_host; then
   if (sw_vers | grep "ProductVersion" | grep "\(10.13.0\|10.13.1\)$" || false) &> /dev/null; then
