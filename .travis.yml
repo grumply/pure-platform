@@ -6,7 +6,7 @@ env:
   global:
     secure: KoIMX5c1lJt79EAKPxDmbr7zvPUlhdA8oUWqT/kxmSpWClwxQv3qtMh8cnpwvc1aR4gO4sEKB0p3/1fray+pNZCSd4hAyJFZESczf1SKt00CZs8kerOISQ8hC/EqGpuLvAkCyb5DRmiR6oCtUn99YApHNCIJ33lmT+g0MAf7z3BpUcCDvWa0vDPvII+SnVxgfIoWJwHK166hd82g2iHg0P4OADjxWPtrB15PXfkeTdgQ1+n6xPZPkKSMrJZGCnSzoted/TGqRDe+y7QhCuJfiSOy+Z13Cz2GoDjuQi0A/4lBlV9SsbmtxD4rD02CQ4Q/2SVeblkDPvJHispWsZbdQjYNzIvvF9WQeemfnQHs3yHbeH5DGOK2idqG8Vok2T6nBB4AsupcBU1Vl+kBQSz3zCEZ7rfsoW9s+rljcnS+luueqKVX9SELB1fm3BTLag1UDKDwSIjGwf3NIxRHIiIvA676wsq0VdKO2wkQIMCZlAyLH7xKTq4KXo+yYPmm0uBeeIiXfvpmjhlLHQ9quIYczbZHcpcpulrViFAAxyB8zpx4YDlSor8qK0oHrdBkjrXaCSCj1GvMTm54DkBiwtY9g7t4xFQZQQBRq2wi4sNFQaYDiLVJyCoNWVntNqwo/cWqE0MwAXuQQu7JVkgV+XPaX+E5/PrddEjQbtdt7YKZu28=
 script:
-- nix-env -if https://github.com/cachix/cachix/tarball/master --extra-substituters https://cachix.cachix.org --trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM='
+- nix-env -if https://github.com/cachix/cachix/tarball/master --extra-substituters https://cachix.cachix.org --trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM= purehs.cachix.org-1:zkfNuhEOyL/EbMKiSdcJHUClo697yfna10ys3s7HbZ8='
 - cachix use purehs
 - cachix push purehs --watch-store&
 - nix-build -j2 | cachix push purehs
