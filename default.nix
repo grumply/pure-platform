@@ -128,6 +128,9 @@ let combineOverrides = old: new: (old // new) // {
 
         hie84             = hie-nix.hie84;
         ghc-mod84         = hie-nix.ghc-mod84;
+     
+        tasty-quickcheck  = dontCheck super.tasty-quickcheck;
+        scientific        = dontCheck super.scientific;
 
         };
     };
