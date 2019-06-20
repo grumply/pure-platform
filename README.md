@@ -1,10 +1,12 @@
 # pure-platform
 
-A port and simplifiaction of [reflex-platform](https://github.com/reflex-frp/reflex-platform/) for convenient pure development. This is a work-in-progress.
+[![Build Status](https://travis-ci.org/grumply/pure-platform.svg?branch=master)](https://travis-ci.org/grumply/pure-platform)
+
+`pure-platform` is the development ecosystem for pure.
 
 ## Getting Started
 
-See [purehs.org](http://purehs.org)
+This repository is a meta-repo for working on the core pure libraries. If you're new to Pure.hs, see [purehs.org](http://purehs.org), instead.
 
 ## Thanks
 
