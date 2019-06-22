@@ -1,11 +1,8 @@
 os: 
 - osx
 - linux
-language: generic
+language: nix
 sudo: required
-before_install:
-- curl https://nixos.org/nix/install | sh
-- source /Users/travis/.nix-profile/etc/profile.d/nix.sh
 before_script:
 - sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
 env:
