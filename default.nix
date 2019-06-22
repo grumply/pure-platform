@@ -33,13 +33,6 @@ let combineOverrides = old: new: (old // new) // {
       });
     };
 
-    hie-nix = import (fetchFromGitHub {
-      owner = "infinisil";
-      repo = "all-hies";
-      rev = "b06fdd252c71404ace1eea5e09b562bcf7f834f7";
-      sha256 = "1j6763lzgif3wrz28gjsqp201r75rlf7gc3sjhcfa1ix74z0a6ds";
-    }) {};
-
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./pure)              {};
@@ -300,13 +293,5 @@ in let this = rec {
   project = args: import ./project this (args ({ pkgs = nixpkgs; } // this));
 
   tryPureShell = pinBuildInputs ("shell-" + system) tryPurePackages [];
-
-  ghcDev = makeRecursivelyOverridable nixpkgs.pkgs.haskell.packages.ghc844 {
-      overrides = self: super: {
-        hie = all-hies.selection { selector = p: { inherit (p) ghc844; }; };
-      };
-  };
-
-  tryPureDevTools = pinBuildInputs ("shell-" + system) (generalDevTools ghcDev) [];
 
 }; in this

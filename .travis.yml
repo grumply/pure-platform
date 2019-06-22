@@ -1,8 +1,9 @@
-os:
-- linux
-- osx
-language: nix
+os: osx
+language: generic
 sudo: required
+before_install:
+- curl https://nixos.org/nix/install | sh
+- source /Users/travis/.nix-profile/etc/profile.d/nix.sh
 before_script:
 - sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
 env:
@@ -14,4 +15,4 @@ script:
   cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM= purehs.cachix.org-1:zkfNuhEOyL/EbMKiSdcJHUClo697yfna10ys3s7HbZ8='
 - cachix use purehs
 - cachix push purehs --watch-store&
-- nix-build -j2 | cachix push purehs
+- nix-build -j auto --cores 0 | cachix push purehs
