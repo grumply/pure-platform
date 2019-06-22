@@ -1,9 +1,6 @@
-
 matrix:
   include:
     - os: linux
-    - os: osx
-      osx_image: xcode10.2
 language: nix
 sudo: required
 before_script:
