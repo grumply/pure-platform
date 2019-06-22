@@ -34,9 +34,9 @@ let combineOverrides = old: new: (old // new) // {
     };
 
     hie-nix = import (fetchFromGitHub {
-      owner = "wizzup";
-      repo = "hie-nix";
-      rev = "279a9bb8baad82ea20f18056420b58ce763ee4ad";
+      owner = "infinisil";
+      repo = "all-hies";
+      rev = "b06fdd252c71404ace1eea5e09b562bcf7f834f7";
       sha256 = "1j6763lzgif3wrz28gjsqp201r75rlf7gc3sjhcfa1ix74z0a6ds";
     }) {};
 
@@ -126,9 +126,6 @@ let combineOverrides = old: new: (old // new) // {
         semigroupoids     = dontCheck super.semigroupoids;
         lens              = dontCheck super.lens;
 
-        hie84             = hie-nix.hie84;
-        ghc-mod84         = hie-nix.ghc-mod84;
-     
         tasty-quickcheck  = dontCheck super.tasty-quickcheck;
         scientific        = dontCheck super.scientific;
 
@@ -289,31 +286,27 @@ in let this = rec {
     inherit buildInputs otherDeps;
   } "";
 
-  # The systems that we want to build for on the current system
-  cacheTargetSystems = [
-    "x86_64-linux"
-    "x86_64-darwin"
-  ];
-
   pureEnv = platform:
     let haskellPackages = builtins.getAttr platform this;
         ghcWithStuff = if platform == "ghc" || platform == "ghcjs" then haskellPackages.ghcWithHoogle else haskellPackages.ghcWithPackages;
     in ghcWithStuff (p: import ./packages.nix { haskellPackages = p; inherit platform; });
 
-  tryPurePackages = generalDevTools ghc
-    ++ builtins.map pureEnv platforms;
+  tryPurePackages = generalDevTools ghc ++ builtins.map pureEnv platforms;
 
   lib = haskellLib;
+
   inherit system;
+
   project = args: import ./project this (args ({ pkgs = nixpkgs; } // this));
+
   tryPureShell = pinBuildInputs ("shell-" + system) tryPurePackages [];
 
   ghcDev = makeRecursivelyOverridable nixpkgs.pkgs.haskell.packages.ghc844 {
       overrides = self: super: {
-        hie84             = hie-nix.hie84;
-        ghc-mod84         = hie-nix.ghc-mod84;
+        hie = all-hies.selection { selector = p: { inherit (p) ghc844; }; };
       };
   };
+
   tryPureDevTools = pinBuildInputs ("shell-" + system) (generalDevTools ghcDev) [];
 
 }; in this

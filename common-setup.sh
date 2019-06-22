@@ -29,85 +29,7 @@ user_error() {
     exit "$1"
 }
 
-on_darwin_host() { [ "$(uname -s)" == 'Darwin' ]; }
-
-reset_daemon() {
-    if on_darwin_host; then
-        sudo launchctl stop org.nixos.nix-daemon
-        sudo launchctl start org.nixos.nix-daemon
-    fi
-}
-
-installing_nix=false
-user_prefs="$HOME/.local/share/pure-platform"
-
-if on_darwin_host; then
-  if (sw_vers | grep "ProductVersion" | grep "\(10.13.0\|10.13.1\)$" || false) &> /dev/null; then
-    allow_broken_macos="$HOME/.local/share/pure-platform/allow-broken-macos"
-    if [ ! -d "$allow_broken_macos" ]; then
-      echo "Running nix on High Sierra versions prior to 10.13.2 is likely to cause system crashes"
-      echo "See https://github.com/NixOS/nix/issues/1583"
-      echo "Please update your system to continue safely"
-      echo "If you still want to try, do:"
-      echo "mkdir -p $allow_broken_macos"
-      exit 1
-    fi
-  fi
-fi
-
 >&2 echo "If you have any trouble with this script, please submit an issue at $REPO/issues"
-
-(
-
-cd "$DIR"
-
-if [ ! -d /nix ]; then
-  installing_nix=true
-  if ! type -P curl >/dev/null ; then
-    echo "Please make sure that 'curl' is installed and can be run from this shell"
-    exit 1
-  fi
-
-  echo "In order to continue, $0 must install the Nix package manager.  This requires root access, so you will be prompted for your password.  If you do not wish to continue, just hit Ctrl-C at the password prompt."
-  ./installNix.sh
-fi
-
-)
-
-# The command to source the nix script.  This should be a line of valid bash code.
-if [ -O /nix/store ]; then
-    SOURCE_NIX_SCRIPT=". $HOME/.nix-profile/etc/profile.d/nix.sh"
-else
-    SOURCE_NIX_SCRIPT=". /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
-fi
-
-# Whether the nix script needed to be sourced - i.e. nix commands are not available without doing so, from the user's basic prompt.
-NEEDED_TO_SOURCE_NIX_SCRIPT=0
-
-if ! type -P nix-shell >/dev/null; then
-  set +eu
-  $SOURCE_NIX_SCRIPT
-  set -eu
-  NEEDED_TO_SOURCE_NIX_SCRIPT=1
-  if ! type -P nix-shell >/dev/null; then
-    echo "It looks like Nix isn't working.  Please make sure you can run nix-shell, then retry the $0, or submit an issue at $REPO/issues"
-    exit 1
-  fi
-fi
-
-# The minimum required version of Nix to run this script.
-MIN_REQUIRED_NIX_VERSION="1.8"
-
-if [ "$(nix-instantiate --eval --expr "builtins.compareVersions builtins.nixVersion \"$MIN_REQUIRED_NIX_VERSION\" >= 0")" != "true" ]; then
-  echo "It looks like your version of Nix, $(nix-instantiate --eval --expr "builtins.nixVersion"), is older than the minimum version required by the Pure Platform, \"$MIN_REQUIRED_NIX_VERSION\".  You'll need to upgrade Nix to continue.  On non-NixOS platforms, that can usually be done like this:"
-  if [ "$NEEDED_TO_SOURCE_NIX_SCRIPT" -ne 0 ]; then
-    echo "$SOURCE_NIX_SCRIPT"
-  fi
-  echo "nix-env --upgrade"
-  echo "If you're on NixOS, you may need to upgrade your OS to a later version.  See https://nixos.org/nixos/manual/sec-upgrading.html"
-  exit 1
-fi
-
 
 git_thunk() {
     case "$1" in
@@ -150,16 +72,6 @@ EOF
 # Clean up a path so it can be injected into a nix expression
 cleanup_nix_path() {
     echo "$1" | sed 's@/*$@@'
-}
-
-prebuild_try_pure_shell() {
-    nix-instantiate "$DIR/shell.nix" --indirect --add-root "$DIR/gc-roots/shell.drv" $NIXOPTS >/dev/null
-    nix-store --realize "$DIR/gc-roots/shell.drv" --indirect --add-root "$DIR/gc-roots/shell.out" >/dev/null
-}
-
-try_pure_shell() {
-    prebuild_try_pure_shell
-    nix-shell -E '{path}: import path' --arg path "$(readlink "$DIR/gc-roots/shell.drv")" $NIXOPTS "$@"
 }
 
 # For a given effective platform, turn a string representing a package, which
