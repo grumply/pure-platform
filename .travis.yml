@@ -1,17 +1,27 @@
 matrix:
   include:
     - os: linux
-language: nix
+      language: nix
+    - os: osx
+      osx_image: xcode10.2
+      language: generic
+      before_install:
+        - curl https://nixos.org/nix/install | sh
+        - source /Users/travis/.nix-profile/etc/profile.d/nix.sh
+
 sudo: required
+
 before_script:
-- sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
+  - sudo mount -o remount,exec,size=4G,mode=755 /run/user || true
+
 env:
   global:
     secure: J1qKo8rrkTlQvVwWeWK1Wb+ekTi5YxSpj7g+JAb90/YI8jangbgmw6H+l7cJHDqUSmDVy0LmEAn7qW36QVc9Pe+c22hereXra9nJ2vt+ZQSGv9C9VWXALUejPb2YIUhPrM+ywGljhtc55wp95LGvk7DMzPSRDZNy9UbAxRUnl9W35Nur1z6ynfdiIXVwkTsecTqAu4aG4yXVcAu5EgTgU7EpZdYONybQnwzeRqFa1gJ+4DWjQHcEZpe/fMt0SGN6sI00M5FoU2N8wqd/iJ7/zoIYgXonFfPtVzG9fxAy2QcwpF02IrqvhuTtsqIBT7O34LRkDruR1WdnUUwqOOWsq3PoT8wl3GLPlZYy6qDxuMO7CcalZKZV7FYzK3epsXmH0O1+bfT/iVfBzL7NRiIZon/D+6uAOd2vAwcbcxou+U/Q616glW/4ZLvn0dajWi5fzs7T2fZQZSwIoqQYVlegbJSYsN5QKxVEDDAzmh3L4C55lLXA2lhSJ+e1l0+SrHCtfduPxdLae1d/agFHmLzyNpMYT/HodyD7FFNH6UFQRuYequN1QZmK3vHZXUaF0AyQElDLJ3uUuMZirVidu0ETmhEWzWIjIm29gaBx/sS+PWZtelSu1byRREgnw2EghQqDrNag7q9Z9UzjGg5NBI0lKnetLQusLPHncHRl+I+UXLA=
+
 script:
-- nix-env -if https://github.com/cachix/cachix/tarball/master --extra-substituters
-  https://cachix.cachix.org --trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-  cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM= purehs.cachix.org-1:zkfNuhEOyL/EbMKiSdcJHUClo697yfna10ys3s7HbZ8='
-- cachix use purehs
-- cachix push purehs --watch-store&
-- nix-build -j auto --cores 0 | cachix push purehs
+  - nix-env -if https://github.com/cachix/cachix/tarball/master --extra-substituters
+    https://cachix.cachix.org --trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+    cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM= purehs.cachix.org-1:zkfNuhEOyL/EbMKiSdcJHUClo697yfna10ys3s7HbZ8='
+  - cachix use purehs
+  - cachix push purehs --watch-store&
+  - nix-build -j auto --cores 0 | cachix push purehs
