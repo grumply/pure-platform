@@ -200,6 +200,7 @@ let
     pure-xml = this;
     ef = this;
     excelsior = this;
+    sorcerer = this;
 
     pure-semantic-ui = this;
 

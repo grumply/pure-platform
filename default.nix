@@ -103,6 +103,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-xml          = self.callPackage (hackGet ./pure-xml)          {};
         ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
+        sorcerer          = self.callPackage (hackGet ./sorcerer)          {};
 
 	pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
 
