@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-variance.git",
-  "rev": "c7fd8c1a76c585dff9346428a1e0adca9a32790a",
-  "sha256": "1ab1vvgv4jplssp3gm3l6clmdylgn2k4gc559nnhgh43s3330z17",
-  "fetchSubmodules": true
+  "rev": "a376a9f669470aab345bab2fafd6b25309c89e09",
+  "sha256": "1kbin8gb9ksfx8lgyp0vy5n9z77lsh3w72w58w58gp7m2nmwndjf",
+  "fetchSubmodules": false
 }
