@@ -1,7 +1,6 @@
 matrix:
   include:
     - os: linux
-      language: generic
       before_install:
         - curl https://nixos.org/nix/install | sh
         - source /Users/travis/.nix-profile/etc/profile.d/nix.sh
