@@ -1,7 +1,10 @@
 matrix:
   include:
     - os: linux
-      language: nix
+      language: generic
+      before_install:
+        - curl https://nixos.org/nix/install | sh
+        - source /Users/travis/.nix-profile/etc/profile.d/nix.sh
     - os: osx
       osx_image: xcode10.2
       language: generic
