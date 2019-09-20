@@ -3,7 +3,7 @@ matrix:
     - os: linux
       before_install:
         - curl https://nixos.org/nix/install | sh
-        - source /Users/travis/.nix-profile/etc/profile.d/nix.sh
+        - source /home/travis/.nix-profile/etc/profile.d/nix.sh
     - os: osx
       osx_image: xcode10.2
       language: generic
