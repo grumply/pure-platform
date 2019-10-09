@@ -206,6 +206,5 @@ let
 
     pure-semantic-ui = this;
 
-    all = all;
   };
 in prj
