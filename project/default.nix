@@ -126,7 +126,9 @@ let
   prj = mapAttrs mkPkgSet shells // {
     shells = mapAttrs (name: pnames:
       this.workOnMulti' {
-        env = prj.${name}.override { overrides = self: super: nixpkgs.lib.optionalAttrs withHoogle {}; };
+        env = prj.${name}.override { overrides = self: super: nixpkgs.lib.optionalAttrs withHoogle {
+          ghcWithPackages = self.ghcWithHoogle
+        }; };
         packageNames = pnames;
         inherit tools shellToolOverrides;
       }
@@ -206,22 +208,4 @@ let
 
     all = all;
   };
-
-  ghcLinks = mapAttrsToList (name: pnames: optionalString (pnames != []) ''
-    mkdir -p $out/${escapeShellArg name}
-    ${concatMapStringsSep "\n" (n: ''
-      ln -s ${prj.${name}.${n}} $out/${escapeShellArg name}/${escapeShellArg n}
-    '') pnames}
-  '') shells;
-  mobileLinks = mobileName: mobile: ''
-    mkdir -p $out/${escapeShellArg mobileName}
-    ${concatStringsSep "\n" (mapAttrsToList (name: app: ''
-      ln -s ${app} $out/${escapeShellArg mobileName}/${escapeShellArg name}
-    '') mobile)}
-  '';
-
-  all =
-    nixpkgs.runCommand name { passthru = prj; preferLocalBuild = true; } ''
-      ${concatStringsSep "\n" ghcLinks}
-    '';
-in all
+in prj
