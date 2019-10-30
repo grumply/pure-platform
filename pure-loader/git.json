@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-loader.git",
-  "rev": "ceb4e94a62b87276e6ea18c5f965aa568559a42a",
-  "sha256": "1vxjj0i0j4sxsa4f7v781dbdbg1jwa2f86440s0h7xqycmxcj5qq",
-  "fetchSubmodules": true
+  "rev": "a9c1af67c71090be0549d24c77cf627df3afd3c3",
+  "sha256": "1q2p91kbwvaxjrcnf32p5rs1l8j3l5r28z14jf2v8ss1c3hzyshl",
+  "fetchSubmodules": false
 }
