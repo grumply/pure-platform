@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-scroll-loader.git",
-  "rev": "f6ac7b2caa12c5d3407ee75388fd8060aa44f242",
-  "sha256": "12kpc2wivlicz2v9lkpl1h33kpzy09d2w95pk4f3px7wdz86f9mc",
-  "fetchSubmodules": true
+  "rev": "e39b2d7f57d068aa8818b92316d638249bddcdf6",
+  "sha256": "0sxgnpiqzr688bdafpmnb6clygblg7xijvgnq0b46csis0dr6p90",
+  "fetchSubmodules": false
 }
