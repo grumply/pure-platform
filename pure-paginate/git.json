@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-paginate.git",
-  "rev": "0fb66343d702928497bc00ffcc9c971924814e74",
-  "sha256": "12k9nfldzwyha46xnq6fqpdjayq1csy6hnq5qf2xj7yk2jw2j06g",
-  "fetchSubmodules": true
+  "rev": "1d42c606607f720149a01e2301760d3277c0021a",
+  "sha256": "1lp75mngz9krpk2ch1i6jc7wviyn459i6aysl3spr0mr2kpqg6mc",
+  "fetchSubmodules": false
 }
