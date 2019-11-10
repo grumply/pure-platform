@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-readfile.git",
-  "rev": "94b9b3c7685bb305a4747d13ecdaaf6e4be6e931",
-  "sha256": "0v1nk4rg06pqfzzqkv6335jw21fd8lbh67qxa7vpf0zx9i2kvkqg",
-  "fetchSubmodules": true
+  "rev": "d3b98b412ab59291d4176a7a0189bfbaa2772d1c",
+  "sha256": "05vbdb5kf1cksa07xa0z0lg36dwl931nsyakr896zpg16g032n17",
+  "fetchSubmodules": false
 }
