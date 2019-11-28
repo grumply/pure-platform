@@ -59,6 +59,25 @@ in
   # build all three packages in a shared incremental environment, for
   # both GHC and GHCJS.
 
+, minimal ? false
+  # :: Bool
+  #
+  # A flag to disable testing, coverage, documentation generation, and
+  # profiling. For finer-grained control, use `overrides`. e.g.
+  #
+  #    overrides = self: super: {
+  #      mkDerivation = args: super.mkDerivation (args // {
+  #        doCheck = true;
+  #        doCoverage = true;
+  #        doBenchmark = true;
+  #        enableLibraryProfiling = true;
+  #        doHaddock = true;
+  #      });
+  #    };
+  #
+  # See https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/generic-builder.nix
+  # for the haskell.mkDerivation specification.
+
 , overrides ? _: _: {}
   # :: PackageSet -> PackageSet ->  { <package name> :: Derivation }
   #
@@ -75,6 +94,9 @@ in
   #         sha256 = "0vh3hj5rj98d448l647jc6b6q1km4nd4k01s9rajgkc2igigfp6s";
   #       }) {};
   #     };
+  #
+  # See https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/haskell-modules/generic-builder.nix
+  # for the haskell.mkDerivation specification.
 
 , shellToolOverrides ? _: _: {}
   # A function returning a record of tools to provide in the
@@ -103,7 +125,6 @@ in
   # nix-shells.
   #
   #     tools = ghc: with ghc; [
-  #       hpack
   #       pkgs.chromium
   #     ];
   #
@@ -112,14 +133,21 @@ in
   # package set of the platform we are developing for, allowing you to
   # build tools with the correct Haskell package set.
 
-, withHoogle ? true
-  # Set to false to disable building the hoogle database when entering
+, withHoogle ? false
+  # Set to true to enable building the hoogle database when entering
   # the nix-shell.
 
 }:
 let
   overrides' = nixpkgs.lib.foldr nixpkgs.lib.composeExtensions (_: _: {}) [
-    (self: super: mapAttrs (name: path: self.callCabal2nix name path {}) packages) 
+    (self: super: mapAttrs (name: path: self.callCabal2nix name path {}) packages)
+    (self: super: { mkDerivation = args: super.mkDerivation (args // {
+        doCheck = !minimal;
+        doCoverage = !minimal;
+        enableLibraryProfiling = !minimal;
+        doHaddock = !minimal;
+      });
+    })
     overrides
   ];
   mkPkgSet = name: _: this.${name}.override { overrides = overrides'; };
