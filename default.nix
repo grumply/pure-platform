@@ -195,6 +195,7 @@ in let this = rec {
     let nativeHaskellPackages = ghc;
     in {
     inherit (nativeHaskellPackages)
+      hpack
       Cabal
       cabal-install;
     inherit (nixpkgs)
