@@ -168,6 +168,7 @@ let
     pure-cache = this;
     pure-capability = this;
     pure-cond = this;
+    pure-contexts = this;
     pure-core = this;
     pure-css = this;
     pure-default = this;
