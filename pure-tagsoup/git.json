@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-tagsoup.git",
-  "rev": "73d3b33791d15d9033db38670e15cdc4b48c66bb",
-  "sha256": "1axrjwzaikccasxj1ybhmxa56pn3h3zxngavlbl3qwv5hgyi8m8x",
-  "fetchSubmodules": true
+  "rev": "b4573de4c7b4b45bf3f35c5e007730aa490db1ad",
+  "sha256": "08hwxhdlc24zyrsid0889m90smfk27fmlh30yx446lfnca0gz4hi",
+  "fetchSubmodules": false
 }

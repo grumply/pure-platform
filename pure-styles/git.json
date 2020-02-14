@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-styles.git",
-  "rev": "8214e570190a7c954680a4ecec334bb9c5d5042f",
-  "sha256": "0k2c20hsvyikrx33k1787ag0lqrab1g3ldn72mkhi7ya7k1f85af",
-  "fetchSubmodules": true
+  "rev": "716a0eb7843e699cf641e45e6ea92ec487cc87d7",
+  "sha256": "17zpllrs3d9wr437g6v4av7n6ljd9pmgy29m1pc20061clvziyvv",
+  "fetchSubmodules": false
 }

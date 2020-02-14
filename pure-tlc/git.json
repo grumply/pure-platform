@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-tlc.git",
-  "rev": "606066c82d9f2bd5d75535f487fbf1ba22a007a8",
-  "sha256": "19l7s101plhj3yw3d0ggba49i344dbyyhrsip84452615fasmddy",
-  "fetchSubmodules": true
+  "rev": "7bdc960f044f9683396aa030e2c6eaa56dca26d5",
+  "sha256": "05id1915b1xajin02hjggs5irh3dgrsjzrhar7nhil8idraxhhnm",
+  "fetchSubmodules": false
 }

@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-svg.git",
-  "rev": "e2358df9f500bf6dd83117995fd31519908cda09",
-  "sha256": "1pg238pfpllvnwjqi33i4sm6nfqp2hgw2hzjnhd6bvq00ycljblh",
-  "fetchSubmodules": true
+  "rev": "78ca9432425f12974c075ce2c3251383c268ae03",
+  "sha256": "1ngxkd7xckvfz64a0ka8zbsbn612drhbxbyyic95h0lkzkw7f288",
+  "fetchSubmodules": false
 }

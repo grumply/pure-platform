@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-lazyloader.git",
-  "rev": "c5cfa12328315b23dec59d0c95f52b179b855572",
-  "sha256": "0l9nrymijh8q3ay2qfcr3s8pdyh8pnlw6r2xnl4i4iyws7nyr0y5",
-  "fetchSubmodules": true
+  "rev": "b0039e25d793087482f15bce9834ed57a3395691",
+  "sha256": "0l6wj34wy4bwxvs0gixkhxwiy1q64q63v69fxc1jk3673gmqhhqk",
+  "fetchSubmodules": false
 }

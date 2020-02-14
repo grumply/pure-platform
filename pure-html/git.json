@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-html.git",
-  "rev": "5f3c0919d3ce861b28560ff533cac281b1e4f73c",
-  "sha256": "1vayqsbva43p2s8ixi9q89c0d4ghmbqfyv1nrkzdw7cv966ysplv",
-  "fetchSubmodules": true
+  "rev": "b61fc4a3e4edecd7f7efc72aca6c2d539927d17a",
+  "sha256": "02j9hslvr16rrrm3lrh5w0z527zhbd13waafx1gdz0qwwcdkfjqr",
+  "fetchSubmodules": false
 }

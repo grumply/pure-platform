@@ -1,5 +1,5 @@
 diff --git a/Data/JSString.hs b/Data/JSString.hs
-index 84f3319..d30e579 100644
+index 36fb370..6475cff 100644
 --- a/Data/JSString.hs
 +++ b/Data/JSString.hs
 @@ -5,7 +5,7 @@
@@ -34,25 +34,23 @@ index 7cb5abd..0847f55 100644
          where
            label = fieldLabelModifier opts $
 diff --git a/ghcjs-base.cabal b/ghcjs-base.cabal
-index 4a64694..5f8b061 100644
+index c3c654d..01eac53 100644
 --- a/ghcjs-base.cabal
 +++ b/ghcjs-base.cabal
-@@ -133,8 +133,8 @@ library
-                    aeson                >= 0.8  && < 1.3,
+@@ -133,7 +133,7 @@ library
                     scientific           >= 0.3  && < 0.4,
                     vector               >= 0.10 && < 0.13,
--                   containers           >= 0.5  && < 0.6,
+                    containers           >= 0.5  && < 0.7,
 -                   time                 >= 1.5  && < 1.9,
-+                   containers           >= 0.5  && < 0.7,
 +                   time                 >= 1.5  && < 1.10,
                     hashable             >= 1.2  && < 1.3,
                     unordered-containers >= 0.2  && < 0.3,
                     attoparsec           >= 0.11 && < 0.14,
 diff --git a/jsbits/jsstring.js b/jsbits/jsstring.js
-index 7b9a761..9113c16 100644
+index e8a4ef9..7d51bd4 100644
 --- a/jsbits/jsstring.js
 +++ b/jsbits/jsstring.js
-@@ -1138,16 +1138,15 @@ function h$jsstringReadValue64(str, start, negate) {
+@@ -1135,16 +1135,15 @@ function h$jsstringReadValue64(str, start, negate) {
        h$jsstringLongs.push(goog.math.Long.fromInt(t));
      }
    }

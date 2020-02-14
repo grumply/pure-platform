@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-xml.git",
-  "rev": "e40f1a907440f1cccff795c2426cfdeba1e23740",
-  "sha256": "04008i504jagaka73psh0y6hl55p5vzidy1z7g1kwqqlngv1awb8",
-  "fetchSubmodules": true
+  "rev": "f53abbd4dd06c4313e1f841e04e97c2e432ca6f8",
+  "sha256": "0dnd7m73p1xkmv9b0bl6whjvrz2vx1gkwwp1v8c4mdvml8ib1di5",
+  "fetchSubmodules": false
 }

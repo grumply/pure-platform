@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-limiter.git",
-  "rev": "68273c992afa32c61a157aa40ab0f8177e74e7b9",
-  "sha256": "08spq0hblxz8rxva1261zml10sph7rdw32ih98sasdw8jw753331",
-  "fetchSubmodules": true
+  "rev": "4d4e0266baff50813efbac4587835fa82d9747bb",
+  "sha256": "1slwx2035sijizckfkk5vy2pzihyw4c73lx930a7fvsmh4k78mp1",
+  "fetchSubmodules": false
 }

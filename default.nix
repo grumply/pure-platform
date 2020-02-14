@@ -108,12 +108,7 @@ let combineOverrides = old: new: (old // new) // {
 
 	pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
 
-        websockets        = self.callHackage "websockets" "0.12.4.0"       {};
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
-
-	haskell-src-meta  = self.callHackage "haskell-src-meta" "0.8.0.3"  {};
-
-        roles             = self.callHackage "roles" "0.2.0.0"             {};
 
         hasktags          = dontCheck super.hasktags;
 
@@ -124,6 +119,12 @@ let combineOverrides = old: new: (old // new) // {
         tasty-quickcheck  = dontCheck super.tasty-quickcheck;
         scientific        = dontCheck super.scientific;
 
+
+        # really?
+        QuickCheck = 
+          (overrideCabal super.QuickCheck (old: {
+            doCheck = false;
+          }));
         };
     };
     haskellOverlays = import ./haskell-overlays {
@@ -146,14 +147,14 @@ let combineOverrides = old: new: (old // new) // {
     inherit haskellLib;
   };
 
-  ghc = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc844).override {
+  ghc = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc865).override {
     overrides = foldr composeExtensions (_: _: {}) [
-       (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs84.override {
+       (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs86.override {
         ghcjsSrc = fetchgit {
           url = "https://github.com/ghcjs/ghcjs.git";
-          branchName = "ghc-8.4";
-          rev = "00a8993a8d9c35b33b84a83b0aec5171c582a4f3";
-          sha256 = "0a9qna5qffskfgw9a4jwvzfd81c41vw36k46hw52hw9xxynvk7x9";
+          branchName = "ghc-8.6";
+          rev = "e87195eaa2bc7e320e18cf10386802bc90b7c874";
+          sha256 = "02mwkf7aagxqi142gcmq048244apslrr72p568akcab9s0fn2gvy";
           fetchSubmodules = true;
         };
       }))

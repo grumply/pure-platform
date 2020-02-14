@@ -1,6 +1,6 @@
 {
   "url": "https://github.com/grumply/pure-try.git",
-  "rev": "0b75a3cc9e74b5fd46e4b9c5a6aee6c6163494be",
-  "sha256": "060wnal54g0mx28qbvwy39rcp43m9bjkn1zr393yrx6c3fnchj1g",
-  "fetchSubmodules": true
+  "rev": "b41921e7e7da99ac3484dee48d3aa53542fa482f",
+  "sha256": "0q383yfkp61d80qwkw3dbwa868bq9kzh2kx77rdgwdgdpaydza15",
+  "fetchSubmodules": false
 }
