@@ -119,7 +119,6 @@ let combineOverrides = old: new: (old // new) // {
         tasty-quickcheck  = dontCheck super.tasty-quickcheck;
         scientific        = dontCheck super.scientific;
 
-
         # really?
         QuickCheck = 
           (overrideCabal super.QuickCheck (old: {
@@ -149,7 +148,7 @@ let combineOverrides = old: new: (old // new) // {
 
   ghc = (extendHaskellPackages nixpkgs.pkgs.haskell.packages.ghc865).override {
     overrides = foldr composeExtensions (_: _: {}) [
-       (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs86.override {
+      (ghcjsPkgs (nixpkgs.pkgs.haskell.compiler.ghcjs86.override {
         ghcjsSrc = fetchgit {
           url = "https://github.com/ghcjs/ghcjs.git";
           branchName = "ghc-8.6";
