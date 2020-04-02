@@ -119,6 +119,8 @@ let combineOverrides = old: new: (old // new) // {
         tasty-quickcheck  = dontCheck super.tasty-quickcheck;
         scientific        = dontCheck super.scientific;
 
+        time-compat       = dontCheck super.time-compat;
+
         # really?
         QuickCheck = 
           (overrideCabal super.QuickCheck (old: {
