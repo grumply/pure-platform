@@ -1,6 +1,6 @@
 # pure-platform
 
-[![Build Status](https://travis-ci.org/grumply/pure-platform.svg?branch=master)](https://travis-ci.org/grumply/pure-platform)
+![CI](https://github.com/grumply/pure-platform/workflows/CI/badge.svg)
 
 `pure-platform` is the development ecosystem for pure.
 
