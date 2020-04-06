@@ -143,7 +143,6 @@ let
     (self: super: mapAttrs (name: path: self.callCabal2nix name path {}) packages)
     (self: super: { mkDerivation = args: super.mkDerivation (args // {
         doCheck = !minimal;
-        doCoverage = !minimal;
         enableLibraryProfiling = !minimal;
         doHaddock = !minimal;
       });
