@@ -1,6 +1,8 @@
 {
   "url": "https://github.com/grumply/pure-elm.git",
-  "rev": "02e744ecb0e3b3d68c4ac7da194d67ca3543ad35",
-  "sha256": "1xfs82hwllhc0c70w1ip7f0ssh483z5ndblm8clqhy1q9r4vxxj6",
-  "fetchSubmodules": false
+  "rev": "fbf29829029845fa4d79e88603bbf253abe40d3c",
+  "sha256": "0n2df78456pl3yw78vsrvjlvxqpid5ka2lqv00q7k6c43ha9qvyk",
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
 }
