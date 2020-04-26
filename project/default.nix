@@ -187,6 +187,7 @@ let
     pure-loader = this;
     pure-localstorage = this;
     pure-locker = this;
+    pure-maybe = this;
     pure-modal = this;
     pure-paginate = this;
     pure-periodically = this;

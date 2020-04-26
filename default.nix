@@ -61,6 +61,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-loader       = self.callPackage (hackGet ./pure-loader)       {};
         pure-localstorage = self.callPackage (hackGet ./pure-localstorage) {};
         pure-locker       = self.callPackage (hackGet ./pure-locker)       {};
+        pure-maybe        = self.callPackage (hackGet ./pure-maybe)        {};
         pure-modal        = self.callPackage (hackGet ./pure-modal)        {};
         pure-paginate     = self.callPackage (hackGet ./pure-paginate)     {};
         pure-periodically = self.callPackage (hackGet ./pure-periodically) {};
@@ -106,7 +107,7 @@ let combineOverrides = old: new: (old // new) // {
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
         sorcerer          = self.callPackage (hackGet ./sorcerer)          {};
 
-	pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
+	      pure-semantic-ui  = self.callPackage (hackGet ./pure-semantic-ui)  {};
 
         tagsoup           = self.callHackage "tagsoup" "0.14.6"            {};
 
