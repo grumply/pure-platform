@@ -165,6 +165,7 @@ let
     pure-async = this;
     pure-bench = this;
     pure-cache = this;
+    pure-cached = this;
     pure-capability = this;
     pure-cond = this;
     pure-contexts = this;
