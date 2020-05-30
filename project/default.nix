@@ -229,7 +229,6 @@ let
     pure-uri = this;
     pure-variance = this;
     pure-visibility = this;
-    pure-xhr = this;
     pure-xml = this;
     ef = this;
     excelsior = this;
