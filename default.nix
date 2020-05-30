@@ -103,6 +103,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-visibility   = self.callPackage (hackGet ./pure-visibility)   {};
         pure-websocket    = self.callPackage (hackGet ./pure-websocket)    {};
         pure-uri          = self.callPackage (hackGet ./pure-uri)          {};
+        pure-xhr          = self.callPackage (hackGet ./pure-xhr)          {};
         pure-xml          = self.callPackage (hackGet ./pure-xml)          {};
         ef                = self.callPackage (hackGet ./ef)                {};
         excelsior         = self.callPackage (hackGet ./excelsior)         {};
@@ -122,6 +123,21 @@ let combineOverrides = old: new: (old // new) // {
         scientific        = dontCheck super.scientific;
 
         time-compat       = dontCheck super.time-compat;
+
+        network           = dontCheck (self.callHackage "network" "2.6.3.6" {});
+        lens-aeson        = dontCheck super.lens-aeson;
+        # avoid foundation in 0.14 and avoid foundation in tests
+        memory            = dontCheck (self.callHackage "memory" "0.15.0" {});
+        Glob              = dontCheck super.Glob;
+        SHA               = dontCheck super.SHA;
+        http-types        = dontCheck super.http-types;
+        # avoid ghcjs-dom and jssaddle in 0.4.1.5+
+        entropy           = overrideCabal (self.callHackage "entropy" "0.4.1.4" {}) 
+                               (drv : { configureFlags = [ "-f-support_foundation" "-f-support_basement" ];
+                                      }
+                               );
+        monad-par         = dontCheck super.monad-par;
+                              
 
         # really?
         QuickCheck = 
