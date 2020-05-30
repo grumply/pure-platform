@@ -139,6 +139,7 @@ let combineOverrides = old: new: (old // new) // {
         monad-par         = dontCheck super.monad-par;
         base-compat-batteries = dontCheck super.base-compat-batteries;
         hourglass         = dontCheck super.hourglass;
+        x509              = dontCheck super.x509;
                               
 
         # really?
