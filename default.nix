@@ -83,6 +83,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-spacetime    = self.callPackage (hackGet ./pure-spacetime)    {};
         pure-spinners     = self.callPackage (hackGet ./pure-spinners)     {};
         pure-state        = self.callPackage (hackGet ./pure-state)        {};
+        pure-stream       = self.callPackage (hackGet ./pure-stream)       {};
         pure-sticky       = self.callPackage (hackGet ./pure-sticky)       {};
         pure-styles       = self.callPackage (hackGet ./pure-styles)       {};
         pure-suspense     = self.callPackage (hackGet ./pure-suspense)     {};

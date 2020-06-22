@@ -209,6 +209,7 @@ let
     pure-spinners = this;
     pure-state = this;
     pure-sticky = this;
+    pure-stream = this;
     pure-styles = this;
     pure-suspense = this;
     pure-svg = this;
