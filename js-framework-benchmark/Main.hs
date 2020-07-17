@@ -1,7 +1,7 @@
 {-# LANGUAGE OverloadedStrings, OverloadedLists #-}
 module Main where
 
-import Pure
+import Pure hiding (rows)
 import Pure.Random
 
 import Data.Maybe (fromJust)
@@ -28,7 +28,6 @@ data Row = Row
   , selected  :: !Bool
   , select    :: !(View -> View)
   , remove    :: !(View -> View)
-  , rendered  :: !View -- render cache
   }
 
 data Model = Model
@@ -77,10 +76,10 @@ createRows n newId update = V.generateM n $ \n -> do
   color <- colors
   noun <- nouns
   let i = newId + n
-  pure $ renderRow $ Row i (adjective <> " " <> color <> " " <> noun) False (OnClick (const $ update (SelectM i))) (OnClick (const $ update (RemoveM i))) Null
+  pure $ Row i (adjective <> " " <> color <> " " <> noun) False (OnClick (const $ update (SelectM i))) (OnClick (const $ update (RemoveM i)))
 
 bang :: Row -> Row
-bang row = renderRow row { label = label row <> " !!!" }
+bang row = row { label = label row <> " !!!" }
 
 updateEvery :: Int -> (a -> a) -> V.Vector a -> V.Vector a
 updateEvery n f = V.modify (flip update 0)
@@ -96,13 +95,10 @@ updateEvery n f = V.modify (flip update 0)
 swap :: Int -> Int -> V.Vector a -> V.Vector a
 swap i j = V.modify (\v -> MV.unsafeSwap v i j)
 
-renderRow :: Row -> Row
-renderRow r = r { rendered = buildRow r }
-
 selectRow :: Int -> Row -> Row
 selectRow i row
-  | i == ident row = renderRow row { selected = True  }
-  | selected row   = renderRow row { selected = False }
+  | i == ident row = row { selected = True  }
+  | selected row   = row { selected = False }
   | otherwise      = row
 
 data Button = Button
@@ -136,11 +132,11 @@ buttons =
     ]
 
 buildRow :: Row -> View
-buildRow (Row i l s select remove _) =
+buildRow (Row i l s select remove) =
   Tr <| (if s then Class "danger" else id) |>
-    [ Td <| Class "col-md-1" |> [ text i ]
+    [ Td <| Class "col-md-1" |> [ txt i ]
     , Td <| Class "col-md-4" |>
-      [ A <| select |> [ text l ]
+      [ A <| select |> [ txt l ]
       ]
     , Td <| Class "col-md-1" |>
       [ A <| remove |>
@@ -151,11 +147,11 @@ buildRow (Row i l s select remove _) =
     ]
 
 buildRows :: V.Vector Row -> [(Int,View)]
-buildRows = fmap ((,) <$> ident <*> rendered) . V.toList
+buildRows = fmap ((,) <$> ident <*> lazy buildRow) . V.toList
 
 main :: IO ()
 main = do
-  inject body $ flip ComponentIO () $ \self ->
+  inject body $ flip Component () $ \self ->
     let
         upd msg = modify_ self $ \_ mdl -> do
           case msg of
@@ -195,7 +191,7 @@ main = do
                     [ Div <| Class "container" |>
                         [ Div <| Class "jumbotron" |>
                             [ Div <| Class "row" |>
-                                  [ Div <| Class "col-md-6" |> [ H1 <||> [ txt "pure-v0.7-keyed" ] ]
+                                  [ Div <| Class "col-md-6" |> [ H1 <||> [ "pure-v0.7-keyed" ] ]
                                   , Div <| Class "col-md-6" |> (fmap (Main.button upd) buttons)
                                   ]
                             ]

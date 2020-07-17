@@ -178,6 +178,7 @@ let
     pure-events = this;
     pure-fetch = this;
     pure-forms = this;
+    pure-gestures = this;
     pure-grid = this;
     pure-html = this;
     pure-intersection = this;
