@@ -19,6 +19,8 @@ TAGS
 result
 *.log
 .DS_Store
+*.hs
+packages/*/default.nix
 
 # Hide any files in hack-on/off quasi-submodules
 # nixpkgs/*

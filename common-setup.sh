@@ -69,29 +69,3 @@ EOF
     fi
 }
 
-# Clean up a path so it can be injected into a nix expression
-cleanup_nix_path() {
-    echo "$1" | sed 's@/*$@@'
-}
-
-# For a given effective platform, turn a string representing a package, which
-# may be a package name or a path, into a nix invocation representing the
-# package.
-package_invocation() {
-    local EFFECTIVE_PLATFORM="$1"
-    local PACKAGE="$2"
-
-    if echo "$PACKAGE" | grep -q / ; then
-        # Package name includes a slash
-        local PACKAGE_PATH="$(cleanup_nix_path "$PACKAGE")"
-        if ( echo "$PACKAGE_PATH" | grep -q '\.nix$' && [ -f "$PACKAGE_PATH" ] ) || [ -f "$PACKAGE_PATH/default.nix" ] ; then
-            echo -n "($EFFECTIVE_PLATFORM.callPackage $PACKAGE_PATH {})"
-        elif test -n "$(shopt -s nullglob ; echo "$PACKAGE_PATH"/*.cabal)" ; then
-            echo -n "($EFFECTIVE_PLATFORM.callCabal2nix \"$(basename "$PACKAGE_PATH"/*.cabal | sed 's/\.cabal$//')\" $PACKAGE_PATH {})"
-        else
-            user_error 1 "Error: The given path must be a nix expression, a directory with a default.nix, or a directory with a cabal file"
-        fi
-    else
-        echo -n "$EFFECTIVE_PLATFORM.$PACKAGE"
-    fi
-}
