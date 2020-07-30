@@ -125,6 +125,7 @@ let combineOverrides = old: new: (old // new) // {
         scientific        = dontCheck super.scientific;
 
         time-compat       = dontCheck super.time-compat;
+        uuid-types        = dontCheck super.uuid-types;
 
         # really?
         QuickCheck = 
