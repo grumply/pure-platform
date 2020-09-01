@@ -193,7 +193,7 @@ let
     pure-modal = this;
     pure-paginate = this;
     pure-periodically = this;
-    pure-portal = this;
+    # pure-portal = this;
     pure-popup = this;
     pure-prop = this;
     pure-proxy = this;
