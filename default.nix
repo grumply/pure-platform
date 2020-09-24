@@ -210,7 +210,7 @@ in let this = rec {
       cabal2nix
       curl
       nix-prefetch-scripts
-      nodejs
+      nodejs-12_x
       pkgconfig;
   };
 
