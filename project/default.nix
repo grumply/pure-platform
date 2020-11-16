@@ -164,6 +164,7 @@ let
     pure = this;
     pure-async = this;
     pure-bench = this;
+    pure-bloom = this;
     pure-cache = this;
     pure-cached = this;
     pure-capability = this;

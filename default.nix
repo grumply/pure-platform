@@ -38,6 +38,7 @@ let combineOverrides = old: new: (old // new) // {
         pure              = self.callPackage (hackGet ./packages/pure)              {};
         pure-async        = self.callPackage (hackGet ./packages/pure-async)        {};
         pure-bench        = self.callPackage (hackGet ./packages/pure-bench)        {};
+        pure-bloom        = self.callPackage (hackGet ./packages/pure-bloom)        {};
         pure-cache        = self.callPackage (hackGet ./packages/pure-cache)        {};
         pure-cached       = self.callPackage (hackGet ./packages/pure-cached)       {};
         pure-capability   = self.callPackage (hackGet ./packages/pure-capability)   {};
