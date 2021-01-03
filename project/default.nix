@@ -233,6 +233,7 @@ let
     pure-variance = this;
     pure-visibility = this;
     pure-xhr = this;
+    pure-xss-sanitize = this;
     pure-xml = this;
     ef = this;
     excelsior = this;

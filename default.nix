@@ -108,6 +108,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-uri          = self.callPackage (hackGet ./packages/pure-uri)          {};
         pure-xhr          = self.callPackage (hackGet ./packages/pure-xhr)          {};
         pure-xml          = self.callPackage (hackGet ./packages/pure-xml)          {};
+        pure-xss-sanitize = self.callPackage (hackGet ./packages/pure-xss-sanitize) {};
         ef                = self.callPackage (hackGet ./packages/ef)                {};
         excelsior         = self.callPackage (hackGet ./packages/excelsior)         {};
         sorcerer          = self.callPackage (hackGet ./packages/sorcerer)          {};
@@ -127,6 +128,15 @@ let combineOverrides = old: new: (old // new) // {
 
         time-compat       = dontCheck super.time-compat;
         uuid-types        = dontCheck super.uuid-types;
+
+        xss-sanitize      = dontCheck super.xss-sanitize;
+        Glob              = dontCheck super.Glob;
+        network-uri       = dontCheck super.network-uri;
+        http-client       = dontCheck super.http-client;
+        http-client-tls   = dontCheck super.http-client-tls;
+        http-conduit      = dontCheck super.http-conduit;
+        warp              = dontCheck super.warp;
+        warp-tls          = dontCheck super.warp-tls;
 
         # really?
         QuickCheck = 
