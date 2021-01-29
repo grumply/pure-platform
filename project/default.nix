@@ -190,8 +190,10 @@ let
     pure-loader = this;
     pure-localstorage = this;
     pure-locker = this;
+    pure-marker = this;
     pure-maybe = this;
     pure-modal = this;
+    pure-mutation = this;
     pure-paginate = this;
     pure-periodically = this;
     # pure-portal = this;
