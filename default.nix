@@ -115,7 +115,6 @@ let combineOverrides = old: new: (old // new) // {
         ef                = self.callPackage (hackGet ./packages/ef)                {};
         excelsior         = self.callPackage (hackGet ./packages/excelsior)         {};
         sorcerer          = self.callPackage (hackGet ./packages/sorcerer)          {};
-        origami-fold      = self.callPackage (hackGet ./packages/origami-fold)      {};
 
 	      pure-semantic-ui  = self.callPackage (hackGet ./packages/pure-semantic-ui)  {};
 
