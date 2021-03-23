@@ -55,6 +55,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-forms        = self.callPackage (hackGet ./packages/pure-forms)        {};
         pure-gestures     = self.callPackage (hackGet ./packages/pure-gestures)     {};
         pure-grid         = self.callPackage (hackGet ./packages/pure-grid)         {};
+        pure-hooks        = self.callPackage (hackGet ./packages/pure-hooks)        {};
         pure-html         = self.callPackage (hackGet ./packages/pure-html)         {};
         pure-intersection = self.callPackage (hackGet ./packages/pure-intersection) {};
         pure-json         = self.callPackage (hackGet ./packages/pure-json)         {};
@@ -114,6 +115,7 @@ let combineOverrides = old: new: (old // new) // {
         ef                = self.callPackage (hackGet ./packages/ef)                {};
         excelsior         = self.callPackage (hackGet ./packages/excelsior)         {};
         sorcerer          = self.callPackage (hackGet ./packages/sorcerer)          {};
+        origami-fold      = self.callPackage (hackGet ./packages/origami-fold)      {};
 
 	      pure-semantic-ui  = self.callPackage (hackGet ./packages/pure-semantic-ui)  {};
 

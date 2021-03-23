@@ -181,6 +181,7 @@ let
     pure-forms = this;
     pure-gestures = this;
     pure-grid = this;
+    pure-hooks = this;
     pure-html = this;
     pure-intersection = this;
     pure-json = this;
@@ -240,6 +241,7 @@ let
     ef = this;
     excelsior = this;
     sorcerer = this;
+    origami-fold = this;
 
     pure-semantic-ui = this;
 
