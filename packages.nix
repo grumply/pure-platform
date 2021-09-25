@@ -8,6 +8,7 @@ with haskellPackages;
   ##############################################################################
   pure
   pure-async
+  pure-backdrop
   pure-bench
   pure-bloom
   pure-cache
@@ -112,6 +113,7 @@ with haskellPackages;
   (drv.executableHaskellDepends or []); }; }).out) 
     [ pure 
       pure-async 
+      pure-backdrop 
       pure-bench 
       pure-bloom 
       pure-cache 

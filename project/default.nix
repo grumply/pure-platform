@@ -163,6 +163,7 @@ let
 
     pure = this;
     pure-async = this;
+    pure-backdrop = this;
     pure-bench = this;
     pure-bloom = this;
     pure-cache = this;
