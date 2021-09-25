@@ -110,6 +110,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-variance     = self.callPackage (hackGet ./packages/pure-variance)     {};
         pure-visibility   = self.callPackage (hackGet ./packages/pure-visibility)   {};
         pure-websocket    = self.callPackage (hackGet ./packages/pure-websocket)    {};
+        pure-websocket-cache = self.callPackage (hackGet ./packages/pure-websocket-cache) {};
         pure-uri          = self.callPackage (hackGet ./packages/pure-uri)          {};
         pure-xhr          = self.callPackage (hackGet ./packages/pure-xhr)          {};
         pure-xml          = self.callPackage (hackGet ./packages/pure-xml)          {};

@@ -232,6 +232,7 @@ let
     pure-txt-search = this;
     pure-txt-trie = this;
     pure-websocket = this;
+    pure-websocket-cache = this;
     pure-server = this;
     pure-uri = this;
     pure-variance = this;
