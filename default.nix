@@ -69,6 +69,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-loader       = self.callPackage (hackGet ./packages/pure-loader)       {};
         pure-localstorage = self.callPackage (hackGet ./packages/pure-localstorage) {};
         pure-locker       = self.callPackage (hackGet ./packages/pure-locker)       {};
+        pure-media-library = self.callPackage (hackGet ./packages/pure-media-library) {};
         pure-marker       = self.callPackage (hackGet ./packages/pure-marker)       {};
         pure-maybe        = self.callPackage (hackGet ./packages/pure-maybe)        {};
         pure-modal        = self.callPackage (hackGet ./packages/pure-modal)        {};

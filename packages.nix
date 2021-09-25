@@ -42,6 +42,7 @@ with haskellPackages;
   pure-locker
   pure-marker
   pure-maybe
+  pure-media-library
   pure-modal
   pure-mutation
   pure-paginate

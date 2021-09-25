@@ -197,6 +197,7 @@ let
     pure-locker = this;
     pure-marker = this;
     pure-maybe = this;
+    pure-media-library = this;
     pure-modal = this;
     pure-mutation = this;
     pure-paginate = this;
