@@ -55,6 +55,7 @@ with haskellPackages;
   pure-router
   pure-scroll-loader
   pure-search
+  pure-sorcerer
   pure-spacetime
   pure-spinners
   pure-state
@@ -85,7 +86,7 @@ with haskellPackages;
   pure-xss-sanitize
   ef
   excelsior
-  sorcerer
+  origami-fold
 
   pure-semantic-ui
 

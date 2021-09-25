@@ -85,6 +85,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-scroll-loader = self.callPackage (hackGet ./packages/pure-scroll-loader) {};
         pure-search       = self.callPackage (hackGet ./packages/pure-search)       {};
         pure-server       = self.callPackage (hackGet ./packages/pure-server)       {};
+        pure-sorcerer     = self.callPackage (hackGet ./packages/pure-sorcerer)     {};
         pure-spacetime    = self.callPackage (hackGet ./packages/pure-spacetime)    {};
         pure-spinners     = self.callPackage (hackGet ./packages/pure-spinners)     {};
         pure-state        = self.callPackage (hackGet ./packages/pure-state)        {};
@@ -114,7 +115,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-xss-sanitize = self.callPackage (hackGet ./packages/pure-xss-sanitize) {};
         ef                = self.callPackage (hackGet ./packages/ef)                {};
         excelsior         = self.callPackage (hackGet ./packages/excelsior)         {};
-        sorcerer          = self.callPackage (hackGet ./packages/sorcerer)          {};
+        origami-fold      = self.callPackage (hackGet ./packages/origami-fold)      {};
 
 	      pure-semantic-ui  = self.callPackage (hackGet ./packages/pure-semantic-ui)  {};
 

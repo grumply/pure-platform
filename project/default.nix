@@ -240,7 +240,7 @@ let
     pure-xml = this;
     ef = this;
     excelsior = this;
-    sorcerer = this;
+    origami-fold = this;
 
     pure-semantic-ui = this;
 
