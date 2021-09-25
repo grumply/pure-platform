@@ -227,6 +227,7 @@ let
     pure-theme = this;
     pure-time = this;
     pure-tlc = this;
+    pure-transform = this;
     pure-transition = this;
     pure-try = this;
     pure-txt = this;

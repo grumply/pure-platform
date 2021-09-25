@@ -102,6 +102,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-theme        = self.callPackage (hackGet ./packages/pure-theme)        {};
         pure-time         = self.callPackage (hackGet ./packages/pure-time)         {};
         pure-tlc          = self.callPackage (hackGet ./packages/pure-tlc)          {};
+        pure-transform    = self.callPackage (hackGet ./packages/pure-transform)    {};
         pure-transition   = self.callPackage (hackGet ./packages/pure-transition)   {};
         pure-try          = self.callPackage (hackGet ./packages/pure-try)          {};
         pure-txt          = self.callPackage (hackGet ./packages/pure-txt)          {};

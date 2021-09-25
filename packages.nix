@@ -72,6 +72,7 @@ with haskellPackages;
   pure-theme
   pure-time
   pure-tlc
+  pure-transform
   pure-transition
   pure-try
   pure-txt
@@ -172,6 +173,7 @@ with haskellPackages;
       pure-theme 
       pure-time 
       pure-tlc 
+      pure-transform 
       pure-transition 
       pure-try 
       pure-txt 
