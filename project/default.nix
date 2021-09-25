@@ -212,6 +212,7 @@ let
     pure-scroll-loader = this;
     pure-search = this;
     pure-selection = this;
+    pure-shadows = this;
     pure-sorcerer = this;
     pure-spacetime = this;
     pure-spinners = this;

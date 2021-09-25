@@ -86,6 +86,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-scroll-loader = self.callPackage (hackGet ./packages/pure-scroll-loader) {};
         pure-selection    = self.callPackage (hackGet ./packages/pure-selection)    {};
         pure-search       = self.callPackage (hackGet ./packages/pure-search)       {};
+        pure-shadows      = self.callPackage (hackGet ./packages/pure-shadows)      {};
         pure-server       = self.callPackage (hackGet ./packages/pure-server)       {};
         pure-sorcerer     = self.callPackage (hackGet ./packages/pure-sorcerer)     {};
         pure-spacetime    = self.callPackage (hackGet ./packages/pure-spacetime)    {};
