@@ -211,6 +211,7 @@ let
     pure-router = this;
     pure-scroll-loader = this;
     pure-search = this;
+    pure-sorcerer = this;
     pure-spacetime = this;
     pure-spinners = this;
     pure-state = this;
