@@ -95,6 +95,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-styles       = self.callPackage (hackGet ./packages/pure-styles)       {};
         pure-suspense     = self.callPackage (hackGet ./packages/pure-suspense)     {};
         pure-svg          = self.callPackage (hackGet ./packages/pure-svg)          {};
+        pure-sync         = self.callPackage (hackGet ./packages/pure-sync)         {};
         pure-tagsoup      = self.callPackage (hackGet ./packages/pure-tagsoup)      {};
         pure-template     = self.callPackage (hackGet ./packages/pure-template)     {};
         pure-test         = self.callPackage (hackGet ./packages/pure-test)         {};

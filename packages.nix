@@ -65,6 +65,7 @@ with haskellPackages;
   pure-styles
   pure-suspense
   pure-svg
+  pure-sync
   pure-tagsoup
   pure-template
   pure-test
@@ -164,6 +165,7 @@ with haskellPackages;
       pure-styles 
       pure-suspense 
       pure-svg 
+      pure-sync 
       pure-tagsoup 
       pure-template 
       pure-test 

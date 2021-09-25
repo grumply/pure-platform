@@ -219,6 +219,7 @@ let
     pure-styles = this;
     pure-suspense = this;
     pure-svg = this;
+    pure-sync = this;
     pure-tagsoup = this;
     pure-template = this;
     pure-test = this;
