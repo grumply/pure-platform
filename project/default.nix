@@ -200,6 +200,7 @@ let
     pure-media-library = this;
     pure-modal = this;
     pure-mutation = this;
+    pure-notifications = this;
     pure-paginate = this;
     pure-parse = this;
     pure-periodically = this;

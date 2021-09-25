@@ -45,6 +45,7 @@ with haskellPackages;
   pure-media-library
   pure-modal
   pure-mutation
+  pure-notifications
   pure-paginate
   pure-parse
   pure-periodically
