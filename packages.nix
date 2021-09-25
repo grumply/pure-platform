@@ -56,6 +56,7 @@ with haskellPackages;
   pure-router
   pure-scroll-loader
   pure-search
+  pure-selection
   pure-sorcerer
   pure-spacetime
   pure-spinners
@@ -159,6 +160,7 @@ with haskellPackages;
       pure-router 
       pure-scroll-loader 
       pure-search 
+      pure-selection 
       pure-spinners 
       pure-state 
       pure-sticky 
