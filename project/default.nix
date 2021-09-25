@@ -224,6 +224,7 @@ let
     pure-spacetime = this;
     pure-spinners = this;
     pure-state = this;
+    pure-statusbar = this;
     pure-sticky = this;
     pure-stream = this;
     pure-styles = this;

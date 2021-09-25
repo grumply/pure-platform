@@ -69,6 +69,7 @@ with haskellPackages;
   pure-spacetime
   pure-spinners
   pure-state
+  pure-statusbar
   pure-sticky
   pure-stream
   pure-styles
@@ -176,6 +177,7 @@ with haskellPackages;
       pure-shadows 
       pure-spinners 
       pure-state 
+      pure-statusbar 
       pure-sticky 
       pure-stream 
       pure-styles 
