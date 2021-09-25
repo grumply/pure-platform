@@ -163,6 +163,7 @@ with haskellPackages;
       pure-scroll-loader 
       pure-search 
       pure-selection 
+      pure-shadows 
       pure-spinners 
       pure-state 
       pure-sticky 
