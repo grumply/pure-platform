@@ -59,6 +59,7 @@ with haskellPackages;
   pure-readfile
   pure-responsive
   pure-router
+  pure-ribbon
   pure-scroll-loader
   pure-search
   pure-selection
@@ -167,6 +168,7 @@ with haskellPackages;
       pure-readfile 
       pure-responsive 
       pure-router 
+      pure-ribbon 
       pure-scroll-loader 
       pure-search 
       pure-selection 

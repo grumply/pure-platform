@@ -88,6 +88,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-render       = self.callPackage (hackGet ./packages/pure-render)       {};
         pure-responsive   = self.callPackage (hackGet ./packages/pure-responsive)   {};
         pure-router       = self.callPackage (hackGet ./packages/pure-router)       {};
+        pure-ribbon       = self.callPackage (hackGet ./packages/pure-ribbon)       {};
         pure-scroll-loader = self.callPackage (hackGet ./packages/pure-scroll-loader) {};
         pure-selection    = self.callPackage (hackGet ./packages/pure-selection)    {};
         pure-search       = self.callPackage (hackGet ./packages/pure-search)       {};

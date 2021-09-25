@@ -213,6 +213,7 @@ let
     pure-readfile = this;
     pure-render = this;
     pure-responsive = this;
+    pure-ribbon = this;
     pure-router = this;
     pure-scroll-loader = this;
     pure-search = this;
