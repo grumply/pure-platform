@@ -169,6 +169,7 @@ let
     pure-cached = this;
     pure-capability = this;
     pure-cond = this;
+    pure-contenteditable = this;
     pure-contexts = this;
     pure-core = this;
     pure-css = this;

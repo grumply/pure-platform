@@ -14,6 +14,7 @@ with haskellPackages;
   pure-cached
   pure-capability
   pure-cond
+  pure-contenteditable
   pure-contexts
   pure-core
   pure-css
