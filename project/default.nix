@@ -164,6 +164,7 @@ let
     pure = this;
     pure-async = this;
     pure-auth = this;
+    pure-autogrid = this;
     pure-backdrop = this;
     pure-bench = this;
     pure-bloom = this;

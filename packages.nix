@@ -9,6 +9,7 @@ with haskellPackages;
   pure
   pure-async
   pure-auth
+  pure-autogrid
   pure-backdrop
   pure-bench
   pure-bloom
@@ -115,6 +116,7 @@ with haskellPackages;
     [ pure 
       pure-async 
       pure-auth 
+      pure-autogrid 
       pure-backdrop 
       pure-bench 
       pure-bloom 
