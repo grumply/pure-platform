@@ -196,6 +196,7 @@ let
     pure-modal = this;
     pure-mutation = this;
     pure-paginate = this;
+    pure-parse = this;
     pure-periodically = this;
     # pure-portal = this;
     pure-popup = this;

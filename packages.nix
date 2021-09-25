@@ -41,6 +41,7 @@ with haskellPackages;
   pure-modal
   pure-mutation
   pure-paginate
+  pure-parse
   pure-periodically
   # pure-portal
   pure-popup

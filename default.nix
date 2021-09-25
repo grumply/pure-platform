@@ -70,6 +70,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-modal        = self.callPackage (hackGet ./packages/pure-modal)        {};
         pure-mutation     = self.callPackage (hackGet ./packages/pure-mutation)     {};
         pure-paginate     = self.callPackage (hackGet ./packages/pure-paginate)     {};
+        pure-parse        = self.callPackage (hackGet ./packages/pure-parse)        {};
         pure-periodically = self.callPackage (hackGet ./packages/pure-periodically) {};
         # pure-portal       = self.callPackage (hackGet ./packages/pure-portal)       {};
         pure-popup        = self.callPackage (hackGet ./packages/pure-popup)        {};
