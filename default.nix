@@ -47,6 +47,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-cached       = self.callPackage (hackGet ./packages/pure-cached)       {};
         pure-capability   = self.callPackage (hackGet ./packages/pure-capability)   {};
         pure-cond         = self.callPackage (hackGet ./packages/pure-cond)         {};
+        pure-conjurer     = self.callPackage (hackGet ./packages/pure-conjurer)     {};
         pure-contenteditable = self.callPackage (hackGet ./packages/pure-contenteditable) {};
         pure-contexts     = self.callPackage (hackGet ./packages/pure-contexts)     {};
         pure-core         = self.callPackage (hackGet ./packages/pure-core)         {};

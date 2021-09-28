@@ -17,6 +17,7 @@ with haskellPackages;
   pure-cached
   pure-capability
   pure-cond
+  pure-conjurer
   pure-contenteditable
   pure-contexts
   pure-core
@@ -129,6 +130,7 @@ with haskellPackages;
       pure-cached 
       pure-capability 
       pure-cond 
+      pure-conjurer
       pure-contenteditable 
       pure-contexts 
       pure-core 
