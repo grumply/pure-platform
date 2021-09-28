@@ -3,7 +3,7 @@
 with haskellPackages;
 
 [
-  ##############################################################################
+  pure-admin
   # Add general packages here                                                  #
   ##############################################################################
   pure
@@ -118,6 +118,7 @@ with haskellPackages;
   out = (drv.buildDepends or []) ++ (drv.libraryHaskellDepends or []) ++
   (drv.executableHaskellDepends or []); }; }).out) 
     [ pure 
+      pure-admin
       pure-async 
       pure-auth 
       pure-autogrid 
