@@ -176,6 +176,7 @@ let
     pure-conjurer = this;
     pure-contenteditable = this;
     pure-contexts = this;
+    pure-convoker = this;
     pure-core = this;
     pure-css = this;
     pure-default = this;
@@ -197,6 +198,7 @@ let
     pure-loader = this;
     pure-localstorage = this;
     pure-locker = this;
+    pure-magician = this;
     pure-marker = this;
     pure-maybe = this;
     pure-media-library = this;

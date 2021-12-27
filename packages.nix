@@ -2,11 +2,8 @@
 
 with haskellPackages;
 
-[
+[ pure
   pure-admin
-  # Add general packages here                                                  #
-  ##############################################################################
-  pure
   pure-async
   pure-auth
   pure-autogrid
@@ -20,6 +17,7 @@ with haskellPackages;
   pure-conjurer
   pure-contenteditable
   pure-contexts
+  pure-convoker
   pure-core
   pure-css
   pure-default
@@ -41,6 +39,7 @@ with haskellPackages;
   pure-loader
   pure-localstorage
   pure-locker
+  pure-magician
   pure-marker
   pure-maybe
   pure-media-library
@@ -133,6 +132,7 @@ with haskellPackages;
       pure-conjurer
       pure-contenteditable 
       pure-contexts 
+      pure-convoker
       pure-core 
       pure-css 
       pure-default 
@@ -154,6 +154,7 @@ with haskellPackages;
       pure-loader 
       pure-localstorage 
       pure-locker 
+      pure-magician
       pure-marker 
       pure-modal 
       pure-maybe 
