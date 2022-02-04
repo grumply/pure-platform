@@ -169,6 +169,7 @@ let
     pure-backdrop = this;
     pure-bench = this;
     pure-bloom = this;
+    pure-bloom-limiter = this;
     pure-cache = this;
     pure-cached = this;
     pure-capability = this;

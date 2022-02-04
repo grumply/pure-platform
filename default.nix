@@ -43,6 +43,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-backdrop     = self.callPackage (hackGet ./packages/pure-backdrop)     {};
         pure-bench        = self.callPackage (hackGet ./packages/pure-bench)        {};
         pure-bloom        = self.callPackage (hackGet ./packages/pure-bloom)        {};
+        pure-bloom-limiter = self.callPackage (hackGet ./packages/pure-bloom-limiter) {};
         pure-cache        = self.callPackage (hackGet ./packages/pure-cache)        {};
         pure-cached       = self.callPackage (hackGet ./packages/pure-cached)       {};
         pure-capability   = self.callPackage (hackGet ./packages/pure-capability)   {};

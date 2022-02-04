@@ -10,6 +10,7 @@ with haskellPackages;
   pure-backdrop
   pure-bench
   pure-bloom
+  pure-bloom-limiter
   pure-cache
   pure-cached
   pure-capability
@@ -124,7 +125,8 @@ with haskellPackages;
       pure-autogrid 
       pure-backdrop 
       pure-bench 
-      pure-bloom 
+      pure-bloom
+      pure-bloom-limiter
       pure-cache 
       pure-cached 
       pure-capability 
