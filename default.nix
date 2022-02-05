@@ -36,7 +36,6 @@ let combineOverrides = old: new: (old // new) // {
     extendHaskellPackages = haskellPackages: makeRecursivelyOverridable haskellPackages {
       overrides = self: super: {
         pure              = self.callPackage (hackGet ./packages/pure)              {};
-        pure-admin        = self.callPackage (hackGet ./packages/pure-admin)        {};
         pure-async        = self.callPackage (hackGet ./packages/pure-async)        {};
         pure-auth         = self.callPackage (hackGet ./packages/pure-auth)         {};
         pure-autogrid     = self.callPackage (hackGet ./packages/pure-autogrid)     {};

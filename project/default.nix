@@ -162,7 +162,6 @@ let
     ) shells;
 
     pure = this;
-    pure-admin = this;
     pure-async = this;
     pure-auth = this;
     pure-autogrid = this;
