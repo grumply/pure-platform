@@ -1,6 +1,6 @@
 {
-  "url": "https://github.com/grumply/pure-conjurer.git",
-  "rev": "2e38447997f5dbc34470e2828d68091638f5709e",
-  "sha256": "1l5vs2g196sfkv52xlqz77rbb9mvpcg0m6xmc913bn083mzf069q",
+  "url": "git://github.com/grumply/pure-conjurer.git",
+  "rev": "43e77947e563814b864e06bdc779e809554f3319",
+  "sha256": "00x5935b1ya85ghb13xb2jb73k1ngndsrb550zngm6l1rf8mwr1p",
   "fetchSubmodules": false
 }
