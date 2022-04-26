@@ -1,5 +1,5 @@
 {
-  "url": "git://github.com/grumply/pure-hooks.git",
+  "url": "https://github.com/grumply/pure-hooks.git",
   "rev": "a396e393d6935adc0b39643bda1773d1e406dce0",
   "sha256": "0lcshkkw07xbnrmvrgvcpz3j8bpywi3sywll7vz3qinnzhf82wvi",
   "fetchSubmodules": false
