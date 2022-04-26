@@ -1,6 +1,6 @@
 {
-  "url": "https://github.com/grumply/pure-convoker.git",
-  "rev": "96bb35aa129668654e8d687e3502919437240645",
-  "sha256": "0vmlyw26fv6rhd09h1f299cvd68q1cw5lzy379dgg4ccvyyd4inv",
+  "url": "git://github.com/grumply/pure-convoker.git",
+  "rev": "ba608c287b559d312602baad72f5248088cc9d90",
+  "sha256": "1pfv0ds06hyj0qqivd8zw3vvws70ll3853hg6j01n8r2cnwqwwn8",
   "fetchSubmodules": false
 }
