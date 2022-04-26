@@ -58,7 +58,7 @@ let combineOverrides = old: new: (old // new) // {
         pure-ease         = self.callPackage (hackGet ./packages/pure-ease)         {};
         pure-elm          = self.callPackage (hackGet ./packages/pure-elm)          {};
         pure-events       = self.callPackage (hackGet ./packages/pure-events)       {};
-        pure-fetch        = self.callPackage (hackGet ./packages/pure-fetch)        {};
+        # pure-fetch        = self.callPackage (hackGet ./packages/pure-fetch)        {};
         pure-forms        = self.callPackage (hackGet ./packages/pure-forms)        {};
         pure-gestures     = self.callPackage (hackGet ./packages/pure-gestures)     {};
         pure-grid         = self.callPackage (hackGet ./packages/pure-grid)         {};
@@ -72,7 +72,12 @@ let combineOverrides = old: new: (old // new) // {
         pure-loader       = self.callPackage (hackGet ./packages/pure-loader)       {};
         pure-localstorage = self.callPackage (hackGet ./packages/pure-localstorage) {};
         pure-locker       = self.callPackage (hackGet ./packages/pure-locker)       {};
-        pure-magician     = self.callPackage (hackGet ./packages/pure-magician)     {};
+        pure-magician     = 
+
+          (overrideCabal (self.callPackage (hackGet ./packages/pure-magician) {}) (old: {
+            doHaddock = false;
+          }));
+        
         pure-media-library = self.callPackage (hackGet ./packages/pure-media-library) {};
         pure-marker       = self.callPackage (hackGet ./packages/pure-marker)       {};
         pure-maybe        = self.callPackage (hackGet ./packages/pure-maybe)        {};
