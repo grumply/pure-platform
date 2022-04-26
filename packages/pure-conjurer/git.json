@@ -1,5 +1,5 @@
 {
-  "url": "git://github.com/grumply/pure-conjurer.git",
+  "url": "https://github.com/grumply/pure-conjurer.git",
   "rev": "43e77947e563814b864e06bdc779e809554f3319",
   "sha256": "00x5935b1ya85ghb13xb2jb73k1ngndsrb550zngm6l1rf8mwr1p",
   "fetchSubmodules": false
