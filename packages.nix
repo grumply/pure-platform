@@ -25,7 +25,7 @@ with haskellPackages;
   pure-ease
   pure-elm
   pure-events
-  pure-fetch
+  # pure-fetch
   pure-forms
   pure-gestures
   pure-grid
@@ -140,7 +140,7 @@ with haskellPackages;
       pure-ease 
       pure-elm 
       pure-events 
-      pure-fetch 
+      # pure-fetch 
       pure-forms 
       pure-gestures 
       pure-grid 

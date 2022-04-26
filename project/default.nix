@@ -184,7 +184,7 @@ let
     pure-ease = this;
     pure-elm = this;
     pure-events = this;
-    pure-fetch = this;
+    # pure-fetch = this;
     pure-forms = this;
     pure-gestures = this;
     pure-grid = this;
