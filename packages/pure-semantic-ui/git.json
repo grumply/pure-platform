@@ -1,6 +1,10 @@
 {
-  "url": "https://github.com/grumply/pure-semantic-ui",
-  "rev": "c79723743fccfad653c98c4886b294ef8149b43d",
-  "sha256": "14lapwyf1n97j0q86pi6j4x0gay10h3wmy9l0fn1vijz0spj8kwx",
-  "fetchSubmodules": false
+  "url": "git://github.com/grumply/pure-semantic-ui.git",
+  "rev": "c543439dc469be8acc093793363636fe73d5b566",
+  "path": "/nix/store/jkxswfrmzqlb1vxhf3lcyx4fynz6cg6j-pure-semantic-ui-c543439",
+  "sha256": "1k636nm3va3xs2qp4wnhpqs4jp0mvf7fsswmgcarz8c9njpddinl",
+  "fetchLFS": false,
+  "fetchSubmodules": false,
+  "deepClone": false,
+  "leaveDotGit": false
 }
