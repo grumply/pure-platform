@@ -1,6 +1,6 @@
 {
-  "url": "https://github.com/grumply/pure-async",
-  "rev": "dee3e0c55f9f7bf2548fd2f4f604fe57e3687e2b",
-  "sha256": "1sr6hmwij800c5ksd3kmw0n16vcqv7agbza2w1bd2l9w621qfxa9",
+  "url": "git://github.com/grumply/pure-async.git",
+  "rev": "ec7c51606496a2f70eaa9b0448971eb938cf43c2",
+  "sha256": "1gz5k6jskh081jgjpfadqqlk8z9sv2pdns0v6s4pmsmp8x05467a",
   "fetchSubmodules": false
 }
